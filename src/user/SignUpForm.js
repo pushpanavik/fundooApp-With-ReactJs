@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 
 
 
@@ -43,6 +43,17 @@ class SignUpForm extends Component {
     render() {
         return (
         <div className="FormCenter">
+        <div className="App__Form">
+        <div className="App__Aside"></div>
+          
+            <div className="PageSwitcher">
+                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
+                <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}}className="PageSwitcher__Item">Sign Up</NavLink>
+              </div>
+
+              <div className="FormTitle">
+                  <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign In</NavLink> or <NavLink exact to="/" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign Up</NavLink>
+              </div>
             <form  name="myform" onSubmit={this.handleSubmit} className="FormFields">
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="username">User Name</label>
@@ -65,6 +76,7 @@ class SignUpForm extends Component {
                   <button className="FormField__Button mr-20" onClick={this.registerUser}>Sign Up</button> <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
               </div>
             </form>
+            </div>
           </div>
           );
          

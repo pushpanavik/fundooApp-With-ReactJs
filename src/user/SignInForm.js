@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link,Route } from 'react-router-dom';
+import { Link,Route,NavLink } from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
+
 
 class SignInForm extends Component {
     constructor() {
@@ -36,6 +37,18 @@ class SignInForm extends Component {
         return (          
            
         <div className="FormCenter">
+          <div className="App__Form">
+       <div className="App__Aside"></div>
+        
+            <div className="PageSwitcher">
+                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
+                <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}}className="PageSwitcher__Item">Sign Up</NavLink>
+              </div>
+
+              <div className="FormTitle">
+                  <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign In</NavLink> or <NavLink exact to="/" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign Up</NavLink>
+              </div>     
+           
             <form onSubmit={this.handleSubmit} className="FormFields" onSubmit={this.handleSubmit}>
             <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
@@ -53,6 +66,7 @@ class SignInForm extends Component {
               </div>
              
             </form>
+            </div>
           </div>
         );
     }
