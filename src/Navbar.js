@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -13,13 +12,22 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert'
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
+import Refresh from '@material-ui/icons/Refresh';
+import List from '@material-ui/icons/List';
+import styled from 'styled-components';
 
+
+
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const styles = theme =>({
     root:{
         width:'100%',
         marginTop:-50,
+        backgroundColor:'#fb0',
+      
     },
     grow :{
         flexGrow:1,
@@ -34,6 +42,16 @@ const styles = theme =>({
             display :'block',
         },
     },
+    RefreshForm: {
+      
+        marginTop: -35,
+        marginRight:  0,
+        marginBottom : 0,
+        marginLeft: 658,
+      },
+    input: {
+        display: 'none',
+      },
     search:{
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -41,16 +59,17 @@ const styles = theme =>({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white,0.25),
         },
-        marginRight :theme.spacing.unit *2,
+        marginRight :theme.spacing.unit*2,
         marginLeft :0,
         width :'100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft :theme.spacing.unit *10,
-            width: 'auto',
+            marginLeft: 35,
+            width: '50%',
+            height: 46,
         },
     },
     searchIcon :{
-        width: theme.spacing.unit * 9,
+        width: 33,
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -62,22 +81,25 @@ const styles = theme =>({
   inputRoot: {
     color: 'inherit',
     width: '100%',
+    marginLeft: 30,
   },
   inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 50,
+    paddingTop: 10,
+    // paddingRight: theme.spacing.unit,
+    // paddingBottom: theme.spacing.unit,
+     paddingLeft: theme.spacing.unit,
     transition: theme.transitions.create('width'),
     width: '100%',
+ 
     [theme.breakpoints.up('md')]: {
-      width: 200,
+      width: 400,
     },
   },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
+     
     },
   },
   sectionMobile: {
@@ -86,14 +108,24 @@ const styles = theme =>({
       display: 'none',
     },
   },
+  ListForm: {
+   
+    marginTop: -72,
+    marginRight:  0,
+    marginBottom : 0,
+    marginLeft: 727,
+  },
 });
 
 class Navbar extends React.Component{
-    state = {
+    constructor(props){
+        super(props);
+        
+    this.state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
       };
-    
+    }
       handleProfileMenuOpen = event => {
         this.setState({ anchorEl: event.currentTarget });
       };
@@ -102,7 +134,8 @@ class Navbar extends React.Component{
         this.setState({ anchorEl: null });
         this.handleOtherMenuClose();
       };
-    
+      
+      
       handleOtherMenuOpen = event => {
         this.setState({ mobileMoreAnchorEl: event.currentTarget });
       };
@@ -119,12 +152,14 @@ class Navbar extends React.Component{
         const isOtherMenuOpen=Boolean(moveMoreAnchorE1);
         
         const renderMenu=(
-            <Menu
+           
+            <Menu 
             anchorE1={anchorE1}
-            transformOrigin={{vertical: 'top', horizontal:'right'}}
-            anchorOrigin={{vertical :'top',horizontal:'right'}}
+            // transformOrigin={{vertical: 'top', horizontal:'right'}}
+            // anchorOrigin={{vertical :'top',horizontal:'right'}}
             open={isMenuOpen}
             onClose={this.handleMenuClose}
+           
             >
             <MenuItem onClick={this.handleClose}>Profile</MenuItem>
             <MenuItem onClick={this.handleClose}>My Account</MenuItem>
@@ -149,12 +184,12 @@ class Navbar extends React.Component{
         );
         return(
             <div className={classes.root}>
-           <AppBar position="static">
-           <Toolbar>
-               <IconButton className={classes.menuButton} color="inherit">
+           <AppBar position="static" >
+           <Toolbar className="NavbarColor">
+               <IconButton className={classes.menuButton} color="black" >
                <MenuIcon/>
                </IconButton>
-               <Typography className={classes.title} variant="title" color="inherit" noWrap>
+               <Typography className={classes.title} variant="title" color="black" noWrap>
                Google Keep
                </Typography>
 
@@ -162,6 +197,7 @@ class Navbar extends React.Component{
                <div className={classes.searchIcon}>
                <SearchIcon/>
                </div>
+
                <Input
                placeholder="Search"
                disableUnderline
@@ -170,22 +206,35 @@ class Navbar extends React.Component{
                    input:classes.inputInput,
                }}
                ></Input>
-               <IconButton
+           
+            <IconButton  className={classes.RefreshForm} ><Refresh/></IconButton>
+           
+            <IconButton className={classes.ListForm}><List/></IconButton>
+               
+               <IconButton 
                aria-owns={isMenuOpen ? 'material-appbar':null}
                aria-haspopup="true"
+               style={{
+               marginTop: -110,
+               marginLeft: 996,
+               marginBottom: 0,
+               marginRight:  0,
+              }}
                onClick={this.handleProfileMenuOpen}
-               color="inherit">
-               <AccountCircle/>
+               color="inherit"
+               >
+               <AccountCircle />
                </IconButton>
                </div>
 
                <div className={classes.sectionMobile}>
-               <div className="navbar-form">
+               <div className="NavbarColor">
                <IconButton aria-haspopup="true" onClick={this.handleOtherMenuOpen} color="inherit">
                <MoreIcon/>
                </IconButton>
                </div>
                </div>
+
                </Toolbar>
                </AppBar> 
                {renderMenu}
@@ -195,5 +244,8 @@ class Navbar extends React.Component{
         );
     }
 }
+Navbar.propTypes={
+    classes: PropTypes.object.isRequired,
+};
 export default withStyles(styles) (Navbar);
 
