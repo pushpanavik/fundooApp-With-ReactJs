@@ -18,16 +18,13 @@ import Refresh from '@material-ui/icons/Refresh';
 import List from '@material-ui/icons/List';
 import styled from 'styled-components';
 
-
-
-import SvgIcon from '@material-ui/core/SvgIcon';
+import Sidebar from './Sidebar';
 
 const styles = theme =>({
     root:{
         width:'100%',
         marginTop:-50,
         backgroundColor:'#fb0',
-      
     },
     grow :{
         flexGrow:1,
@@ -118,78 +115,37 @@ const styles = theme =>({
 });
 
 class Navbar extends React.Component{
-    constructor(props){
-        super(props);
-        
-    this.state = {
-        anchorEl: null,
-        mobileMoreAnchorEl: null,
-      };
+    constructor(){
+        super();
+        this.state={
+            showMenu: null,
+        },
+      this.toggleMenu = this.toggleMenu.bind(this);
     }
-      handleProfileMenuOpen = event => {
-        this.setState({ anchorEl: event.currentTarget });
-      };
-    
-      handleMenuClose = () => {
-        this.setState({ anchorEl: null });
-        this.handleOtherMenuClose();
-      };
+     
+      toggleMenu=()=>{
+        this.setState({ showMenu: !this.state.showMenu });
+        console.log("clicks toggle menu ");
+      }
       
       
-      handleOtherMenuOpen = event => {
-        this.setState({ mobileMoreAnchorEl: event.currentTarget });
-      };
-    
-      handleOtherMenuClose = () => {
-        this.setState({ mobileMoreAnchorEl: null });
-      };
 
     render(){
         // It is a better way to retrieve values from an object or an array .It's an ES6 features for javascript called destructuring assignment.
-        const {anchorE1,moveMoreAnchorE1}=this.state;
+       
         const {classes}=this.props;
-        const isMenuOpen=Boolean(anchorE1);
-        const isOtherMenuOpen=Boolean(moveMoreAnchorE1);
-        
-        const renderMenu=(
-           
-            <Menu 
-            anchorE1={anchorE1}
-            // transformOrigin={{vertical: 'top', horizontal:'right'}}
-            // anchorOrigin={{vertical :'top',horizontal:'right'}}
-            open={isMenuOpen}
-            onClose={this.handleMenuClose}
-           
-            >
-            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-            <MenuItem onClick={this.handleClose}>My Account</MenuItem>
-            </Menu>
-        );
-
-        const renderMobileMenu=(
-            <Menu
-            anchorE1={anchorE1}
-            transformOrigin={{vertical:'top', horizontal:'right'}}
-            anchorOrigin={{vertical:'top',horizontal:'right'}}
-            open={isOtherMenuOpen}
-            onClose={this.handleOtherMenuClose}>
-
-           <MenuItem onClick={this.handleProfileMenuOpen}>
-            <IconButton color="inherit">
-            <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
-            </MenuItem>
-            </Menu>
-        );
+       
+          
         return(
             <div className={classes.root}>
            <AppBar position="static" >
+           <Sidebar />
            <Toolbar className="NavbarColor">
-               <IconButton className={classes.menuButton} color="black" >
+               <IconButton className={classes.menuButton} color="primary" onClick={this.toggleMenu} >
                <MenuIcon/>
+               
                </IconButton>
-               <Typography className={classes.title} variant="title" color="black" noWrap>
+               <Typography className={classes.title} variant="title" color="primary" noWrap>
                Google Keep
                </Typography>
 
@@ -212,15 +168,14 @@ class Navbar extends React.Component{
             <IconButton className={classes.ListForm}><List/></IconButton>
                
                <IconButton 
-               aria-owns={isMenuOpen ? 'material-appbar':null}
-               aria-haspopup="true"
+             
                style={{
                marginTop: -110,
                marginLeft: 996,
                marginBottom: 0,
                marginRight:  0,
               }}
-               onClick={this.handleProfileMenuOpen}
+              
                color="inherit"
                >
                <AccountCircle />
@@ -229,7 +184,7 @@ class Navbar extends React.Component{
 
                <div className={classes.sectionMobile}>
                <div className="NavbarColor">
-               <IconButton aria-haspopup="true" onClick={this.handleOtherMenuOpen} color="inherit">
+               <IconButton color="primary">
                <MoreIcon/>
                </IconButton>
                </div>
@@ -237,8 +192,7 @@ class Navbar extends React.Component{
 
                </Toolbar>
                </AppBar> 
-               {renderMenu}
-               {renderMobileMenu}
+              
               
            </div>
         );
