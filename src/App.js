@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SignUpForm from './user/SignUpForm';
 import SignInForm from './user/SignInForm';
 import ForgotPassword from './user/ForgotPassword';
 import ResetPassword from './user/ResetPassword';
-import Navbar from './Navbar';
+import Navbar from './user/Navbar';
 import ImageUpload from './ImageUpload'; 
-import Sidebar from './Sidebar';
+import Sidebar from './user/Sidebar';
 
+import Home from './user/Home'
 import './App.css';
+
 
 class App extends Component {
   render() {
@@ -18,12 +20,15 @@ class App extends Component {
             
               <div className="FormCenter"></div>
               <Route exact path="/" component={SignUpForm}></Route>
-              <Route strict path="/sign-in" component={SignInForm}></Route>
+              <Route strict path="/login" component={SignInForm}></Route>
               <Route exact path="/forgot-password" component={ForgotPassword}></Route>
-              <Route strict path="/reset-password"  component={ResetPassword}></Route>
+              <Route strict path="/resetPassword"  component={ResetPassword}></Route>
               <Route exact path="/navbar" component={Navbar}></Route>
               <Route exact path="/image-upload" component={ImageUpload}></Route>
               <Route path="/sidebar" component={Sidebar}></Route>
+              <Route exact path="/home" component={Home}></Route>
+             
+            
           </div>
 
       </Router>

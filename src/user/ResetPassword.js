@@ -1,49 +1,89 @@
 import React,{Component} from 'react';
-import Button from '@material-ui/core/Button';
-class ResetPassword extends React.Component{
+import {postResetService} from './UserService';
+import queryString from 'query-string';
+class ResetPassword extends Component{
     constructor(){
         super();
         this.state={
-            email:""
+            password :'',
         }
         this.handleChange=this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.resetPasswordFunction=this.resetPasswordFunction.bind(this);
     }
     handleChange(e) {
-        let target = e.target;
-        let value = e.target.value;
-        let name = target.name;
-
         this.setState({
-          [name]: value
+          password: e.target.value
         });
     }
   
     handleSubmit(e) {
         e.preventDefault();
-
-        console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
+
+    validateForm(){
+        let errors={};
+        let isformValid=true;
+    
+        if(this.state.password.length === 0){
+            isformValid = false;
+            errors["password"] = "Please enter password";
+        }
+
+        if(this.state.password.length > 0 && this.state.password !== undefined){
+            if(!(this.state.password.length >= 6)){
+                isformValid = false;
+                errors["password"] = "Please enter a password of atleast 6 characters";
+            }
+        }
+
+        this.setState({errors : errors});
+        return isformValid;
+    }
+    resetPasswordFunction(){
+       let gettokenFromUrl=queryString.parse(this.props.location.search);
+    console.log('token from url',gettokenFromUrl);
+        let check = this.validateForm();
+        console.log(check)
+        if(check){
+        
+            postResetService(gettokenFromUrl, {  
+                password:this.state.password,
+                
+            })
+            .then(response =>{
+                    this.props.history.push("/login");
+              
+            })
+            .catch(error =>{
+                console.log(error);
+                window.location.reload();
+                this.props.history.push("/resetPassword"); 
+            }); 
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     render(){
+        console.log("pass:+++++=", this.state.password);
+        
         return(
             <div className="FormCenter">
             <div className="App__Form">
+            <div className="FormForgot" >Reset Password</div>
+            <form onSubmit={this.handleSubmit} className="FormFields" >
             <div className="FormField">
                 <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 3 or more characters"
-                className="FormField__Input" minLength="3"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+                <input type="password" id="password" className="FormField__Input" placeholder="Enter new password" onChange={this.handleChange}   />
               </div>
-
+    
               <div className="FormField">
-                <label className="FormField__Label" htmlFor="password">Confirm Password</label>
-                <input type="password" id="password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 3 or more characters"
-                className="FormField__Input" minLength="3"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+                  <button className="FormField__Button" onClick={this.resetPasswordFunction}>SUBMIT</button>
               </div>
-             
-              <div className="FormField">
-                  <button className="FormField__Button mr-20">SUBMIT</button>
-              </div>
+              </form>
               </div>
             </div>
         )

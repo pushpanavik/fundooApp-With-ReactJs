@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link,NavLink } from 'react-router-dom';
-import {postService} from './UserService';
+ import {postService} from './UserService';
+//import axios from 'axios';
 
 
 const APIPATH="http://localhost:9090/fundoo/user/registerUser";
@@ -17,11 +18,10 @@ class SignUpForm extends Component {
                  };
 
         this.handleChange = this.handleChange.bind(this);
-        this.registerUser = this.registerUser.bind(this);
-
-        
+        this.registerUser = this.registerUser.bind(this);  
+       
     }
-  
+    
     
     handleChange(e) {
      const name=e.target.name;
@@ -30,8 +30,13 @@ class SignUpForm extends Component {
           [name]: value
         });
     }
-  
-    
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        
+    };
+
+   
     validateForm(){
         let errors={};
         let isformValid=true;
@@ -41,7 +46,7 @@ class SignUpForm extends Component {
         }
 
         if(this.state.firstname.length > 0 && this.state.firstname !== undefined){
-        if(!(this.state.firstname.match(/^[a-zA-Z]$/))){
+        if(!(this.state.firstname.match(/^[A-Za-z0-9-]/))){
             isformValid = false;
                 errors["firstName"] = "Please enter alphabetical characters only";
             }
@@ -53,7 +58,7 @@ class SignUpForm extends Component {
         }
 
         if(this.state.lastname.length > 0 && this.state.lastname !== undefined){
-            if(!(this.state.lastName.match(/^[a-zA-Z]$/))){
+            if(!(this.state.lastname.match(/^[A-Za-z0-9-]/))){
                 isformValid = false;
                 errors["lastName"] = "Please enter alphabet characters only";
             }
@@ -87,34 +92,44 @@ class SignUpForm extends Component {
         return isformValid;
     }
     registerUser(){
+    //    let error={};
+        let check = this.validateForm();
         console.log("inside regitsr user function");
+        console.log(check)
+        if(check){
         
-        let errors={};
-    let formValid=true;
-   
-    if(this.validateForm()){
-        postService(APIPATH, {
-            firstname:this.state.firstname,
-            lastname:this.state.lastname,
-            email:this.state.email,
-            password:this.state.password
-        })
-        .then(response =>{
-            if(response.data.msg === 'User successfully registered'){
-                this.setState({isFormRegisteredSuccessfully:true});
-                alert("user registered successfully authenticate via login link ")
+            postService(APIPATH, {
+                firstname:this.state.firstname,
+                lastname:this.state.lastname,
+                email:this.state.email,
+                password:this.state.password,
+            })
+            .then(response =>{
+                if(response.msg==="User successfully resgistered"){
+                  alert("you have successfully registered your account. Click the link send to your mail to activate your account");
+                  this.props.history.push("/login"); 
+            }
+            else if(response.status===-5){
+                this.setState({
+                    erorr: 'Email Id already registered.'
+                  });
+                return false;
+            }
+            else if(response.status===-10){
+                this.setState({
+                    error: 'Due to some reason ,Registration failed.Pls retry again.'
+                })
+               
             }
         })
-        .catch(error =>{
-            if(error.response.data.msg === 'User Already  Registered'){
-                errors['email'] = 'Please choose a different email-ID';
-                this.setState({errors : errors});
-            }
-        });
+            .catch(error =>{
+                console.log(error);
+            }); 
+            return true;
+        }else{
+            return false;
+        }
     }
-    }
-
-
     render() {
         return (
         <div className="FormCenter">
@@ -129,16 +144,16 @@ class SignUpForm extends Component {
               <div className="FormTitle">
                   <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign In</NavLink> or <NavLink exact to="/" activeClassName="FormTitle__Link--Active" activeStyle={{fontWeight:'bold'}} className="FormTitle__Link">Sign Up</NavLink>
               </div>
-            <form  name="myform"  className="FormFields">
+             <form   className="FormFields" onSubmit={this.handleSubmit} > 
             <div className="FormField">
-                <label className="FormField__Label" htmlFor="username">First Name</label>
+                <label className="FormField__Label" htmlFor="firstname">First Name</label>
                 <input type="text" id="fname" className="FormField__Input" 
-                  placeholder="Enter your first name" name="firstname" value={this.state.name} onChange={this.handleChange} />
+                  placeholder="Enter your first name" name="firstname" value={this.state.firstname} onChange={this.handleChange} />
               </div>
               <div className="FormField">
-                <label className="FormField__Label" htmlFor="username">Last Name</label>
+                <label className="FormField__Label" htmlFor="lastname">Last Name</label>
                 <input type="text" id="lname" className="FormField__Input" 
-                  placeholder="Enter your last name" name="lastname" value={this.state.name} onChange={this.handleChange} />
+                  placeholder="Enter your last name" name="lastname" value={this.state.lastname} onChange={this.handleChange} />
               </div>
              
               <div className="FormField">
@@ -149,13 +164,12 @@ class SignUpForm extends Component {
 
               <div className="FormField">
               <label className="FormField__Label" htmlFor="password" >Password</label>
-              <input type="password" id="password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 3 or more characters"
-              className="FormField__Input"  
+              <input type="password" id="password"  className="FormField__Input"  
               placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
             </div>
 
-              <div className="FormField">
-                  <button className="FormField__Button mr-20" onClick={this.registerUser}>Sign Up</button> <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
+              <div>
+                  <button className="FormField__Button " onClick={this.registerUser}>Sign Up</button> <Link to="/login" className="FormField__Link">I'm already member</Link>
               </div>
             </form>
             </div>
