@@ -1,17 +1,19 @@
-// import React, { Component } from 'react';
-// import Navbar from './user/Navbar';
-// import Sidebar from './user/Sidebar';
+import React,{ Component } from 'react';
+import Navbar from './Navbar';
+import Note from './Note';
 
-// class Home extends Component{
-//     render(){
+
+class Home extends Component{
+    
+    render(){
        
-//     return(
-//         <div>
-//         <Navbar/>
-//         <Sidebar/>
-//         </div>
-//     )
-//     }
-// }
+    return(
+        <div>
+        <Navbar/>
+        <Note/>
+        </div>
+    )
+    }
+}
 
-// export default Home;
+export default Home;

@@ -4,9 +4,9 @@ import SignUpForm from './user/SignUpForm';
 import SignInForm from './user/SignInForm';
 import ForgotPassword from './user/ForgotPassword';
 import ResetPassword from './user/ResetPassword';
-import Navbar from './user/Navbar';
+import Navbar from '../src/user/Navbar';
 import ImageUpload from './ImageUpload'; 
-import Sidebar from './user/Sidebar';
+
 
 import Home from './user/Home'
 import './App.css';
@@ -25,8 +25,7 @@ class App extends Component {
               <Route strict path="/resetPassword"  component={ResetPassword}></Route>
               <Route exact path="/navbar" component={Navbar}></Route>
               <Route exact path="/image-upload" component={ImageUpload}></Route>
-              <Route path="/sidebar" component={Sidebar}></Route>
-              <Route exact path="/home" component={Home}></Route>
+               <Route exact path="/home" component={Home}></Route> 
              
             
           </div>

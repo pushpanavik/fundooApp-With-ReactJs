@@ -178,7 +178,45 @@
 .invalid {
     color: red;
 }
+.sidebarBtn{
+  height: 50px;
+  width: 100%;
+}
+.noteBtn{
+  width:30%
+}
+/* .reminderBtn{
+  margin-left: -134px;
+  padding-right: 30px;
+  padding-left: 30px;
+  opacity: 0.54;
 
+}
+
+.trashBtn{
+  margin-left: -167px;
+  padding-right: 30px;
+  padding-left: 40px;
+  opacity: 0.54;
+
+}
+.archiveBtn{
+  margin-left: -167px;
+  padding-right: 30px;
+  padding-left: 55px;
+  opacity: 0.54;
+} */
+
+drawer{
+top:64px !important;
+}
+
+  .notefirstCard{
+    width: 500px;
+    margin-left: 325px;
+    margin-top: 40px;
+    border: none;
+}
 .NavbarColor{
   background-color: #fb0;
 }
@@ -190,7 +228,9 @@
 .h3{
   margin-left: 15px
 }
-
+.paper{
+  top:64px;
+}
 .fileInput{
   border-bottom: 4px solid lightgray;
   border-right: 4px solid lightgray;
