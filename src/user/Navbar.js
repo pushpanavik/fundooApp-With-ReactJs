@@ -29,12 +29,11 @@ import notification from '../icons/notification.svg';
 
 const theme = createMuiTheme({
     overrides: {
-      MuiButton: { 
-        Drawer: { 
-          top: 64,
-          width:250, 
-        },
-      },
+      MuiDrawer:{
+          paperAnchorLeft:{
+              top:64
+          }
+      }
     },
   });
 
@@ -102,9 +101,7 @@ const styles = theme =>({
   },
   inputInput: {
     paddingTop: 10,
-    // paddingRight: theme.spacing.unit,
-    // paddingBottom: theme.spacing.unit,
-     paddingLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
     transition: theme.transitions.create('width'),
     width: '100%',
  
