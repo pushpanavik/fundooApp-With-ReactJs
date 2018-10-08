@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link,NavLink } from 'react-router-dom';
-import {postService} from './UserService';
-
+import {postService, getService} from './UserService';
+const USER_PATH="http://localhost:9090/fundoo/getUser";
 const LOGIN_PATH="http://localhost:9090/fundoo/user/login";
 class SignInForm extends Component {
     constructor() {
@@ -14,9 +14,11 @@ class SignInForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.goToLoginPage=this.goToLoginPage.bind(this);
+        //this.goToLoginPage=this.goToLoginPage.bind(this);
+        this.getUserInfo=this.getUserInfo.bind(this);
     }
 
+    
     handleChange(e) {
         let target = e.target;
         let value = e.target.value;
@@ -76,28 +78,34 @@ class SignInForm extends Component {
             .then(response =>{
                 console.log(response.data);
                 if(response.data.status===200){
-                    localStorage.setItem('token',response.data.msg);
+                    var token=localStorage.setItem('token',response.data.msg);
                     this.setState({
                         successfullyLoggedIn: true,
                         
                     })
                     this.props.history.push("/home"); 
+                    this.getUserInfo(response.data.msg);
                 }
                 if(response.data.status===-101){
                     alert('invalid username or password');
                     return false;
                 }
             })
-            .catch(error =>{
-                console.log(error);
-                this.props.history.push("/login"); 
-            }); 
+            
             return true;
         }else{
             return false;
         }
     }
-
+getUserInfo(token){
+getService(USER_PATH,
+   {token }).then(resp=>{
+        console.log(resp);
+    })
+    .catch(error=>{
+        console.log(error);
+    })
+}
     render() {
         return (          
            
@@ -127,7 +135,7 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                  <button className="FormField__Button" onClick={this.goToLoginPage}>Sign In</button> <Link to="/forgot-password" className="FormField__Link">Forgot Password</Link>
+                  <button className="FormField__Button" onClick={()=>{this.goToLoginPage();}}>Sign In</button> <Link to="/forgot-password" className="FormField__Link">Forgot Password</Link>
               </div>
              
             </form>

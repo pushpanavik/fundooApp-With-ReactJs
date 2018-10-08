@@ -59,14 +59,7 @@ class ForgotPassword extends Component{
             .then(response =>{
                 console.log(response.data);
                 alert('go to Link')
-                // if(response.data.status===200){
-                //     localStorage.setItem('token',response.data.msg);
-                //   this.props.history.push("/dashboard"); 
-                // }
-                // if(response.data.status===-101){
-                //     alert('invalid username or password');
-                //     return false;
-                // }
+              
             })
             .catch(error =>{
                 console.log(error);

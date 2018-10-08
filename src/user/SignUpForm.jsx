@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link,NavLink } from 'react-router-dom';
  import {postService} from './UserService';
-//import axios from 'axios';
-
 
 const APIPATH="http://localhost:9090/fundoo/user/registerUser";
 class SignUpForm extends Component {
@@ -137,7 +135,7 @@ class SignUpForm extends Component {
         <div className="App__Aside"></div>
           
             <div className="PageSwitcher">
-                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
+                <NavLink to="/login" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
                 <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}}className="PageSwitcher__Item">Sign Up</NavLink>
               </div>
 
@@ -180,4 +178,3 @@ class SignUpForm extends Component {
     }
 }
 export default SignUpForm;
-

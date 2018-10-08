@@ -8,30 +8,25 @@ import Input from '@material-ui/core/Input';
 import Drawer from '@material-ui/core/Drawer';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles,MuiThemeProvider,createMuiTheme  } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import menu from '../icons/menu.svg'
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
 import MoreIcon from '@material-ui/icons/MoreVert';
 // import {sidebarIcons} from '../user/Sidebar';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Refresh from '@material-ui/icons/Refresh';
 import List from '@material-ui/icons/List';
-import Notes from '../icons/Notes.svg';
-import reminders from '../icons/reminders.svg';
-import trash from '../icons/trash.svg';
-import archive from '../icons/archive.svg';
-import setting from '../images/setting.svg';
-import sendFeed from '../images/sendFeed.svg';
-import help from '../images/help.svg';
-import labe from '../images/labe.svg';
 import apps from '../icons/apps.svg';
 import notification from '../icons/notification.svg';
+import Sidebar from './Sidebar';
+import UserProfile from './UserProfile';
 
 const theme = createMuiTheme({
     overrides: {
       MuiDrawer:{
           paperAnchorLeft:{
-              top:64
+              top:64,
+              width:250,
           }
       }
     },
@@ -48,7 +43,7 @@ const styles = theme =>({
         flexGrow:1,
     },
     menuButton: {
-        marginLeft:-23,
+        marginLeft:-25,
         marginRight: 20,
         color:'black',
     },
@@ -153,8 +148,18 @@ class Navbar extends Component{
         this.state = {
             left: false,
           };
+         
     }
-     
+    
+
+
+    
+     handleRefresh(e){ 
+        e.preventDefault(); 
+         console.log("comes to refresh function");
+        window.location.reload();
+       
+     }
     
       toggleDrawer = (side, open) => () => {
         this.setState({
@@ -164,52 +169,18 @@ class Navbar extends Component{
       
     render(){
         // It is a better way to retrieve values from an object or an array .It's an ES6 features for javascript called destructuring assignment.
-       
+     
         const {classes}=this.props;
                  
         return(
             <div className={classes.root}>
            <AppBar position="static" >
            
-           <Toolbar className="NavbarColor"> <MenuIcon/>
+           <Toolbar className="NavbarColor"> <img src={menu} style={{width:30}} alt="Menu"/>
                <IconButton className={classes.menuButton}   onClick={this.toggleDrawer('left', true)} ></IconButton>         
                 <MuiThemeProvider theme={theme}>
                <Drawer variant="temporary"  open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-               <Button  href="" className="sidebarBtn"  style={{'textTransform': 'initial'}}>
-                                 <img style={{width:30,height:30}} src={Notes} alt="notes" className="noteBtn"  />
-                                    Notes
-                            </Button>
-
-                                <Button  href="" className="sidebarBtn"  style={{'textTransform': 'initial'}}>
-                                    <img style={{width:30, height:30}}src={reminders} alt="Reminders" className="reminderBtn"/>
-                                    Reminders
-                            </Button>
-
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30}} src={labe} alt="Archive"  className="" />
-                                    Label
-                            </Button>
-                                <Button href="/home/archive"  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30}} src={archive} alt="Archive"  className="archiveBtn" />
-                                    Archive
-                            </Button>
-                                <Button href="/home/trash"  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img  style={{width:30, height:30}}src={trash} alt="Trash" className="trashBtn"  />
-                                    Trash
-                            </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30}} src={setting} alt="Archive"  className="" />
-                                    Settings
-                            </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30}} src={sendFeed} alt="Archive"  className="" />
-                                    Send Feedback
-                            </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30}} src={help} alt="Archive"  className="" />
-                                    Help
-                            </Button>
-             
+               <Sidebar/>
             </Drawer>
             </MuiThemeProvider>
                
@@ -231,23 +202,11 @@ class Navbar extends Component{
                }}
                ></Input>
            
-            <IconButton  className={classes.RefreshForm} ><Refresh/></IconButton>
+            <IconButton onClick={this.handleRefresh.bind(this)} className={classes.RefreshForm} ><Refresh/></IconButton>
            
             <IconButton className={classes.ListForm}><List/></IconButton>
                
-               <IconButton 
-             
-               style={{
-               marginTop: -110,
-               marginLeft: 996,
-               marginBottom: 0,
-               marginRight:  0,
-              }}
               
-               color="inherit"
-               >
-               <AccountCircle />
-               </IconButton>
                </div>
 
                <IconButton className={classes.appIcon}>
@@ -257,7 +216,7 @@ class Navbar extends Component{
                <IconButton className={classes.notificationIcon}>
                    <img src={notification} alt="Notification"/>
                </IconButton>
-
+               <UserProfile />
                <div className={classes.sectionMobile}>
                <div className="NavbarColor">
                <IconButton color="primary">

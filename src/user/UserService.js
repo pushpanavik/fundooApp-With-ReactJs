@@ -27,5 +27,17 @@ const postResetService=(token,data) =>{
         data: data,
 })
 }
+
+const getService=(url,token) =>{
+    console.log('token inside getuser',token);
+    return axios({
+        method:'GET',
+        url:"http://localhost:9090/fundoo/getUser",
+        headers:{
+            ContentType :'application/json',
+            'token':token,
+        },
+    })
+}
     
-export {postService,postResetService};
+export {postService,postResetService,getService};
