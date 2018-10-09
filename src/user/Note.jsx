@@ -14,7 +14,7 @@ import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles'; 
 import { Collapse } from '@material-ui/core';
 import PropTypes from 'prop-types';
- import NoteController from '../controller/NoteController';
+import NoteController from '../controller/NoteController';
 
  var noteControl=new NoteController();
 
@@ -50,23 +50,25 @@ const style = {
       }
 }
 class Note extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             open: true,
+            title:'',
+            description : ''
+            
       }  
       this.createNote=this.createNote.bind(this);
       this.handleChange=this.handleChange.bind(this);
     }
-      handleChange(event){
-        this.setState({value: event.target.value});
+      handleChange(e){
+      
       } 
     createNote(){
-        noteControl.addNote();
-        this.setState={
-            title:null,
-            description:null,
-        }
+       noteControl.addNote(
+           this.state.title,this.state.description
+       );
+        
     }
     handleExpandClick=()=>{
         this.setState({
@@ -75,13 +77,15 @@ class Note extends Component{
     }
     render(){
         const { classes } = this.props;
+        console.log(this.state.title)
+        console.log(this.state.description)
         return(
             
             <div>
                   <Collapse in={this.state.open}> 
                     <div className="notefirstCard">
                         <Card  className={classes.card}  style={{maxHeight:50 }}>
-                            <input className={classes.inputTitle} type="text" placeholder="Take a note..." onClick={this.handleExpandClick.bind(this)} />
+                            <input className={classes.inputTitle} type="text"  placeholder="Take a note..." onClick={this.handleExpandClick.bind(this)} />
 
                             <div className={classes.noteDiv}>
                                 <IconButton aria-label="Delete">
@@ -100,13 +104,13 @@ class Note extends Component{
 
                 <Collapse in={!this.state.open} >
                 
-                 <Card   className={classes.card} style={{marginLeft:453,marginTop:33}}>
-                            <input className={classes.takeNote} id="noteTitle" value={this.state.title} type="text" placeholder="Title"/>
+                 <Card  className={classes.card} style={{marginLeft:453,marginTop:33}}>
+                            <input className={classes.takeNote}  onChange={(event) => this.setState({title : event.target.value})}  type="text" placeholder="Title"/>
                             <IconButton aria-label="Delete" style={{marginLeft:366}}>
                                 <img src={pin} alt="pin" /> 
                             </IconButton>
                             <div >
-                            <input className={classes.takeNote}  id="noteDescriptn" value={this.state.description} type="text" placeholder="Take a note..." />
+                            <input className={classes.takeNote}  onChange={(event) => this.setState({description : event.target.value})} type="text" placeholder="Take a note..." />
                             </div>
                             <div>
                                 <div>
@@ -134,7 +138,7 @@ class Note extends Component{
                                         <img src={morevert} alt="archive" />
                                     </IconButton>
                                 </div>
-                                <Button className={classes.closeBtn} onChange= {this.handleChange} onClick={()=>{this.handleExpandClick();this.createNote()}}>Close</Button>
+                                <Button className={classes.closeBtn}  onClick={()=>{this.handleExpandClick();this.createNote()}}>Close</Button>
 
                             </div>
                         </Card>

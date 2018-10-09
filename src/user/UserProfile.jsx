@@ -1,19 +1,43 @@
 import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import account from '../icons/account.svg';
-import {Collapse, Card} from '@material-ui/core';
+// import account from '../icons/account.svg';
+
+import ProfileCard from './ProfileCard';
 class UserProfile extends Component{
     constructor(props){
         super(props);
         this.state={
-            open: true,
-        }
+            isHidden: true,
+            firstLetter:null
+      } 
+      
+      this.getUserDetails=this.getUserDetails.bind(this);
+      this.getInitialsLetter=this.getInitialsLetter.bind(this);
+      this.toggleHidden=this.toggleHidden.bind(this);
+    }
+    toggleHidden() {
+        console.log('under toggle');
+        this.setState({
+          isHidden: !this.state.isHidden,
+          
+        })
+      }
+     
+      
+      getUserDetails(userInfo){
+          localStorage.setItem('user',userInfo)
+          let firstname=userInfo.firstname;
+          console.log(firstname);
+          
+          let takeLetter=this.getInitialsLetter(firstname);
+            console.log(takeLetter);
+            
+          this.setState={
+              firstLetter:takeLetter,
+          }
+      }
     
-    }
-    handleClick(){
-        open: !this.state.open
-    }
-
+      
     getInitialsLetter(name) {
         var canvas = document.createElement('canvas');
         canvas.style.display = 'none';
@@ -39,24 +63,21 @@ class UserProfile extends Component{
             return false;
         }
 }
+    
     render()
     {
+        console.log(this.state.firstLetter);
+        
+        //var firstname=localStorage.getItem('firstname');
         return(
             <div>
-            <Collapse in={this.state.open}> 
-            <IconButton onClick={this.handleClick} style={{marginBottom: -14,}} color="inherit">
-            <img src={account} alt="Account"/>
-            </IconButton>
-            </Collapse>
-
-            
-            <Collapse in={!this.state.open}>
-            <Card>
-                <div ></div>
-            </Card>
            
-            
-            </Collapse>
+            <IconButton   style={{marginBottom: -14}} >
+            <img src={this.state.firstLetter} onChange={this.toggleHidden} style={{borderRadius:50}}  alt="Account"/>
+            </IconButton>           
+            <div >
+            <ProfileCard/>
+            </div>
             </div>
         )
     }

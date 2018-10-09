@@ -10,7 +10,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles,MuiThemeProvider,createMuiTheme  } from '@material-ui/core/styles';
 import menu from '../icons/menu.svg'
 import SearchIcon from '@material-ui/icons/Search';
-
 import MoreIcon from '@material-ui/icons/MoreVert';
 // import {sidebarIcons} from '../user/Sidebar';
 // import Button from '@material-ui/core/Button';

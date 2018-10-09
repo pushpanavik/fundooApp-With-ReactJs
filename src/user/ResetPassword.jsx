@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
-import {postResetService} from './UserService';
-import queryString from 'query-string';
+import NoteController from '../controller/NoteController';
+
+var notecontrol=new NoteController();
 class ResetPassword extends Component{
     constructor(){
         super();
@@ -21,7 +22,8 @@ class ResetPassword extends Component{
         e.preventDefault();
         console.log(this.state);
     }
-
+    
+    
     validateForm(){
         let errors={};
         let isformValid=true;
@@ -42,26 +44,13 @@ class ResetPassword extends Component{
         return isformValid;
     }
     resetPasswordFunction(){
-       let gettokenFromUrl=queryString.parse(this.props.location.search);
-    console.log('token from url',gettokenFromUrl);
+       
         let check = this.validateForm();
         console.log(check)
         if(check){
-        
-            postResetService(gettokenFromUrl, {  
-                password:this.state.password,
-                
-            })
-            .then(response =>{
-                    this.props.history.push("/login");
-              
-            })
-            .catch(error =>{
-                console.log(error);
-                window.location.reload();
-                this.props.history.push("/resetPassword"); 
-            }); 
-            return true;
+            notecontrol.resetPassword(
+                this.state.password
+            );
         }else{
             return false;
         }

@@ -1,41 +1,41 @@
 import axios from 'axios';
 
-const postService=(url,data) =>{
-    console.log('data of user is',url,data);
+let postService=(url,note) =>{
+    console.log('data of user is',url,note);
     return axios({
         method: 'POST',
         url:url,
         headers:{
-            ContentType : 'application/json',
+            'Content-Type' : 'application/json',
             'token': localStorage.getItem("token")
         },
-        data: data,
+        data: note,
 })
     
    
 }
-const postResetService=(token,data) =>{
-    console.log('token of user is',token);
+const postResetService=(data) =>{
+   
     console.log('data inside reset ',data)
     return axios({
         method: 'POST',
         url:"http://localhost:9090/fundoo/user/resetPassword",
         headers:{
             ContentType : 'application/json',
-            'token': token,
+            token: localStorage.getItem("forgotToken"),
         },
         data: data,
 })
 }
 
-const getService=(url,token) =>{
-    console.log('token inside getuser',token);
+const getService=(url) =>{
+    console.log('token inside getuser');
     return axios({
         method:'GET',
         url:"http://localhost:9090/fundoo/getUser",
         headers:{
             ContentType :'application/json',
-            'token':token,
+            token: localStorage.getItem("token")
         },
     })
 }

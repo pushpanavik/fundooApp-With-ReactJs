@@ -58,6 +58,8 @@ class ForgotPassword extends Component{
             })
             .then(response =>{
                 console.log(response.data);
+                localStorage.setItem('forgotToken',response.data.msg);
+            
                 alert('go to Link')
               
             })

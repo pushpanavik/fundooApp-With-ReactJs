@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+ import UserProfile from './UserProfile';
 import { Link,NavLink } from 'react-router-dom';
 import {postService, getService} from './UserService';
 const USER_PATH="http://localhost:9090/fundoo/getUser";
 const LOGIN_PATH="http://localhost:9090/fundoo/user/login";
+
+ var userProf=new UserProfile();
 class SignInForm extends Component {
+    
     constructor() {
         super();
 
@@ -78,13 +82,13 @@ class SignInForm extends Component {
             .then(response =>{
                 console.log(response.data);
                 if(response.data.status===200){
-                    var token=localStorage.setItem('token',response.data.msg);
+                  localStorage.setItem('token',response.data.msg);
                     this.setState({
                         successfullyLoggedIn: true,
                         
                     })
                     this.props.history.push("/home"); 
-                    this.getUserInfo(response.data.msg);
+                    this.getUserInfo();
                 }
                 if(response.data.status===-101){
                     alert('invalid username or password');
@@ -97,10 +101,19 @@ class SignInForm extends Component {
             return false;
         }
     }
-getUserInfo(token){
-getService(USER_PATH,
-   {token }).then(resp=>{
+    
+         
+getUserInfo(){
+getService(USER_PATH
+   ).then(resp=>{
         console.log(resp);
+        let userInfoFromResponse=resp.data;
+        console.log('userInfo from response',userInfoFromResponse);
+        localStorage.setItem('email',userInfoFromResponse.email);
+        localStorage.setItem('userId',userInfoFromResponse.userId);
+        localStorage.setItem('firstname',userInfoFromResponse.firstname);
+        localStorage.setItem('lastname',userInfoFromResponse.lastname);
+         userProf.getUserDetails(userInfoFromResponse);
     })
     .catch(error=>{
         console.log(error);
