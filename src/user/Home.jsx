@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';
 import Navbar from './Navbar';
-import Note from './Note';
+import Note from '../Note/Note';
 
 
 class Home extends Component{

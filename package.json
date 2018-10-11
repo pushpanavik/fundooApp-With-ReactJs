@@ -10,6 +10,7 @@
     "react-dom": "^16.5.2",
     "react-icons": "^3.1.0",
     "react-images-upload": "^1.2.3",
+    "react-responsive-modal": "^3.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5"
   },

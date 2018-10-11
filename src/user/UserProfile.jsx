@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-// import account from '../icons/account.svg';
+import account from '../icons/account.svg';
 
 import ProfileCard from './ProfileCard';
 class UserProfile extends Component{
@@ -73,7 +73,7 @@ class UserProfile extends Component{
             <div>
            
             <IconButton   style={{marginBottom: -14}} >
-            <img src={this.state.firstLetter} onChange={this.toggleHidden} style={{borderRadius:50}}  alt="Account"/>
+            <img src={account} onChange={this.toggleHidden} style={{borderRadius:50}}  alt="Account"/>
             </IconButton>           
             <div >
             <ProfileCard/>

@@ -1,7 +1,8 @@
 import {
-    postService,postResetService
+    postService,postResetService, getService
 } from '../user/UserService';
 const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
+const NOTE_PATH="http://localhost:9090/fundoo/user/displayNote";
 class NoteController {
 
     addNote(title, description) {
@@ -10,7 +11,6 @@ class NoteController {
         console.log(title);
         console.log(description);
 
-
         const noteModel = {
             title: title,
             description: description
@@ -18,6 +18,8 @@ class NoteController {
         postService(ADD_NOTE, noteModel)
             .then(res => {
                 console.log(res);
+                localStorage.setItem("NoteToken",res.data.msg);
+                this.getUserNote();
             })
             .catch(error => {
                 console.log(error);
@@ -26,10 +28,9 @@ class NoteController {
 
     }
     resetPassword(password){
-        postResetService( password)
+        postResetService(password)
             .then(response =>{
                     this.props.history.push("/login");
-              
             })
             .catch(error =>{
                 console.log(error);
@@ -37,6 +38,17 @@ class NoteController {
                 this.props.history.push("/resetPassword"); 
             }); 
     }
+
+   getUserNote(callback){
+       getService(NOTE_PATH).then(res =>  
+        {console.log(res); 
+            return callback(res.data);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+   }
 }
+
 
 export default NoteController;

@@ -26,7 +26,7 @@ class App extends Component {
               <Route exact path="/navbar" component={Navbar}></Route>
               <Route exact path="/image-upload" component={ImageUpload}></Route>
                <Route exact path="/home" component={Home}></Route> 
-             
+              
             
           </div>
 

@@ -7,7 +7,7 @@
 6 silly lifecycle fundoo-react@0.1.0~prestart: no script for prestart, continuing
 7 info lifecycle fundoo-react@0.1.0~start: fundoo-react@0.1.0
 8 verbose lifecycle fundoo-react@0.1.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle fundoo-react@0.1.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/bridgeit/fundoo-react/node_modules/.bin:/home/bridgeit/bin:/home/bridgeit/.local/bin:/home/bridgeit/bin:/home/bridgeit/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
+9 verbose lifecycle fundoo-react@0.1.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/bridgeit/fundoo-react/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 10 verbose lifecycle fundoo-react@0.1.0~start: CWD: /home/bridgeit/fundoo-react
 11 silly lifecycle fundoo-react@0.1.0~start: Args: [ '-c', 'react-scripts start' ]
 12 silly lifecycle fundoo-react@0.1.0~start: Returned: code: 1  signal: null
