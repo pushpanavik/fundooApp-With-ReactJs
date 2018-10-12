@@ -11,8 +11,7 @@ import { withStyles,MuiThemeProvider,createMuiTheme  } from '@material-ui/core/s
 import menu from '../icons/menu.svg'
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-// import {sidebarIcons} from '../user/Sidebar';
-// import Button from '@material-ui/core/Button';
+
 import Refresh from '@material-ui/icons/Refresh';
 import List from '@material-ui/icons/List';
 import apps from '../icons/apps.svg';

@@ -1,10 +1,12 @@
 import {
-    postService,postResetService, getService
+    postService,postResetService, getService,postImageService,putService
 } from '../user/UserService';
 const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
 const NOTE_PATH="http://localhost:9090/fundoo/user/displayNote";
+const PROFILE_PATH="http://localhost:9090/fundoo/uploadFile";
+const  UPDATE_PROFILE ="http://localhost:9090/fundoo/updateUser";
 class NoteController {
-
+    
     addNote(title, description) {
         console.log("Add Note called");
 
@@ -48,7 +50,50 @@ class NoteController {
             console.log(error);
         })
    }
+    dataURLtoFile (dataurl, filename) {
+    const arr = dataurl.split(',')
+    const mime = arr[0].match(/:(.*?);/)[1]
+    const bstr = atob(arr[1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+    while (n) {
+      u8arr[n - 1] = bstr.charCodeAt(n - 1)
+      n -= 1 // to make eslint happy
+    }
+    return new File([u8arr], filename, {
+      type: mime
+    });
+  }
+   uploadProfilePic(urlPic,name){
+
+    const file =this.dataURLtoFile(urlPic,name);
+    var form1 = new FormData();
+    form1.append("file", file);
+    console.log(form1);
+    postImageService(PROFILE_PATH,form1)
+    .then(res =>
+        {
+            console.log(res);
+            this.updateUserProfile(res.data.msg);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
+
+    updateUserProfile(image){
+        console.log('image info' + image);
+        var user=localStorage.getItem('UserData');
+        user.profilepicImage = image;
+        console.log(user.profilepicImage);
+        
+        putService(UPDATE_PROFILE,user)
+        .then(res =>{
+            console.log(res);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
 }
-
-
 export default NoteController;

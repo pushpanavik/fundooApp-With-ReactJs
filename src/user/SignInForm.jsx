@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
- import UserProfile from './UserProfile';
+
+
 import { Link,NavLink } from 'react-router-dom';
 import {postService, getService} from './UserService';
 const USER_PATH="http://localhost:9090/fundoo/getUser";
 const LOGIN_PATH="http://localhost:9090/fundoo/user/login";
 
- var userProf=new UserProfile();
+
 class SignInForm extends Component {
     
     constructor() {
@@ -89,6 +90,7 @@ class SignInForm extends Component {
                     })
                     this.props.history.push("/home"); 
                     this.getUserInfo();
+                    
                 }
                 if(response.data.status===-101){
                     alert('invalid username or password');
@@ -109,11 +111,9 @@ getService(USER_PATH
         console.log(resp);
         let userInfoFromResponse=resp.data;
         console.log('userInfo from response',userInfoFromResponse);
-        localStorage.setItem('email',userInfoFromResponse.email);
-        localStorage.setItem('userId',userInfoFromResponse.userId);
-        localStorage.setItem('firstname',userInfoFromResponse.firstname);
-        localStorage.setItem('lastname',userInfoFromResponse.lastname);
-         userProf.getUserDetails(userInfoFromResponse);
+
+        localStorage.setItem("UserData",userInfoFromResponse);
+        
     })
     .catch(error=>{
         console.log(error);

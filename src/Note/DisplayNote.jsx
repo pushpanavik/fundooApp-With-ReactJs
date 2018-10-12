@@ -1,6 +1,6 @@
 import React, { Component } from "react"; 
 import NoteController from "../controller/NoteController";
-import DisplayCard from "./DisplayCard";
+//import DisplayCard from "./DisplayCard";
 
  var noteCtrl = new NoteController();
  

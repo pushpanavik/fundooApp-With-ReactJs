@@ -243,8 +243,8 @@ top:64px !important;
 .imgPreview{
   text-align: center;
   margin: 5px 15px;
-  height: 200px;
-  width: 500px;
+  height: 150px;
+  width: 450px;
   border-left: 1px solid gray;
   border-right: 1px solid gray;
   border-top: 5px solid gray;
@@ -281,25 +281,29 @@ top:64px !important;
     border-radius: 50px;
 
 }
-.profile-card-img
-{
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-      }
-
-.profile-card
-{
-    margin-left: -360px;
-    width: 350px;
-    z-index: auto;
-    position: relative;
-    position: absolute;
-    right: 8px;
-    top: 58px;
-    border-radius: 2px;
-
+.appsignout {
+  width: 200px;
+  height: 200px;
+} 
+.signoutcard {
+  top: 60px;
+  right: 10px;
+  position: absolute;
+   margin-top: 5px; 
+  z-index: 5;
+   height: 130px; 
 }
+.prof{
+  background-size: 96px 96px;
+  border: none;
+  vertical-align: top;
+  height: 96px;
+  width: 96px;
+}
+#crop-editor {
+	margin: 50px;
+}
+
 .note-card{
 width: 250px;
 

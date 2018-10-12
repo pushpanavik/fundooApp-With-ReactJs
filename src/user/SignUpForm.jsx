@@ -12,6 +12,7 @@ class SignUpForm extends Component {
             lastname: '',
             email: '',
             password: '',
+            profilepicImage:'',
             isFormRegisteredSuccessfully:false,
                  };
 

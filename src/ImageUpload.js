@@ -1,58 +1,102 @@
-import React, {Component} from 'react';
 
-class ImageUpload extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {file: '',imagePreviewUrl: ''};
+import React, { PureComponent } from 'react';
+import ReactDOM from 'react-dom'; 
+import ReactCrop, { makeAspectCrop } from '../lib/ReactCrop';
+
+/**
+ * Load the image in the crop editor.
+ */
+const cropEditor = document.querySelector('#crop-editor');
+
+function loadEditView(dataUrl) {
+  class Parent extends PureComponent {
+    state = {
+      crop: {
+        x: 20,
+        y: 10,
+        width: 40,
+        aspect: 16 / 9,
+      },
+      maxHeight: 80,
     }
-  
-    _handleSubmit(e) {
-      e.preventDefault();
-      // TODO: do something with -> this.state.file
-      console.log('handle uploading-', this.state.file);
+
+    onButtonClick = () => {
+      this.setState({
+        crop: {
+          x: 20,
+          y: 5,
+          aspect: 1,
+          height: 50,
+        },
+        disabled: true,
+      });
     }
-  
-    _handleImageChange(e) {
-      e.preventDefault();
-  
-      let reader = new FileReader();
-      let file = e.target.files[0];
-  
-      reader.onloadend = () => {
-        this.setState({
-          file: file,
-          imagePreviewUrl: reader.result
-        });
-      }
-  
-      reader.readAsDataURL(file)
+
+    onButtonClick2 = () => {
+      this.setState({
+        crop: {
+          x: 20,
+          y: 5,
+          height: 20,
+          width: 30,
+        },
+        disabled: false,
+      });
     }
-  
+
+    onImageLoaded = (image, pixelCrop) => {
+      console.log('onImageLoaded', { image, pixelCrop });
+    }
+
+    onCropComplete = (crop, pixelCrop) => {
+      console.log('onCropComplete', { crop, pixelCrop });
+    }
+
+    onCropChange = (crop, pixelCrop) => {
+      // console.log('onCropChange', { crop, pixelCrop });
+      this.setState({ crop });
+    }
+
     render() {
-      let {imagePreviewUrl} = this.state;
-      let $imagePreview = null;
-      if (imagePreviewUrl) {
-        $imagePreview = (<img src={imagePreviewUrl} alt={this.props} />);
-      } else {
-        $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-      }
-  
       return (
-        <div className="previewComponent">
-          <form onSubmit={(e)=>this._handleSubmit(e)}>
-            <input className="fileInput" 
-              type="file" 
-              onChange={(e)=>this._handleImageChange(e)} />
-            <button className="submitButton" 
-              type="submit" 
-              onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
-          </form>
-          <div className="imgPreview">
-            {$imagePreview}
-          </div>
+        <div>
+          <ReactCrop
+            {...this.state}
+            className="ACustomClassA ACustomClassB"
+            src={dataUrl}
+            onImageLoaded={this.onImageLoaded}
+            onComplete={this.onCropComplete}
+            onChange={this.onCropChange}
+          />
+          <button type="button" onClick={this.onButtonClick}>Programatically set crop</button>
+          <button type="button" onClick={this.onButtonClick2}>Programatically set crop 2</button>
         </div>
-      )
+      );
     }
   }
-    
-  export default ImageUpload;
+
+  ReactDOM.render(<Parent />, cropEditor);
+}
+
+/**
+ * Select an image file.
+ */
+const imageType = /^image\//;
+const fileInput = document.querySelector('#file-picker');
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files.item(0);
+
+  if (!file || !imageType.test(file.type)) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = (e2) => {
+    loadEditView(e2.target.result);
+  };
+
+  reader.readAsDataURL(file);
+});
+ 

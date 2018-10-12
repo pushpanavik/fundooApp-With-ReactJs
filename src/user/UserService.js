@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-let postService=(url,note) =>{
-    console.log('data of user is',url,note);
+let postService=(url,data) =>{
+    console.log('data of user is',url,data);
     return axios({
         method: 'POST',
         url:url,
@@ -9,7 +9,7 @@ let postService=(url,note) =>{
             'Content-Type' : 'application/json',
             'token': localStorage.getItem("token")
         },
-        data: note,
+        data: data,
 })
     
    
@@ -29,6 +29,30 @@ const postResetService=(data) =>{
         data: data,
 })
 }
+let postImageService=(url,data) =>{
+    console.log('data of user is',url,data);
+    return axios({
+        method: 'POST',
+        url:url,
+        headers:{
+         
+        },
+        data: data,
+}) 
+}
+
+let putService=(url,data) =>{
+    console.log('data of user is',url,data);
+    return axios({
+        method: 'PUT',
+        url:url,
+        headers:{
+			"Content-Type":"application/json",
+            'token': localStorage.getItem('token')
+     },
+        data: data,
+}) 
+}
 
 const getService=(url) =>{
     console.log('token inside getuser',url);
@@ -42,4 +66,4 @@ const getService=(url) =>{
     })
 }
     
-export {postService,postResetService,getService};
+export {postService,postResetService,getService,postImageService,putService};
