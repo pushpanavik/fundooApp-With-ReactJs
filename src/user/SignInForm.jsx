@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-
-
+import NoteController from "../controller/NoteController";
 import { Link,NavLink } from 'react-router-dom';
-import {postService, getService} from './UserService';
-const USER_PATH="http://localhost:9090/fundoo/getUser";
+import {postService} from './UserService';
+
 const LOGIN_PATH="http://localhost:9090/fundoo/user/login";
 
-
+var noteCtrl = new NoteController();
 class SignInForm extends Component {
     
     constructor() {
@@ -20,7 +19,7 @@ class SignInForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.goToLoginPage=this.goToLoginPage.bind(this);
-        this.getUserInfo=this.getUserInfo.bind(this);
+        
     }
 
     
@@ -89,7 +88,7 @@ class SignInForm extends Component {
                         
                     })
                     this.props.history.push("/home"); 
-                    this.getUserInfo();
+                   noteCtrl.getUserInfo();
                     
                 }
                 if(response.data.status===-101){
@@ -105,20 +104,7 @@ class SignInForm extends Component {
     }
     
          
-getUserInfo(){
-getService(USER_PATH
-   ).then(resp=>{
-        console.log(resp);
-        let userInfoFromResponse=resp.data;
-        console.log('userInfo from response',userInfoFromResponse);
 
-        localStorage.setItem("UserData",userInfoFromResponse);
-        
-    })
-    .catch(error=>{
-        console.log(error);
-    })
-}
     render() {
         return (          
            
@@ -127,7 +113,7 @@ getService(USER_PATH
        <div className="App__Aside"></div>
         
             <div className="PageSwitcher">
-                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
+                <NavLink to="/login" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}} className="PageSwitcher__Item">Sign In</NavLink>
                 <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" activeStyle={{fontWeight:'bold'}}className="PageSwitcher__Item">Sign Up</NavLink>
               </div>
 

@@ -149,9 +149,6 @@ class Navbar extends Component{
          
     }
     
-
-
-    
      handleRefresh(e){ 
         e.preventDefault(); 
          console.log("comes to refresh function");

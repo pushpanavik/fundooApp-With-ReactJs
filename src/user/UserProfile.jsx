@@ -31,19 +31,7 @@ class UserProfile extends Component{
           })
       }
      
-//       getUserDetails(userInfo){
-//           localStorage.setItem('user',userInfo)
-//           let firstname=userInfo.firstname;
-//           console.log(firstname);
-          
-//           let takeLetter=this.getInitialsLetter(firstname);
-//             console.log(takeLetter);
-            
-//           this.setState={
-//               firstLetter:takeLetter,
-//           }
-//       }
-    
+
       
 //     getInitialsLetter(name) {
 //         var canvas = document.createElement('canvas');
@@ -73,14 +61,15 @@ class UserProfile extends Component{
     
     render()
     {
-        //console.log(this.state.firstLetter);
+        let user=JSON.parse(localStorage.getItem("UserData") || "[]");
+     
         const {classes}=this.props;
       
         return(
             <div>
            
             <IconButton  variant="raised" style={{marginBottom: -14}}  onClick={this.handleClick}>
-            <img src={account} style={{borderRadius:50}}  alt="Account"/>
+            <img src={user.profilepicImage}  alt={account} style={{borderRadius:100,width:45,height:43}}   />
             </IconButton>   
        
                  

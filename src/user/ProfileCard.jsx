@@ -10,15 +10,14 @@ import Divider from "@material-ui/core/Divider";
 import PropTypes from 'prop-types';
 import 'react-image-crop/dist/ReactCrop.css';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-var first = localStorage.getItem("firstname");
-var last = localStorage.getItem("lastname");
-var email = localStorage.getItem("email");
+import account from '../icons/account.svg';
 
 var noteCtrl=new NoteController();
 class ProfileCard extends Component {
   constructor() {
     super();
     this.state = {
+      user:[],
       show: true,
       open: false,
       file: '',
@@ -27,9 +26,14 @@ class ProfileCard extends Component {
     this.logout = this.logout.bind(this);
       
   }
+  componentDidMount(){
+   
+  // var getData =noteCtrl.getUserInfo();
+  }
   handleClickOpen = () => {
     this.setState({ open: true });
   };
+
 
   handleClose = () => {
     this.setState({ open: false });
@@ -42,9 +46,7 @@ class ProfileCard extends Component {
     });
   }
   logout() {
-    localStorage.removeItem("firstname");
-    localStorage.removeItem("lastname");
-    localStorage.removeItem("user");
+    localStorage.removeItem('UserData');
     window.location.href = "/";
   }
 
@@ -76,7 +78,7 @@ class ProfileCard extends Component {
   }
 
   render() {
-     
+    let user=JSON.parse(localStorage.getItem("UserData") || "[]");
     const { fullScreen } = this.props;
     let {imagePreviewUrl} = this.state;
       let $imagePreview = null;
@@ -85,11 +87,15 @@ class ProfileCard extends Component {
       } else {
         $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
       }
+
+
+      console.log(this.state.user);
+      
     return (
       <Card className="signoutcard">
         <div>
           <table>
-            <tr>
+            <tbody>
               <th>
                 <div className="prof">
                 <Button onClick={this.handleClickOpen}
@@ -99,8 +105,13 @@ class ProfileCard extends Component {
                       marginTop: 7,
                       height: 75,
                       width: 90
-                    }}
-                  />
+                    }}>
+                    <img src={user.profilepicImage} style={{   
+                      borderRadius: 100,
+                      height: 75,
+                      width: 90,
+                      marginTop: -8}}  alt={account}/>
+                    </Button>
                   <Dialog
           fullScreen={fullScreen}
           open={this.state.open}
@@ -138,13 +149,13 @@ class ProfileCard extends Component {
               <th>
                 <div style={{ height: 70 }}>
                   <Typography>
-                    {first} {last}
+                    {user.firstname} {this.state.user.lastname}
                   </Typography>
                   <br />
-                  <Typography>{email}</Typography>
+                  <Typography>{user.email}</Typography>
                 </div>
               </th>
-            </tr>
+            </tbody>
           </table>
         </div>
         <Divider style={{ marginTop: 9 }} />

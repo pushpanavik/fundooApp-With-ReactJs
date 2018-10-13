@@ -62,6 +62,7 @@ class Note extends Component {
   handleChange(e) {}
   createNote() {
     noteControl.addNote(this.state.title, this.state.description);
+   
   }
   handleExpandClick = () => {
     this.setState({

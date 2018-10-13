@@ -5,8 +5,9 @@ const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
 const NOTE_PATH="http://localhost:9090/fundoo/user/displayNote";
 const PROFILE_PATH="http://localhost:9090/fundoo/uploadFile";
 const  UPDATE_PROFILE ="http://localhost:9090/fundoo/updateUser";
+const USER_PATH="http://localhost:9090/fundoo/getUser";
 class NoteController {
-    
+     
     addNote(title, description) {
         console.log("Add Note called");
 
@@ -14,9 +15,10 @@ class NoteController {
         console.log(description);
 
         const noteModel = {
-            title: title,
-            description: description
+            notetitle: title,
+            notedesc: description
         }
+        if (title !== "" && description !== "") {
         postService(ADD_NOTE, noteModel)
             .then(res => {
                 console.log(res);
@@ -27,7 +29,7 @@ class NoteController {
                 console.log(error);
             });
 
-
+        }
     }
     resetPassword(password){
         postResetService(password)
@@ -80,16 +82,33 @@ class NoteController {
             console.log(error);
         })
     }
-
+    getUserInfo(){
+        getService(USER_PATH
+           ).then(resp=>{
+                console.log(resp);
+                let userInfoFromResponse=resp.data;
+                localStorage.setItem("UserData",JSON.stringify(userInfoFromResponse));
+                return userInfoFromResponse;
+                
+                
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+        }
     updateUserProfile(image){
-        console.log('image info' + image);
-        var user=localStorage.getItem('UserData');
+            
+       console.log('image info' + image);
+       var user=JSON.parse(localStorage.getItem("UserData") || "[]");
+       
         user.profilepicImage = image;
         console.log(user.profilepicImage);
         
         putService(UPDATE_PROFILE,user)
         .then(res =>{
             console.log(res);
+            localStorage.removeItem('UserData');
+            localStorage.setItem("UserData",JSON.stringify(res.data));
         })
         .catch(error =>{
             console.log(error);
