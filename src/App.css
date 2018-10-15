@@ -214,7 +214,7 @@ top:64px !important;
   .notefirstCard{
     
     margin-left:453px;
-    margin-top: 31px;
+    margin-top: 101px;
     border: none;
 }
 .NavbarColor{
@@ -306,5 +306,8 @@ top:64px !important;
 
 .note-card{
 width: 250px;
-
+}
+.dashboardcard{
+  flex-direction:row;
+  flex-wrap:wrap;
 }

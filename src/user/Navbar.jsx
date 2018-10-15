@@ -11,7 +11,7 @@ import { withStyles,MuiThemeProvider,createMuiTheme  } from '@material-ui/core/s
 import menu from '../icons/menu.svg'
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+//import Backdrop from '@material-ui/core/Backdrop';
 import Refresh from '@material-ui/icons/Refresh';
 import List from '@material-ui/icons/List';
 import apps from '../icons/apps.svg';
@@ -132,23 +132,35 @@ const styles = theme =>({
 },
 
 });
-// const theme1 = createMuiTheme({
-//     palette: {
-//       secondary: {
-//         main: '#f44336',
-//       },
-//     },
-//   });
+
 
 class Navbar extends Component{
     constructor(props){
         super(props);
         this.state = {
             left: false,
+            changeView : false,
           };
-         
+          this.toggleView=this.toggleView.bind(this); 
     }
-    
+    toggleView(){
+        console.log('inside toggleView');
+        this.setState({
+            changeView:!this.state.changeView,
+        });
+      var notes = document.getElementsByClassName("dashboard");
+      if (this.state.changeView) {
+        for ( var i = 0; i < notes.length; i++) {
+          notes[i].style.width = "60%";
+          notes[i].style.marginLeft = "10%";
+        }
+      } else {
+        for (i = 0; i < notes.length; i++) {
+          notes[i].style.width = "30%";
+          notes[i].style.marginLeft = "0%";
+        }
+      }
+    }
      handleRefresh(e){ 
         e.preventDefault(); 
          console.log("comes to refresh function");
@@ -160,7 +172,9 @@ class Navbar extends Component{
         this.setState({
           [side]: open,
         });
-      };
+      
+    }
+      
       
     render(){
         // It is a better way to retrieve values from an object or an array .It's an ES6 features for javascript called destructuring assignment.
@@ -169,10 +183,10 @@ class Navbar extends Component{
                  
         return(
             <div className={classes.root}>
-           <AppBar position="static" >
+           <AppBar position="fixed" >
            
            <Toolbar className="NavbarColor"> <img src={menu} style={{width:30}} alt="Menu"/>
-               <IconButton className={classes.menuButton}   onClick={this.toggleDrawer('left', true)} ></IconButton>         
+               <IconButton className={classes.menuButton}  onClick={this.toggleDrawer('left', true)} ></IconButton>         
                 <MuiThemeProvider theme={theme}>
                <Drawer variant="temporary"  open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                <Sidebar/>
@@ -199,7 +213,7 @@ class Navbar extends Component{
            
             <IconButton onClick={this.handleRefresh.bind(this)} className={classes.RefreshForm} ><Refresh/></IconButton>
            
-            <IconButton className={classes.ListForm}><List/></IconButton>
+            <IconButton onClick={this.toggleView}className={classes.ListForm}><List/></IconButton>
                
               
                </div>
@@ -221,9 +235,7 @@ class Navbar extends Component{
                </div>
 
                </Toolbar>
-               </AppBar> 
-              
-              
+               </AppBar>       
            </div>
         );
     }

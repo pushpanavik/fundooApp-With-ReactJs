@@ -27,8 +27,7 @@ class ProfileCard extends Component {
       
   }
   componentDidMount(){
-   
-  // var getData =noteCtrl.getUserInfo();
+  
   }
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -37,7 +36,9 @@ class ProfileCard extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    if(this.state.imagePreviewUrl!==undefined && this.state.name===null){
     noteCtrl.uploadProfilePic(this.state.imagePreviewUrl,this.state.name);
+    }
   };
   
   handleClick() {
@@ -57,7 +58,7 @@ class ProfileCard extends Component {
   }
 
   handleImageChange(e) {
-      
+    
     e.preventDefault();
 
     let reader = new FileReader();

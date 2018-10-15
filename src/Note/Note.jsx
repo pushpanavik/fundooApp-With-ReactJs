@@ -46,7 +46,8 @@ const style = {
     border: "none",
     outline: "none",
     marginLeft: 10
-  }
+  },
+  
 };
 class Note extends Component {
   constructor(props) {
@@ -71,8 +72,7 @@ class Note extends Component {
   };
   render() {
     const { classes } = this.props;
-    // console.log(this.state.title);
-    // console.log(this.state.description);
+    
     return (
       <div>
         <Collapse in={this.state.open}>

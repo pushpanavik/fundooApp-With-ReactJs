@@ -1,13 +1,18 @@
+
 import {
     postService,postResetService, getService,postImageService,putService
 } from '../user/UserService';
+
 const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
 const NOTE_PATH="http://localhost:9090/fundoo/user/displayNote";
 const PROFILE_PATH="http://localhost:9090/fundoo/uploadFile";
 const  UPDATE_PROFILE ="http://localhost:9090/fundoo/updateUser";
 const USER_PATH="http://localhost:9090/fundoo/getUser";
+const UPDATE_NOTE="http://localhost:9090/fundoo/user/updateNote";
+
 class NoteController {
-     
+  
+  
     addNote(title, description) {
         console.log("Add Note called");
 
@@ -47,6 +52,7 @@ class NoteController {
        getService(NOTE_PATH).then(res =>  
         {console.log(res); 
             return callback(res.data);
+            
         })
         .catch(error =>{
             console.log(error);
@@ -114,5 +120,31 @@ class NoteController {
             console.log(error);
         })
     }
+
+    isPinned(note){
+        console.log('inisde pin',note)
+        if(note.pin === false){
+            note.pin = true;    
+        }        
+        else{
+            note.pin = false;
+        }
+         this.updateNote(note);   
+    }
+    updateNote(note){
+        console.log(note);
+    putService(UPDATE_NOTE,note)
+    .then(res =>{
+        console.log(res);
+      
+    })
+    .catch(error =>{
+        console.log(error);
+    })
+    }
 }
+
+
+
+
 export default NoteController;

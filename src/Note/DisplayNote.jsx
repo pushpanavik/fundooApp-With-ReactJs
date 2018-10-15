@@ -1,40 +1,18 @@
 import React, { Component } from "react"; 
 import NoteController from "../controller/NoteController";
 import DisplayCard from "./DisplayCard";
-//import DisplayCard from "./DisplayCard";
-
  var noteCtrl = new NoteController();
  
 class DisplayNote extends Component {
   constructor(props) {
-   
     super(props);
     this.state = {
       notes: [],
       open: false,
-      notettitle: "",
-      notedesc: "",
+    
     };
   }
-  onOpen = () => {
-    this.setState({ open: true });
-  };
-  onClose = () => {
-    this.setState({ open: false });
-  };
   
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
   componentDidMount() {
     var other=this;
     noteCtrl.getUserNote(function(noteDetails){
@@ -42,7 +20,6 @@ class DisplayNote extends Component {
          notes: noteDetails });
   });
   }
-
 
   render() {
     var noteKey;
@@ -55,7 +32,16 @@ class DisplayNote extends Component {
       });
 
 return( 
-  <div>
+  <div style={{
+    marginTop:55,
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    flexWrap:'wrap',
+    marginLeft:250,
+    marginRight:250,
+    
+  }}>
     {listItems}
   </div> 
   
