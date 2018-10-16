@@ -1,55 +1,76 @@
 import React, { Component } from 'react';
 import NoteController from "../controller/NoteController";
 import IconButton from "@material-ui/core/IconButton";
-import image from "../icons/image.svg";
 import pin from "../icons/pin.svg";
-import reminders from "../icons/reminders.svg";
-import addUser from "../icons/addUser.svg";
-import color from "../icons/color.svg";
-import archive from "../icons/archive.svg";
-import morevert from "../icons/morevert.svg";
-import Card from "@material-ui/core/Card";
-import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-
+import Icons from '../Note/Icons';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Card from '@material-ui/core/Card';
 var noteCtrl = new NoteController();
-const style = theme => ({
-    pinIcon: {
-      marginLeft: 246,
-      marginTop: -41
-    },
-   card:{
-    direction: 'row',
- 
-   },
-    img: {
-      width: 17
-    },
-    
-  });
+
 class OtherNote  extends Component{
   constructor(){
     super();
   this.state={
-    show:false,
+    open:false,
+    title:null,
+    description: null,
+    
 } 
 this.handleClick=this.handleClick.bind(this);
-}
 
+}
 handleClick(){
-  console.log('for note dialog'); 
   this.setState({
-      show:!this.state.show,
+      open:!this.state.open,
   })
 }
+handleClose = () => {
+  this.setState({ open: false });
+};
 
+componentDidMount() {
+ 
+}
     render(){
-        const { classes } = this.props;
-        
+             
         var note=this.props.getData;
      
         return(
           <div>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="form-dialog-title"
+            fullWidth
+          >
+           
+            <DialogContent>
+              
+             <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
+             <IconButton style={{float:'right',marginTop: -10}}>
+               <img src={pin}  alt="pin"/>
+             </IconButton>
+             </div>
+  
+             <div style={{marginTop:5}}><input type="text"  style={{outline:'none',border:0}} defaultValue={note.description} onChange={event =>this.setState({description:event.target.value})} />
+             </div>
+            
+            <div style={{
+              marginTop: 63,
+              marginBottom:-23,
+              marginRight: -10,
+            }}><Icons/></div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary" style={{marginTop:-55}}>
+                CLOSE
+              </Button>
+            </DialogActions>
+          </Dialog>
+       
 <Card className="dashboard"   style={{top: 0,
     left: 0,
     height: 100,
@@ -60,34 +81,10 @@ handleClick(){
       <IconButton style={{float:"right",marginTop:-12}} onClick={() => noteCtrl.isPinned(note)}><img id="otherpin" src={pin} alt="pin"/></IconButton>      </div>
       
       <div style={{marginTop:10,
-      marginLeft:10}}>{note.description} 
+      marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
       
-      <div>
-        <IconButton aria-label="Reminder">
-          <img className={classes.img} src={reminders} alt="reminders" />
-        </IconButton>
-
-        <IconButton aria-label="Collaborator">
-          <img className={classes.img} src={addUser} alt="collaborator" />
-        </IconButton>
-
-        <IconButton aria-label="Color">
-          <img className={classes.img} src={color} alt="color" />
-        </IconButton>
-
-        <IconButton aria-label="image">
-          <img className={classes.img} src={image} alt="images" />
-        </IconButton>
-
-        <IconButton aria-label="Archive">
-          <img className={classes.img} src={archive} alt="archive" />
-        </IconButton>
-
-        <IconButton aria-label="More Vert">
-          <img className={classes.img} src={morevert} alt="archive" />
-        </IconButton>
-        </div>
+      <Icons/>
       </Card>
       
       </div>
@@ -95,7 +92,4 @@ handleClick(){
     }
     
 }
-OtherNote.propTypes = {
-    classes: PropTypes.object.isRequired
-  };
-export default withStyles(style)(OtherNote);
+export default OtherNote;

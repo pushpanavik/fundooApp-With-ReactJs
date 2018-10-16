@@ -115,6 +115,7 @@ class NoteController {
             console.log(res);
             localStorage.removeItem('UserData');
             localStorage.setItem("UserData",JSON.stringify(res.data));
+            
         })
         .catch(error =>{
             console.log(error);
@@ -131,17 +132,75 @@ class NoteController {
         }
          this.updateNote(note);   
     }
+
     updateNote(note){
         console.log(note);
+         
     putService(UPDATE_NOTE,note)
     .then(res =>{
         console.log(res);
+       this.setState({
+          pin: true,
+       })
       
     })
     .catch(error =>{
         console.log(error);
     })
     }
+    getAllNote(){
+        getService(NOTE_PATH).then(res =>  
+            {console.log(res); 
+                             
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+}
+
+changeColor(note,btn) {
+    if(btn === 1) {
+        note.color = 'white';
+    }
+    else if(btn === 2) {
+        note.color = 'rgb(255, 138, 128)';
+    }
+    else if(btn === 3) {
+        note.color = 'rgb(255, 209, 128)';
+    }
+    else if(btn === 4) {
+        note.color = 'rgb(255, 255, 141)';
+    }
+    else if(btn === 5) {
+        note.color = 'rgb(204, 255, 144)';
+    }
+    else if(btn === 6) {
+        note.color = 'rgb(167, 255, 235)';
+    }
+    else if(btn === 7) {
+        note.color = 'rgb(128, 216, 255)';
+    }
+    else if(btn === 8) {
+        note.color = 'rgb(130, 177, 255)';
+    }
+    else if(btn === 9) {
+        note.color= 'rgb(179, 136, 255)';
+    }
+    else if(btn === 10) {
+        note.color = 'rgb(248, 187, 208)';
+    }
+    else if(btn === 11) {
+        note.color = 'rgb(215, 204, 200)';
+    }
+    else if(btn === 12) {
+        note.color = 'rgb(207, 216, 220)';
+    }
+    else {
+        note.color = 'white';
+    }
+    
+    this.updateNote(note);
+}
 }
 
 

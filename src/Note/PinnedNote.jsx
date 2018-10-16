@@ -1,46 +1,28 @@
 import React, { Component } from 'react';
 import NoteController from "../controller/NoteController";
 import IconButton from "@material-ui/core/IconButton";
-import image from "../icons/image.svg";
 import BluePin from  '../images/BluePin.svg';
-import reminders from "../icons/reminders.svg";
-import addUser from "../icons/addUser.svg";
-import color from "../icons/color.svg";
-import archive from "../icons/archive.svg";
-import morevert from "../icons/morevert.svg";
 import Card from "@material-ui/core/Card";
-import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
+import Icons from '../Note/Icons';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-
-
 var noteCtrl = new NoteController();
 
-const style = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: '350px',
-    backgroundColor: theme.palette.background.paper,
-  },
-    img: {
-      width: 17
-    },
-       
-  });
 class PinnedNote  extends Component{
   constructor(){
     super();
   this.state={
     open:false,
+    title:"",
+    description: "",
+    
 } 
 this.handleClick=this.handleClick.bind(this);
+
 }
 handleClick(){
-  console.log('for note dialog'); 
   this.setState({
       open:!this.state.open,
   })
@@ -48,40 +30,60 @@ handleClick(){
 handleClose = () => {
   this.setState({ open: false });
 };
-
+updateNote(){
+  var note=this.props.getData;
+  const noteObj = {
+    id:note.id,
+    title: this.state.title,
+    description: this.state.description,
+    pin:note.pin,
+    trash:note.trash,
+    archive:note.archive,
+    createdAt:note.createdAt,
+    lastupdatedat:note.lastupdatedAt,
+    color:note.color,
+    user:note.user
+}
+  noteCtrl.updateNote(noteObj)
+}
 componentDidMount() {
  
 }
-handleChange = (e) => {
- this.setState({title: e.target.value});
-}
-
     render(){
-      console.log(this.state.open)
-        const { classes } = this.props;
         var note=this.props.getData;
-               
+                  
         return(
      <div>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
+          fullWidth
         >
          
           <DialogContent>
             
-            <TextField            
-              id="name"
-              type="text"
-              value={note.title}
+           <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
+           <IconButton style={{float:'right',marginTop: -10}}>
+             <img src={BluePin}  alt="pin"/>
+           </IconButton>
+           </div>
 
-              fullWidth
-            />
-            
+           <div style={{marginTop:5}}><input type="text"  style={{outline:'none',border:0}} defaultValue={note.description} onChange={event =>this.setState({description:event.target.value})} />
+           </div>
+          
+          <div style={{
+            marginTop: 63,
+            marginBottom:-23,
+            marginRight: -10,
+          }}>
+          <Icons fetchData={note}/></div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button  onClick={() => {
+                  this.handleClose();
+                  this.updateNote();
+                }} color="primary" style={{marginTop:-55}}>
               CLOSE
             </Button>
           </DialogActions>
@@ -102,39 +104,13 @@ handleChange = (e) => {
       <div style={{marginTop:10,
       marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
-      
-      <div>
-        <IconButton aria-label="Reminder">
-          <img className={classes.img} src={reminders} alt="reminders" />
-        </IconButton>
-
-        <IconButton aria-label="Collaborator">
-          <img className={classes.img} src={addUser} alt="collaborator" />
-        </IconButton>
-
-        <IconButton aria-label="Color">
-          <img className={classes.img} src={color} alt="color" />
-        </IconButton>
-
-        <IconButton aria-label="image">
-          <img className={classes.img} src={image} alt="images" />
-        </IconButton>
-
-        <IconButton aria-label="Archive">
-          <img className={classes.img} src={archive} alt="archive" />
-        </IconButton>
-
-        <IconButton aria-label="More Vert">
-          <img className={classes.img} src={morevert} alt="archive" />
-        </IconButton>
-        </div>
+      <Icons/>
+     
       </Card>
       </div> 
         );
     }
     
 }
-PinnedNote.propTypes = {
-    classes: PropTypes.object.isRequired
-  };
-export default withStyles(style)(PinnedNote);
+
+export default PinnedNote;

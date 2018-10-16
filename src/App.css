@@ -211,8 +211,12 @@ drawer{
 top:64px !important;
 }
 
+color-change-div{
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+}
   .notefirstCard{
-    
     margin-left:453px;
     margin-top: 101px;
     border: none;

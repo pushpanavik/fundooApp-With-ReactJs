@@ -26,6 +26,9 @@ const theme = createMuiTheme({
               top:64,
               width:250,
           }
+      },
+      MuiBackdrop:{
+         invisible:true
       }
     },
   });

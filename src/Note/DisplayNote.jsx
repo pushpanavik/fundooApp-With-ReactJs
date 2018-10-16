@@ -24,10 +24,13 @@ class DisplayNote extends Component {
   render() {
     var noteKey;
      console.log(this.state.notes);
-   var listItems =Object.values(this.state.notes).map(function(value) {
+   var listItems =Object.values(this.state.notes).map(function(value,i) {
+    
     noteKey=value;
        return(
+         <li key={i}>
          <DisplayCard getDataFromParent={noteKey}/>
+         </li>
        )
       });
 
