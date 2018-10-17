@@ -10,43 +10,51 @@ import help from '../images/help.svg';
 import Button from '@material-ui/core/Button';
 
 class Sidebar extends Component{
+
+   
     render(){
         return(
             <div>
-                <Button  href="" className="sidebarBtn"  style={{'textTransform': 'initial'}}>
-                                 <img style={{width:30,height:30,marginRight:148}} src={Notes} alt="notes"   />
-                                    Notes
+                <Button href="/home/notes" className="sidebarBtn"  style={{width:30}}>
+                                 <img style={{width:30,height:30}} src={Notes} alt="notes"   />
                             </Button>
+                            <span style={{marginLeft:120}}>Notes</span>
 
-                                <Button  href="" className="sidebarBtn"  style={{'textTransform': 'initial'}}>
-                                    <img style={{width:30, height:30,marginRight:124}}src={reminders} alt="Reminders" className="reminderBtn"/>
-                                    Reminders
+                                <Button  href="/home/reminder" className="sidebarBtn"  style={{width:30}}>
+                                    <img style={{width:30, height:30}}src={reminders} alt="Reminders" />
                             </Button>
+                            <span style={{marginLeft:85}}>Reminders</span>
 
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30,marginRight:144}} src={labe} alt="Archive"  className="" />
-                                    Label
+                            <Button href=""  className="sidebarBtn" style={{width:30}}>
+                                <img style={{width:30, height:30}} src={labe} alt="Archive"  className="" />
                             </Button>
-                                <Button href="/home/archive"  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30,marginRight:137}} src={archive} alt="Archive"  className="archiveBtn" />
-                                    Archive
+                            <span style={{marginLeft:115}}> Label</span>
+
+                                <Button href="/home/archive"  className="sidebarBtn" style={{width:30}}>
+                                <img style={{width:30, height:30}} src={archive} alt="Archive"  className="archiveBtn" />
                             </Button>
-                                <Button href="/home/trash"  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img  style={{width:30, height:30,marginRight:148}}src={trash} alt="Trash" className="trashBtn"  />
-                                    Trash
+                            <span style={{marginLeft:101}}>  Archive</span>
+
+                                <Button href="/home/trash"  className="sidebarBtn" style={{width:30}}>
+                                <img  style={{width:30, height:30}} src={trash} alt="Trash" className="trashBtn"  />
                             </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30,marginRight:131}} src={setting} alt="Archive"  className="" />
-                                    Settings
+                            <span style={{marginLeft:116}}>Trash</span>
+
+                            <Button href=""  className="sidebarBtn" style={{width:30}}>
+                                <img style={{width:30, height:30}} src={setting} alt="Setting"  className="" />
+                                   
                             </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30,marginRight:85}} src={sendFeed} alt="Archive"  className="" />
-                                    Send Feedback
+                            <span style={{marginLeft:98}}> Settings</span>
+
+                            <Button href=""  className="sidebarBtn" style={{width:30}}>
+                                <img style={{width:30, height:30}} src={sendFeed} alt="Feedback"  className="" />       
                             </Button>
-                            <Button href=""  className="sidebarBtn" style={{'textTransform': 'initial'}}>
-                                <img style={{width:30, height:30,marginRight:155}} src={help} alt="Archive"  className="" />
-                                    Help
+                            <span style={{marginLeft:54}}>Send Feedback</span>
+
+                            <Button href=""  className="sidebarBtn" style={{width:30}}>
+                                <img style={{width:30, height:30}} src={help} alt="Help"  className="" />   
                             </Button>
+                            <span style={{marginLeft:126}}> Help</span>
                             </div>
         );
     }

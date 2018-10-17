@@ -6,7 +6,8 @@ var noteCtrl=new NoteController();
 class NoteColor extends Component {
 
     handleClose = () => {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl: null
+         });
     };
 
     changeColor(data,btn){
@@ -14,12 +15,13 @@ class NoteColor extends Component {
     }
    
   render() {
-      var data =this.props.data;
-      console.log(data);
+      var data =this.props.fetchData;
+      
     return (
       <div>
         <IconButton
           id="color-btn"
+          style={{ backgroundColor: "white" }}
           onClick={() => {
             this.handleClose();
             this.changeColor(data, 1);
@@ -27,13 +29,13 @@ class NoteColor extends Component {
         >
           <div
             className="color-change-div"
-            style={{ backgroundColor: "white" }}
           />
         </IconButton>
        
         <Tooltip title="Red">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(255, 138, 128)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 2);
@@ -41,27 +43,28 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(255, 138, 128)" }}
+              
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Orange">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(255, 209, 128)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 3);
             }}
           >
             <div
-              className="color-change-div"
-              style={{ backgroundColor: "rgb(255, 209, 128)" }}
+              className="color-change-div" 
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Yellow">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(255, 255, 141)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 4);
@@ -69,7 +72,7 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(255, 255, 141)" }}
+             
             />
           </IconButton>
         </Tooltip>
@@ -77,6 +80,7 @@ class NoteColor extends Component {
         <Tooltip title="Green">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(204, 255, 144)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 5);
@@ -84,13 +88,14 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(204, 255, 144)" }}
+              
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Teal">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(167, 255, 235)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 6);
@@ -98,13 +103,14 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(167, 255, 235)" }}
+              
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Blue">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(128, 216, 255)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 7);
@@ -112,13 +118,14 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(128, 216, 255)" }}
+            
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Dark blue">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(130, 177, 255)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 8);
@@ -126,7 +133,7 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(130, 177, 255)" }}
+              
             />
           </IconButton>
         </Tooltip>
@@ -134,6 +141,7 @@ class NoteColor extends Component {
         <Tooltip title="Purple">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(179, 136, 255)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 9);
@@ -141,13 +149,14 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(179, 136, 255)" }}
+             
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Pink">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(248, 187, 208)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 10);
@@ -155,27 +164,28 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(248, 187, 208)" }}
+             
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Brown">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(215, 204, 200)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 11);
             }}
           >
             <div
-              className="color-change-div"
-              style={{ backgroundColor: "rgb(215, 204, 200)" }}
+              className="color-change-div"   
             />
           </IconButton>
         </Tooltip>
         <Tooltip title="Gray">
           <IconButton
             id="color-btn"
+            style={{ backgroundColor: "rgb(207, 216, 220)" }}
             onClick={() => {
               this.handleClose();
               this.changeColor(data, 12);
@@ -183,7 +193,7 @@ class NoteColor extends Component {
           >
             <div
               className="color-change-div"
-              style={{ backgroundColor: "rgb(207, 216, 220)" }}
+            
             />
           </IconButton>
         </Tooltip>

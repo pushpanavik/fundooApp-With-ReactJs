@@ -17,6 +17,7 @@ class PinnedNote  extends Component{
     open:false,
     title:"",
     description: "",
+    notes:[]
     
 } 
 this.handleClick=this.handleClick.bind(this);
@@ -46,11 +47,9 @@ updateNote(){
 }
   noteCtrl.updateNote(noteObj)
 }
-componentDidMount() {
- 
-}
+
     render(){
-        var note=this.props.getData;
+        var note=this.props.getData;     
                   
         return(
      <div>
@@ -94,6 +93,7 @@ componentDidMount() {
     left: 0,
     height: 100,
     width: 250,
+    backgroundColor:note.color
    }} >
  
       <div style={{marginTop:10,
@@ -104,7 +104,7 @@ componentDidMount() {
       <div style={{marginTop:10,
       marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
-      <Icons/>
+      <Icons data={note}/>
      
       </Card>
       </div> 

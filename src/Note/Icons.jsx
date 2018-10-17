@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import image from "../icons/image.svg";
-import reminders from "../icons/reminders.svg";
-import addUser from "../icons/addUser.svg";
 import color from "../icons/color.svg";
 import archive from "../icons/archive.svg";
-import morevert from "../icons/morevert.svg";
+
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Menu from '@material-ui/core/Menu';
 import NoteColor from './NoteColor';
-
+import Reminder from './Reminder';
+import Collaborator from './Collborator';
+import ImageOnNote from './ImageOnNote';
+import MoreOnNote from './MoreOnNote';
 
 const style = theme => ({
     root: {
@@ -21,6 +21,7 @@ const style = theme => ({
       img: {
         width: 17
       },
+      
          
     });
       
@@ -29,22 +30,22 @@ class Icons extends Component{
         super();
         this.state={
             anchorEl: null,
-            open:false,
+            open:false,  
         }
         
     }
+    
     OnOpen=()=>{
       this.setState({
           open:true,
       })  
     }
-
     onClose=() =>{
         this.setState({
             open:false,
         })
     }
-    handleClick = e => {
+    handleClick = e => {      
         this.setState({ anchorEl: e.currentTarget });
     };
 
@@ -60,8 +61,8 @@ class Icons extends Component{
   
    
     render(){
-        var note=this.props.fetchData;
-        console.log(note)
+        var note=this.props.data;
+               
         const { anchorEl } =this.state;
         const { open } = this.state;
        
@@ -70,15 +71,12 @@ class Icons extends Component{
         return(
             
             <div>
-            <IconButton aria-label="Reminder">
-              <img className={classes.img} src={reminders} alt="reminders" />
-            </IconButton>
-    
-            <IconButton aria-label="Collaborator">
-              <img className={classes.img} src={addUser} alt="collaborator" />
-            </IconButton>
-         
-            <IconButton
+           <Reminder/>
+            <div>
+           <Collaborator/>
+            </div>
+            
+            <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
               onClick={(event) => this.handleClick(event)}
@@ -86,27 +84,27 @@ class Icons extends Component{
             <img className={classes.img} src={color} alt="color" />
             </IconButton>
             <Menu id="menu"
-            position="right top"
             anchorEl={anchorEl} 
             open={Boolean(anchorEl)} 
             onClose={this.handleClose}
            >
-                   <NoteColor  data={note}/>   
+                   <NoteColor fetchData={note}/>      
             </Menu>
-        
-
+            
+            <div>
+                <ImageOnNote/>
+            </div>
     
-            <IconButton aria-label="image">
-              <img className={classes.img} src={image} alt="images" />
-            </IconButton>
-    
-            <IconButton aria-label="Archive">
+            <IconButton  style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
-    
-            <IconButton aria-label="More Vert">
-              <img className={classes.img} src={morevert} alt="archive" />
-            </IconButton>
+            
+            <div>
+                <MoreOnNote/>
+            </div>
+           
+
+
 
                         
             </div>

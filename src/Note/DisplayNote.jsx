@@ -28,9 +28,11 @@ class DisplayNote extends Component {
     
     noteKey=value;
        return(
-         <li key={i}>
-         <DisplayCard getDataFromParent={noteKey}/>
-         </li>
+        <div style={{marginTop:20}}  key={i}>
+          <DisplayCard  getDataFromParent={noteKey}/>
+        </div>
+         
+     
        )
       });
 

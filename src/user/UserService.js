@@ -65,5 +65,14 @@ const getService=(url) =>{
         },
     })
 }
+
+ const deleteService=(data,url) =>{
+console.log('data in delete note service',data,url);
+return axios({
+    method:'DELETE',
+    url:url,
+    data:data
+})
+ }
     
-export {postService,postResetService,getService,postImageService,putService};
+export {postService,postResetService,getService,postImageService,putService,deleteService};

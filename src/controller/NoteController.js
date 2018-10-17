@@ -1,6 +1,6 @@
 
 import {
-    postService,postResetService, getService,postImageService,putService
+    postService,postResetService, getService,postImageService,putService,deleteService
 } from '../user/UserService';
 
 const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
@@ -9,10 +9,10 @@ const PROFILE_PATH="http://localhost:9090/fundoo/uploadFile";
 const  UPDATE_PROFILE ="http://localhost:9090/fundoo/updateUser";
 const USER_PATH="http://localhost:9090/fundoo/getUser";
 const UPDATE_NOTE="http://localhost:9090/fundoo/user/updateNote";
+const DELETE_NOTE="http://localhost:9090/fundoo/user/deleteNote/"
 
 class NoteController {
-  
-  
+     
     addNote(title, description) {
         console.log("Add Note called");
 
@@ -22,6 +22,7 @@ class NoteController {
         const noteModel = {
             notetitle: title,
             notedesc: description
+            
         }
         if (title !== "" && description !== "") {
         postService(ADD_NOTE, noteModel)
@@ -134,14 +135,11 @@ class NoteController {
     }
 
     updateNote(note){
-        console.log(note);
-         
+
     putService(UPDATE_NOTE,note)
     .then(res =>{
         console.log(res);
-       this.setState({
-          pin: true,
-       })
+              this.getAllNote();
       
     })
     .catch(error =>{
@@ -201,6 +199,29 @@ changeColor(note,btn) {
     
     this.updateNote(note);
 }
+
+isTrashNote(note){             
+    if(note.trash === false){
+        note.trash = true;
+    }        
+    else{
+        note.trash = false;
+    }
+    this.updateNote(note);
+}
+
+deleteNoteForever(note){
+    var url=DELETE_NOTE +"note.id";
+  deleteService(note,url)
+  .then(res =>
+{
+    console.log(res);
+})
+.catch(error =>{
+    console.log(error);
+})
+}
+
 }
 
 

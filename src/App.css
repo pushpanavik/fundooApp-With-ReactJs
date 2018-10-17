@@ -211,10 +211,20 @@ drawer{
 top:64px !important;
 }
 
+.change-color-btn:hover #change-color-div {
+  visibility: visible;
+}
 color-change-div{
   width: 22px;
   height: 22px;
   border-radius: 11px;
+}
+#color-btn {
+  height:26px;
+  width:26px;
+  margin: 3px;
+  border: 1px solid;
+  border-color: gray;
 }
   .notefirstCard{
     margin-left:453px;
