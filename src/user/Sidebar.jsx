@@ -10,51 +10,56 @@ import help from '../images/help.svg';
 import Button from '@material-ui/core/Button';
 
 class Sidebar extends Component{
-
+   
    
     render(){
         return(
             <div>
-                <Button href="/home/notes" className="sidebarBtn"  style={{width:30}}>
-                                 <img style={{width:30,height:30}} src={Notes} alt="notes"   />
+                <Button href="/home/note" className="sidebarBtn" >
+                                 <img style={{width:30,height:30,marginLeft:-172}} src={Notes} alt="notes"   />
+                                
                             </Button>
-                            <span style={{marginLeft:120}}>Notes</span>
+                            <span style={{marginLeft:-165}}> Notes</span>
+                           
+                 
+                    
+                <Button  href="/home/reminder" className="sidebarBtn"  >
+                        <img style={{width:30, height:30,marginLeft:-180}}src={reminders} alt="Reminders" />
+                        </Button>
+                        <span style={{marginLeft:-160}}>Reminders</span>
 
-                                <Button  href="/home/reminder" className="sidebarBtn"  style={{width:30}}>
-                                    <img style={{width:30, height:30}}src={reminders} alt="Reminders" />
-                            </Button>
-                            <span style={{marginLeft:85}}>Reminders</span>
+                           
+               
 
-                            <Button href=""  className="sidebarBtn" style={{width:30}}>
-                                <img style={{width:30, height:30}} src={labe} alt="Archive"  className="" />
+                <Button href=""  className="sidebarBtn">
+                                <img style={{width:30, height:30,marginLeft:-169}} src={labe} alt="Archive"  className="" />
                             </Button>
-                            <span style={{marginLeft:115}}> Label</span>
+                            <span style={{marginLeft:-162}}> Label</span>
 
-                                <Button href="/home/archive"  className="sidebarBtn" style={{width:30}}>
-                                <img style={{width:30, height:30}} src={archive} alt="Archive"  className="archiveBtn" />
+                <Button href="/home/archive"  className="sidebarBtn">
+                                <img style={{width:30, height:30,marginLeft:-172}} src={archive} alt="Archive"  className="archiveBtn" />
                             </Button>
-                            <span style={{marginLeft:101}}>  Archive</span>
+                            <span style={{marginLeft:-163}}>  Archive</span>
 
-                                <Button href="/home/trash"  className="sidebarBtn" style={{width:30}}>
-                                <img  style={{width:30, height:30}} src={trash} alt="Trash" className="trashBtn"  />
+                <Button href="/home/trash"  className="sidebarBtn">
+                                <img  style={{width:30, height:30,marginLeft:-172}} src={trash} alt="Trash" className="trashBtn"  />
                             </Button>
-                            <span style={{marginLeft:116}}>Trash</span>
+                            <span style={{marginLeft:-157}}>Trash</span>
 
-                            <Button href=""  className="sidebarBtn" style={{width:30}}>
-                                <img style={{width:30, height:30}} src={setting} alt="Setting"  className="" />
-                                   
+                <Button href=""  className="sidebarBtn" >
+                                <img style={{width:30, height:30,marginLeft:-170}} src={setting} alt="Setting"  className="" />    
                             </Button>
-                            <span style={{marginLeft:98}}> Settings</span>
+                            <span style={{marginLeft:-160}}> Settings</span>
 
-                            <Button href=""  className="sidebarBtn" style={{width:30}}>
-                                <img style={{width:30, height:30}} src={sendFeed} alt="Feedback"  className="" />       
+                <Button href=""  className="sidebarBtn" >
+                                <img style={{width:30, height:30,marginLeft:-174}} src={sendFeed} alt="Feedback"  className="" />       
                             </Button>
-                            <span style={{marginLeft:54}}>Send Feedback</span>
+                            <span style={{marginLeft:-160}}>Send Feedback</span>
 
-                            <Button href=""  className="sidebarBtn" style={{width:30}}>
-                                <img style={{width:30, height:30}} src={help} alt="Help"  className="" />   
+                <Button href=""  className="sidebarBtn" >
+                                <img style={{width:30, height:30,marginLeft:-182}} src={help} alt="Help"  className="" />   
                             </Button>
-                            <span style={{marginLeft:126}}> Help</span>
+                            <span style={{marginLeft:-163}}> Help</span>
                             </div>
         );
     }

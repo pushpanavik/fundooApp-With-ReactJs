@@ -1,33 +1,36 @@
 import React, { Component } from "react";
 
-import PinnedNote from './PinnedNote';
-import OtherNote from './OtherNote';
+import PinnedNote from "./PinnedNote";
+import OtherNote from "./OtherNote";
+
 
 
 class DisplayCard extends Component {
-  
-  render() {  
+  render() {
+    var note = this.props.getDataFromParent;
+    console.log(note);
     
-    var note=this.props.getDataFromParent;
-    if(note.pin===true){
-      return(
-              <div>
-              <PinnedNote getData={note} /> 
-              </div>
-            );
-  }
-  else{
-    if(note.pin === false && note.archive === false && note.trash === false) {
-      return(
-       <div>
-       <OtherNote getData={note}/>
-       </div>
+    if (note.pin === true &&
+      note.trash===false &&
+      note.archive===false) {
+      return (
+        
+        <div>
+          
+          <PinnedNote  getData={note} /> 
+         
+        </div>
       );
+    } else {
+      return (
+        <div>
+          <OtherNote  getData={note}/>
+        
+        </div>
+      );
+    }
+  
   }
-}
-    
-}
-
 }
 
 export default DisplayCard;

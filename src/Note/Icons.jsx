@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import Menu from '@material-ui/core/Menu';
 import NoteColor from './NoteColor';
 import Reminder from './Reminder';
-import Collaborator from './Collborator';
+import Collaborator from './Collaborator';
 import ImageOnNote from './ImageOnNote';
 import MoreOnNote from './MoreOnNote';
 
@@ -62,7 +62,7 @@ class Icons extends Component{
    
     render(){
         var note=this.props.data;
-               
+          
         const { anchorEl } =this.state;
         const { open } = this.state;
        
@@ -92,15 +92,15 @@ class Icons extends Component{
             </Menu>
             
             <div>
-                <ImageOnNote/>
+                <ImageOnNote getnote={note}/>
             </div>
-    
+   
             <IconButton  style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
             
             <div>
-                <MoreOnNote/>
+                <MoreOnNote getnote={note}/>
             </div>
            
 

@@ -7,10 +7,10 @@ import ResetPassword from './user/ResetPassword';
 import Navbar from '../src/user/Navbar';
 import Home from './user/Home'
 import './App.css';
-import notes from './Note/notes';
-import ArchiveNote from './Note/ArchiveNote';
+// import ArchiveNote from './Note/ArchiveNote';
 import TrashNote from './Note/TrashNote';
-import Reminder from './Note/Reminder'
+import DisplayCard from './Note/DisplayCard';
+// import Reminder from './Note/Reminder'
 
 
 class App extends Component {
@@ -25,13 +25,19 @@ class App extends Component {
               <Route exact path="/forgot-password" component={ForgotPassword}></Route>
               <Route strict path="/resetPassword"  component={ResetPassword}></Route>
               <Route exact path="/navbar" component={Navbar}></Route>
-              <Route exact path="/home" component={Home}></Route> 
-              <Route  path='/note' component={notes}/>
-              <Route  path='/archive' component={ArchiveNote}/>
+              <Route  path="/home" component={Home}/>
+              <Route  path='/note' component={DisplayCard}/>
               <Route  path='/trash' component={TrashNote}/>
-              <Route  path='/reminder' component={Reminder}/>
+              {/* <Route  path='/archive' component={ArchiveNote}/>
+             
+              <Route  path='/reminder' component={Reminder}/>  */}
+              
+              
+              
              
               
+            
+             
              
             
           </div>

@@ -15,7 +15,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Collapse } from "@material-ui/core";
 import PropTypes from "prop-types";
 import NoteController from "../controller/NoteController";
-import DisplayNote from './DisplayNote';
+import DisplayNote from '../Note/DisplayNote'
+
 
 var noteControl = new NoteController();
 
@@ -103,7 +104,7 @@ class Note extends Component {
         <Collapse in={!this.state.open}>
           <Card
             className={classes.card}
-            style={{ marginLeft: 453, marginTop: 33 }}
+            style={{ marginLeft: 453, marginTop: 102 }}
           >
             <input
               className={classes.takeNote}
@@ -163,6 +164,7 @@ class Note extends Component {
           </Card>
         </Collapse>
         <div>
+         
             <DisplayNote/>
         </div>
       </div>

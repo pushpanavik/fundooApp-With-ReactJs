@@ -35,20 +35,11 @@ class TrashNote extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      notes:[]
     };
   }
-  OnOpen=()=>{
-    this.setState({
-        open:true,
-    })  
-  }
-  
-  onClose=() =>{
-      this.setState({
-          open:false,
-      })
-  }
+ 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -59,7 +50,13 @@ class TrashNote extends Component {
   changeColor(data,btn){
     noteCtrl.changeColor(data,btn);
   }
-
+  componentDidMount() {
+    var other=this;
+    noteCtrl.getUserNote(function(noteDetails){
+      other.setState({
+         notes: noteDetails });
+  });
+  }
   render() {
     const { classes } = this.props;
     const { anchorEl } =this.state;
@@ -76,7 +73,7 @@ class TrashNote extends Component {
      
        )
       });
-if(note.trash===true){
+if(note.trash===true && note.pin===false  ){
 return( 
   <div style={{
     marginTop:55,
@@ -556,7 +553,7 @@ return(
       </div>
                    
             </Menu>
-      
+            
             <IconButton aria-label="image">
               <img className={classes.img} src={image} alt="images" />
             </IconButton>
@@ -566,7 +563,7 @@ return(
             </IconButton>
     
             <IconButton aria-label="More Vert">
-              <img className={classes.img} src={morevert} alt="archive" />
+              <img className={classes.img} src={morevert} alt="more" />
             </IconButton>
            
             </div>
@@ -579,7 +576,9 @@ return(
  )
 }
 else{
-    <Home/>
+   return (
+     <div> <Home/> </div>
+   );
 }
 }
 }

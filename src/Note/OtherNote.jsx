@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import NoteController from "../controller/NoteController";
 import IconButton from "@material-ui/core/IconButton";
 import pin from "../icons/pin.svg";
-import image from "../icons/image.svg";
-import reminders from "../icons/reminders.svg";
-import addUser from "../icons/addUser.svg";
 import color from "../icons/color.svg";
 import archive from "../icons/archive.svg";
-import morevert from "../icons/morevert.svg";
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -18,7 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import Reminder from './Reminder';
-import Collaborator from './Collborator';
+import Collaborator from '../Note/Collaborator';
 import ImageOnNote from './ImageOnNote';
 import MoreOnNote from './MoreOnNote';
 var noteCtrl = new NoteController();
@@ -85,6 +81,7 @@ changeColor(data,btn){
         const { anchorEl } =this.state;
         const { open } = this.state;
         const { classes } = this.props;
+        
         return(
           <div>
           <Dialog
@@ -549,8 +546,10 @@ changeColor(data,btn){
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
     
-           <MoreOnNote style={{marginTop:-170,
-           marginLeft:199}}/>
+            <div style={{marginTop:18}}>
+            <MoreOnNote/>
+            </div>
+           
            
             </div>
           

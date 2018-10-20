@@ -24,7 +24,7 @@ const theme = createMuiTheme({
       MuiDrawer:{
           paperAnchorLeft:{
               top:64,
-              width:250,
+              width:270,
           }
       },
       MuiBackdrop:{
@@ -140,9 +140,12 @@ const styles = theme =>({
 class Navbar extends Component{
     constructor(props){
         super(props);
+
         this.state = {
             left: false,
             changeView : false,
+            colorOnToolbar: null,
+            title: null,
           };
           this.toggleView=this.toggleView.bind(this); 
     }
@@ -154,12 +157,12 @@ class Navbar extends Component{
       var notes = document.getElementsByClassName("dashboard");
       if (this.state.changeView) {
         for ( var i = 0; i < notes.length; i++) {
-          notes[i].style.width = "60%";
+          notes[i].style.width = "600px";
           notes[i].style.marginLeft = "10%";
         }
       } else {
         for (i = 0; i < notes.length; i++) {
-          notes[i].style.width = "30%";
+          notes[i].style.width = "250px";
           notes[i].style.marginLeft = "0%";
         }
       }
@@ -177,7 +180,51 @@ class Navbar extends Component{
         });
       
     }
-      
+     
+    componentDidMount() {
+        if (window.location.pathname === '/home/note') {
+            this.setState({
+                colorOnToolbar: {
+                    backgroundColor: 'rgb(255, 187, 0)',
+                },
+                title: 'Google Keep'
+            });
+        }
+        else if (window.location.pathname === '/home/trash') {
+            this.setState({
+                colorOnToolbar: {
+                    backgroundColor: 'rgb(99, 99, 99)',
+                },
+                title: 'Trash'
+            });
+
+        }
+        else if (window.location.pathname === '/home/archive') {
+            this.setState({
+                colorOnToolbar: {
+                    backgroundColor: 'rgb(96, 125, 139)',
+                },
+                title: 'Archive'
+            });
+        }
+        else if (window.location.pathname === '/home/reminder') {
+            this.setState({
+                colorOnToolbar: {
+                    backgroundColor: 'rgb(96, 125, 139)',
+                },
+                title: 'Reminders'
+            });
+        }
+        else if (window.location.pathname === '/home/search') {
+            this.setState({
+                colorOnToolbar: {
+                    backgroundColor: 'rgb(62, 80, 180)',
+                },
+                title: 'Google Keep'
+            });
+        }
+        
+    }
       
     render(){
         // It is a better way to retrieve values from an object or an array .It's an ES6 features for javascript called destructuring assignment.
@@ -186,9 +233,9 @@ class Navbar extends Component{
                  
         return(
             <div className={classes.root}>
-           <AppBar position="fixed" >
+           <AppBar position="fixed" style={this.state.colorOnToolbar}>
            
-           <Toolbar className="NavbarColor"> <img src={menu} style={{width:30}} alt="Menu"/>
+           <Toolbar className="NavbarColor" style={this.state.colorOnToolbar}> <img src={menu} style={{width:30}} alt="Menu"/>
                <IconButton className={classes.menuButton}  onClick={this.toggleDrawer('left', true)} ></IconButton>         
                 <MuiThemeProvider theme={theme}>
                <Drawer variant="temporary"  open={this.state.left} onClose={this.toggleDrawer('left', false)}>
@@ -196,10 +243,22 @@ class Navbar extends Component{
             </Drawer>
             </MuiThemeProvider>
                
-               <Typography className={classes.title} variant="title"  noWrap>
-               Google Keep
+               {
+                (window.location.pathname==='/home/trash' ||
+                   window.location.pathname==='/home/reminder' ||
+                   window.location.pathname==="/home/archive" ||
+                   window.location.pathname==='/home/label') &&
+               <Typography style={{color:'white',fontWeight:'normal', fontSize: 23}} variant="title" color="primary"  >
+               {this.state.title}
+              
                </Typography>
-
+               }
+                {
+                    (window.location.pathname === '/home/note') &&
+                    <Typography style={{color:'black',fontWeight:'normal', fontSize: 23}} variant="title"  color="primary">
+                    Google Keep
+                    </Typography>
+                            }
                <div className={classes.search}>
                <div className={classes.searchIcon}>
                <SearchIcon/>

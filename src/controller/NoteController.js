@@ -50,8 +50,10 @@ class NoteController {
     }
 
    getUserNote(callback){
-       getService(NOTE_PATH).then(res =>  
+       getService(NOTE_PATH)
+       .then(res =>  
         {console.log(res); 
+            console.log(res.data);
             return callback(res.data);
             
         })
@@ -200,9 +202,11 @@ changeColor(note,btn) {
     this.updateNote(note);
 }
 
-isTrashNote(note){             
+isTrashNote(note){ 
+    console.log(note);            
     if(note.trash === false){
         note.trash = true;
+        note.pin=false;
     }        
     else{
         note.trash = false;
