@@ -9,7 +9,7 @@ import Home from './user/Home'
 import './App.css';
 // import ArchiveNote from './Note/ArchiveNote';
 import TrashNote from './Note/TrashNote';
-import DisplayCard from './Note/DisplayCard';
+import DisplayNote from './Note/DisplayNote'
 // import Reminder from './Note/Reminder'
 
 
@@ -26,8 +26,8 @@ class App extends Component {
               <Route strict path="/resetPassword"  component={ResetPassword}></Route>
               <Route exact path="/navbar" component={Navbar}></Route>
               <Route  path="/home" component={Home}/>
-              <Route  path='/note' component={DisplayCard}/>
-              <Route  path='/trash' component={TrashNote}/>
+              <Route  path='/home/note' component={DisplayNote}/>
+              <Route  path='/home/trash' component={TrashNote}/>
               {/* <Route  path='/archive' component={ArchiveNote}/>
              
               <Route  path='/reminder' component={Reminder}/>  */}

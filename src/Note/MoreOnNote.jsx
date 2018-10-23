@@ -42,8 +42,9 @@ class MoreOnNote extends Component{
     render(){
         const { anchorEl } =this.state;
         const { open } = this.state;
+        
         var note=this.props.getnote;
-        // console.log('from more ption',note)
+         console.log('from more ption',note)
         return(
             <div>
             <IconButton aria-label="More Vert" style={{marginTop:-207,marginLeft:199}}
@@ -57,7 +58,7 @@ class MoreOnNote extends Component{
                anchorEl={anchorEl}
                open={Boolean(anchorEl)}
                onClose={this.handleClose}>
-               <MenuItem onClick={(event) => { this.handleClick(event); noteCtrl.isTrashNote(note); this.handleClose()}}>Delete note</MenuItem>
+               <MenuItem onClick={(event) => { this.handleClick(event);noteCtrl.isTrashNote(note); this.handleClose()}}>Delete note</MenuItem>
                <MenuItem onClick={this.handleClose}>Add label</MenuItem>
                </Menu>
                </div>

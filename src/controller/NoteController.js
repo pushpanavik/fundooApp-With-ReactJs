@@ -20,8 +20,8 @@ class NoteController {
         console.log(description);
 
         const noteModel = {
-            notetitle: title,
-            notedesc: description
+            title: title,
+            description: description
             
         }
         if (title !== "" && description !== "") {
@@ -29,7 +29,7 @@ class NoteController {
             .then(res => {
                 console.log(res);
                 localStorage.setItem("NoteToken",res.data.msg);
-                this.getUserNote();
+               this.getAllNote();
             })
             .catch(error => {
                 console.log(error);
@@ -52,8 +52,9 @@ class NoteController {
    getUserNote(callback){
        getService(NOTE_PATH)
        .then(res =>  
-        {console.log(res); 
-            console.log(res.data);
+        {
+            // console.log(res); 
+            console.log("Response....",res.data);
             return callback(res.data);
             
         })
@@ -116,6 +117,7 @@ class NoteController {
         putService(UPDATE_PROFILE,user)
         .then(res =>{
             console.log(res);
+            //this.loadProfileImage(res);
             localStorage.removeItem('UserData');
             localStorage.setItem("UserData",JSON.stringify(res.data));
             
@@ -125,6 +127,19 @@ class NoteController {
         })
     }
 
+    // loadProfileImage(user){
+    //     console.log(user);
+    //     var url =user.data.profilepicImage;
+    //     var pathname = new URL(url).pathname;
+    //     const profileImgUrl="http://localhost:9090"+pathname+"";
+    //     getService(profileImgUrl)
+    //     .then(res=>{
+    //         console.log(res);
+    //     })
+    //     .catch(err=>{
+    //         console.log(err);
+    //     })
+    // }
     isPinned(note){
         console.log('inisde pin',note)
         if(note.pin === false){
@@ -150,7 +165,8 @@ class NoteController {
     }
     getAllNote(){
         getService(NOTE_PATH).then(res =>  
-            {console.log(res); 
+            {
+                // console.log(res); 
                              
             })
             .catch(error =>{
@@ -212,23 +228,73 @@ isTrashNote(note){
         note.trash = false;
     }
     this.updateNote(note);
+   
 }
 
 deleteNoteForever(note){
-    var url=DELETE_NOTE +"note.id";
+    console.log(note);
+    var url=DELETE_NOTE +note.id;
   deleteService(note,url)
   .then(res =>
 {
     console.log(res);
+    this.updateNote(note);
 })
 .catch(error =>{
     console.log(error);
 })
 }
 
+
+// var getImageUrl = '';
+//   $scope.imageSelect = function(event, note) {
+//     console.log('goes under imge', event);
+//     console.log('note info', note);
+//     if (event != undefined) {
+//       event.stopPropagation();
+//     }
+//     document.addEventListener("change", function(event) {
+//       console.log('inside document');
+//       var form = new FormData();
+//       console.log("form", event.target.files[0]);
+
+//       form.append("file", event.target.files[0]);
+//       console.log("form after appending", event.target.files[0]);
+//       var url = baseUrl + "uploadFile";
+//       console.log("url", url);
+//       noteservice.postImageService(form, url).then(function successCallback(response) {
+//         console.log("Upload Successfully done", response);
+//         note.image = response.data.msg;
+//         console.log('getImageUrl', note.image);
+//         updateImage(note);
+//       }, function errorCallback(response) {
+//         console.log(" Upload failed", response);
+//       });
+//     });
+//   };
+
+//   function updateImage(note) {
+//     console.log("In update image...............");
+
+//     var url = baseUrl + 'user/updateNote';
+//     console.log('url inside update image', url);
+//     noteservice.putService(url, note).then(function successCallback(response) {
+
+//       console.log(response);
+//     }, function errorCallback(response) {
+//       console.log("error" + response.data);
+//     })
+//   }
+//   $scope.removeImage = function(note) {
+//     console.log("note info ", note);
+//     console.log("image link", note.image);
+//     note.image = null;
+//     $scope.getAllNote();
+//     updateImage(note);
+
+//   };
+
 }
-
-
 
 
 export default NoteController;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NoteController from "../controller/NoteController";
 import DisplayCard from "./DisplayCard";
+import Note from "./Note";
 
 var noteCtrl = new NoteController();
 
@@ -24,15 +25,14 @@ class DisplayNote extends Component {
 
   render(){
     var noteKey;
-     console.log(this.state.notes);
+     
    var listItems =Object.values(this.state.notes).map(function(value,i) {
-    console.log(listItems)
+     
     noteKey=value;
-    console.log(noteKey);
-    
+      
        return(
-        <div style={{marginTop:20}}  key={i}>
-         <div></div>
+         <div key={i}>
+        
           <DisplayCard  getDataFromParent={noteKey}/>
         </div>
          
@@ -42,16 +42,19 @@ class DisplayNote extends Component {
 
 return( 
   <div style={{
-    marginTop:55,
+    marginTop:105,
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-evenly',
     flexWrap:'wrap',
-    marginLeft:250,
-    marginRight:250,
+    marginLeft:350,
+    marginRight:150,
+   
     
   }}>
+   <div style={{marginBottom:45}}><Note/></div>
     {listItems}
+   
   </div> 
   
  )

@@ -3,12 +3,10 @@ import React, { Component } from "react";
 import PinnedNote from "./PinnedNote";
 import OtherNote from "./OtherNote";
 
-
-
 class DisplayCard extends Component {
   render() {
     var note = this.props.getDataFromParent;
-    console.log(note);
+    
     
     if (note.pin === true &&
       note.trash===false &&
@@ -16,16 +14,15 @@ class DisplayCard extends Component {
       return (
         
         <div>
-          
-          <PinnedNote  getData={note} /> 
+                   <PinnedNote  getData={note} /> 
          
         </div>
       );
     } else {
       return (
         <div>
-          <OtherNote  getData={note}/>
         
+          <OtherNote  getData={note}/>
         </div>
       );
     }

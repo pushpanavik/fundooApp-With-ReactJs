@@ -7,7 +7,7 @@ import archive from "../icons/archive.svg";
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Tooltip from '@material-ui/core/Tooltip';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,7 +16,9 @@ import Card from '@material-ui/core/Card';
 import Reminder from './Reminder';
 import Collaborator from '../Note/Collaborator';
 import ImageOnNote from './ImageOnNote';
-import MoreOnNote from './MoreOnNote';
+
+import MoreOtherNote from './MoreOtherNote';
+import OtherNoteColor from './OtherNoteColor';
 var noteCtrl = new NoteController();
 
 
@@ -62,7 +64,6 @@ handleClick = e => {
 
 handleClose = () => {
     this.setState({ anchorEl: null,
-    
      });
 };
 
@@ -85,10 +86,10 @@ changeColor(data,btn){
         return(
           <div>
           <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-            fullWidth
+             open={this.state.open}
+             onClose={this.handleClose}
+             aria-labelledby="form-dialog-title"
+             fullWidth
           >
            
             <DialogContent>
@@ -112,6 +113,7 @@ changeColor(data,btn){
            
            <Collaborator/>
          
+         
             <IconButton className="change-color-btn"
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
@@ -125,187 +127,11 @@ changeColor(data,btn){
             open={Boolean(anchorEl)} 
             onClose={this.handleClose}
            >
-                   <div>
-        <IconButton
-          id="color-btn"
-          style={{ backgroundColor: "white" }}
-          onClick={() => {
-            this.handleClose();
-            this.changeColor(note, 1);
-          }}
-        >
-          <div
-            className="color-change-div"
-          />
-        </IconButton>
-       
-        <Tooltip title="Red">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 138, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 2);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Orange">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 209, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 3);
-            }}
-          >
-            <div
-              className="color-change-div" 
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Yellow">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 255, 141)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 4);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Green">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(204, 255, 144)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 5);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Teal">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(167, 255, 235)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 6);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(128, 216, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 7);
-            }}
-          >
-            <div
-              className="color-change-div"
-            
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Dark blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(130, 177, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 8);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Purple">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(179, 136, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 9);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Pink">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(248, 187, 208)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 10);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Brown">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(215, 204, 200)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 11);
-            }}
-          >
-            <div
-              className="color-change-div"   
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Gray">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(207, 216, 220)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 12);
-            }}
-          >
-            <div
-              className="color-change-div"
-            />
-          </IconButton>
-        </Tooltip>
-      </div>
-                   
+         <div>
+            <OtherNoteColor  fetchData={note}/>
+        </div>
             </Menu>
+            
       
             <ImageOnNote/>
     
@@ -313,7 +139,7 @@ changeColor(data,btn){
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
     
-            <MoreOnNote/>
+            <MoreOtherNote note={note}/>
            
             </div>
             </div>
@@ -358,185 +184,9 @@ changeColor(data,btn){
             open={Boolean(anchorEl)} 
             onClose={this.handleClose}
            >
-                   <div>
-        <IconButton
-          id="color-btn"
-          style={{ backgroundColor: "white" }}
-          onClick={() => {
-            this.handleClose();
-            this.changeColor(note, 1);
-          }}
-        >
-          <div
-            className="color-change-div"
-          />
-        </IconButton>
-       
-        <Tooltip title="Red">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 138, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 2);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Orange">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 209, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 3);
-            }}
-          >
-            <div
-              className="color-change-div" 
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Yellow">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 255, 141)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 4);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Green">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(204, 255, 144)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 5);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Teal">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(167, 255, 235)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 6);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(128, 216, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 7);
-            }}
-          >
-            <div
-              className="color-change-div"
-            
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Dark blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(130, 177, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 8);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Purple">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(179, 136, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 9);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Pink">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(248, 187, 208)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 10);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Brown">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(215, 204, 200)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 11);
-            }}
-          >
-            <div
-              className="color-change-div"   
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Gray">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(207, 216, 220)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 12);
-            }}
-          >
-            <div
-              className="color-change-div"
-            />
-          </IconButton>
-        </Tooltip>
-      </div>
+          <div>
+              <OtherNoteColor fetchData={note}/>
+          </div>
                    
             </Menu>
       
@@ -547,7 +197,7 @@ changeColor(data,btn){
             </IconButton>
     
             <div style={{marginTop:18}}>
-            <MoreOnNote/>
+            <MoreOtherNote data={note}/>
             </div>
            
            

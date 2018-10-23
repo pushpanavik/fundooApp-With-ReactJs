@@ -1,6 +1,8 @@
 import React,{ Component } from 'react';
 import Navbar from './Navbar';
-import DisplayNote from '../Note/DisplayNote';
+
+
+
 
 
 class Home extends Component{
@@ -9,10 +11,9 @@ class Home extends Component{
     return(
         <div>
        <Navbar />
-       
-       <DisplayNote/>
-    
       
+    
+     
         </div>
     )
     }

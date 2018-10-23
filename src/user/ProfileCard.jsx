@@ -36,9 +36,11 @@ class ProfileCard extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    if(this.state.imagePreviewUrl!==undefined && this.state.name===null){
+    console.log(this.state.imagePreviewUrl);
+    console.log(this.state.name);
+    // if(this.state.imagePreviewUrl!==undefined && this.state.name===null){
     noteCtrl.uploadProfilePic(this.state.imagePreviewUrl,this.state.name);
-    }
+    // }
   };
   
   handleClick() {
@@ -90,14 +92,14 @@ class ProfileCard extends Component {
       }
 
 
-      console.log(this.state.user);
+      console.log(user);
       
     return (
       <Card className="signoutcard">
         <div>
           <table>
             <tbody>
-              <th>
+           <th>
                 <div className="prof">
                 <Button onClick={this.handleClickOpen}
                     style={{
@@ -146,7 +148,8 @@ class ProfileCard extends Component {
                     height: 70
                   }}
                 />
-              </th>
+                </th>
+              
               <th>
                 <div style={{ height: 70 }}>
                   <Typography>

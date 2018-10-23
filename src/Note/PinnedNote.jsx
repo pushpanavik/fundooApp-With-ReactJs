@@ -91,7 +91,7 @@ updateNote(){
 
     <Card  className="dashboard" style={{top: 0,
     left: 0,
-    height: 100,
+    height:100,
     width: 250,
     backgroundColor:note.color
    }} >
