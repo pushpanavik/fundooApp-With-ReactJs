@@ -2,23 +2,15 @@ import React, { Component } from 'react';
 import NoteController from "../controller/NoteController";
 import IconButton from "@material-ui/core/IconButton";
 import pin from "../icons/pin.svg";
-import color from "../icons/color.svg";
-import archive from "../icons/archive.svg";
-import Menu from '@material-ui/core/Menu';
+
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
-import Reminder from './Reminder';
-import Collaborator from '../Note/Collaborator';
-import ImageOnNote from './ImageOnNote';
-
-import MoreOtherNote from './MoreOtherNote';
-import OtherNoteColor from './OtherNoteColor';
+import OtherNoteIcons from './OtherNoteIcons';
 var noteCtrl = new NoteController();
 
 
@@ -39,49 +31,43 @@ class OtherNote  extends Component{
     super();
   this.state={
     open:false,
-    title:null,
-    description: null,
-       
+    title:"",
+    description: "",
+    notes:[]
+    
 } 
-}
+this.handleClick=this.handleClick.bind(this);
 
-OnOpen=()=>{
+}
+handleClick(){
   this.setState({
-      open:true,
-  })  
+      open:!this.state.open,
+  })
 }
-
-onClose=() =>{
-    this.setState({
-        open:false,
-    })
-}
-handleClick = e => {
-    this.setState({ 
-      anchorEl: e.currentTarget,
-     });
-};
-
 handleClose = () => {
-    this.setState({ anchorEl: null,
-     });
+  this.setState({ open: false });
 };
-
-handleChange = (e) => {
-    this.setState({
-        [e.target.name]: e.target.value
-    })
+updateNote(){
+  var note=this.props.getData;
+  const noteObj = {
+    id:note.id,
+    title: this.state.title,
+    description: this.state.description,
+    pin:note.pin,
+    trash:note.trash,
+    archive:note.archive,
+    createdAt:note.createdAt,
+    lastupdatedat:note.lastupdatedAt,
+    color:note.color,
+    user:note.user
 }
-changeColor(data,btn){
-  noteCtrl.changeColor(data,btn);
+  noteCtrl.updateNote(noteObj)
 }
 
     render(){
              
         var note=this.props.getData;
-        const { anchorEl } =this.state;
-        const { open } = this.state;
-        const { classes } = this.props;
+         
         
         return(
           <div>
@@ -92,7 +78,7 @@ changeColor(data,btn){
              fullWidth
           >
            
-            <DialogContent>
+            <DialogContent style={{overflowY:"hidden"}}>
               
              <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
              <IconButton style={{float:'right',marginTop: -10}}>
@@ -105,49 +91,20 @@ changeColor(data,btn){
             
             <div style={{
               marginTop: 63,
-              marginBottom:-23,
+              marginBottom:-124,
               marginRight: -10,
             }}>
-            <div>
-           <Reminder/>
-           
-           <Collaborator/>
-         
-         
-            <IconButton className="change-color-btn"
-              aria-owns={open ? 'menu' : null}
-              aria-haspopup="true"
-              onClick={(event) => this.handleClick(event)}
-            >
-            <img className={classes.img} src={color} alt="color" />
-            </IconButton>
-            <Menu id="menu"
-           
-            anchorEl={anchorEl} 
-            open={Boolean(anchorEl)} 
-            onClose={this.handleClose}
-           >
-         <div>
-            <OtherNoteColor  fetchData={note}/>
-        </div>
-            </Menu>
+            <OtherNoteIcons fetchData={note}/>
+            </div>
             
-      
-            <ImageOnNote/>
-    
-            <IconButton aria-label="Archive">
-              <img className={classes.img} src={archive} alt="archive" />
-            </IconButton>
-    
-            <MoreOtherNote note={note}/>
-           
-            </div>
-            </div>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.onClose} color="primary" style={{marginTop:-55}}>
-                CLOSE
-              </Button>
+            <Button  onClick={() => {
+                  this.handleClose();
+                  this.updateNote();
+                }} color="primary" style={{marginTop:-55}}>
+              CLOSE
+            </Button>
             </DialogActions>
           </Dialog>
        
@@ -155,7 +112,8 @@ changeColor(data,btn){
     left: 0,
     height: 100,
     width: 250,
-    backgroundColor:note.color}}>
+    backgroundColor:note.color
+  }}>
 
       <div style={{marginTop:10,
       marginLeft:10}}>{note.title} 
@@ -166,42 +124,8 @@ changeColor(data,btn){
       </div>
       
       <div>
-            <Reminder/>
-    
-            <Collaborator/>
-         
-            <IconButton className="change-color-btn" style={{marginTop:-92,
-            marginLeft:82}}
-              aria-owns={open ? 'menu' : null}
-              aria-haspopup="true"
-              onClick={(event) => this.handleClick(event)}
-            >
-            <img className={classes.img} src={color} alt="color" />
-            </IconButton>
-            <Menu id="menu"
-           
-            anchorEl={anchorEl} 
-            open={Boolean(anchorEl)} 
-            onClose={this.handleClose}
-           >
-          <div>
-              <OtherNoteColor fetchData={note}/>
-          </div>
-                   
-            </Menu>
-      
-            <ImageOnNote style={{marginTop:-151,marginLeft:125}}/>
-    
-            <IconButton aria-label="Archive" style={{marginTop:-133}}>
-              <img className={classes.img} src={archive} alt="archive" />
-            </IconButton>
-    
-            <div style={{marginTop:18}}>
-            <MoreOtherNote data={note}/>
-            </div>
-           
-           
-            </div>
+      <OtherNoteIcons data={note}/>         
+      </div>
           
       </Card>
       

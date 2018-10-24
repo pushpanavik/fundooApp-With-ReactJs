@@ -11,7 +11,9 @@ import Reminder from './Reminder';
 import Collaborator from './Collaborator';
 import ImageOnNote from './ImageOnNote';
 import MoreOnNote from './MoreOnNote';
+import NoteController from '../controller/NoteController';
 
+var noteCtrl=new NoteController();
 const style = theme => ({
     root: {
       width: '100%',
@@ -95,7 +97,7 @@ class Icons extends Component{
                 <ImageOnNote getnote={note}/>
             </div>
    
-            <IconButton  style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
+            <IconButton onClick={()=>noteCtrl.isArchiveNote(note)} style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
             

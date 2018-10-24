@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import pin from "../icons/pin.svg";
-import image from "../icons/image.svg";
-import reminders from "../icons/reminders.svg";
-import addUser from "../icons/addUser.svg";
-import color from "../icons/color.svg";
-import archive from "../icons/archive.svg";
-import morevert from "../icons/morevert.svg";
-import Menu from '@material-ui/core/Menu';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import Reminder from '../Note/Reminder';
+import Menu from '@material-ui/core/Menu';
+import ImageOnNote from '../Note/ImageOnNote';
+import color from '../icons/color.svg';
+import Collaborator from '../Note/Collaborator';
+import unarchive from '../icons/unarchive.svg';
+ import Button from '@material-ui/core/Button';
+ import Dialog from '@material-ui/core/Dialog';
+ import DialogActions from '@material-ui/core/DialogActions';
+ import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import NoteController from "../controller/NoteController";
-import Home from "../user/Home";
+import OtherNoteColor from '../Note/OtherNoteColor';
+import MoreOtherNote from '../Note/MoreOtherNote'
+
 var noteCtrl=new NoteController();
 const style = theme => ({
     root: {
@@ -32,80 +32,93 @@ const style = theme => ({
          
     });
 class ArchiveNote extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      anchorEl: null,
-      note:[]
-    };
-  }
-  componentDidMount(){
-    var self=this;
-    noteCtrl.getUserNote(function(notes){
-      self.setState({
-        note:notes
-      })
-    })
-  }
-  OnOpen=()=>{
-    this.setState({
-        open:true,
-    })  
-  }
-  
-  onClose=() =>{
-      this.setState({
-          open:false,
-      })
-  }
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-  changeColor(data,btn){
-    noteCtrl.changeColor(data,btn);
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { anchorEl } =this.state;
-        const { open } = this.state;
-  
-   var note;
-   var listItems=Object.values(this.state.note).map(function(value,i) {
-    note=value;
-       return(
-        <div style={{marginTop:20}}  key={i}>
-       {note}>
-        </div>
-         
-       )
-      });
-if(note.archive===true){
-return( 
-  <div style={{
-    marginTop:55,
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-evenly',
-    flexWrap:'wrap',
-    marginLeft:250,
-    marginRight:250,
+  constructor(){
+    super();
+  this.state={
+    open:false,
+    title:"",
+    description: "",
+    notes:[]
     
-  }}
-  > {listItems}
-           
-           <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-            fullWidth
-          >
-           
-            <DialogContent>
+} 
+  }
+OnOpen=()=>{
+  this.setState({
+      open:true,
+  })  
+}
+onClose=() =>{
+    this.setState({
+        open:false,
+    })
+}
+handleClick = e => {      
+    this.setState({ anchorEl: e.currentTarget });
+};
+
+handleClose = () => {
+    this.setState({ anchorEl: null });
+};
+
+handleChange = (e) => {
+    this.setState({
+        [e.target.name]: e.target.value
+    })
+}
+
+
+updateNote(){
+  // var note=this.props.getData;
+  // const noteObj = {
+  //   id:note.id,
+  //   title: this.state.title,
+  //   description: this.state.description,
+  //   pin:note.pin,
+  //   trash:note.trash,
+  //   archive:note.archive,
+  //   createdAt:note.createdAt,
+  //   lastupdatedat:note.lastupdatedAt,
+  //   color:note.color,
+  //   user:note.user
+//}
+  //noteCtrl.updateNote(noteObj)
+}
+componentDidMount() {
+  var self = this;
+  noteCtrl.getUserNote(function (noteDetails) {
+      if (noteDetails !== null && noteDetails !== undefined) {
+          self.setState({
+              notes: noteDetails
+          });
+      }
+      else {
+          self.setState({
+              notes: []
+          });
+      }
+  });
+}
+    render(){
+      const { anchorEl } =this.state;
+        const { open } = this.state;
+        const { classes } = this.props;
+        console.log('note info from other note',this.state.notes)
+      
+        return (
+          Object.keys(this.state.notes).map((item) => {
+              var key = item;
+              var note = this.state.notes[key];
+
+            if(note.archive===false && note.pin===false){
+              return(
+
+            <Dialog
+             open={this.state.open}
+             onClose={this.handleClose}
+             aria-labelledby="form-dialog-title"
+             fullWidth
+          > 
+            <DialogContent style={{overflowY:"hidden"}}>
               
              <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
              <IconButton style={{float:'right',marginTop: -10}}>
@@ -118,19 +131,17 @@ return(
             
             <div style={{
               marginTop: 63,
-              marginBottom:-23,
+              marginBottom:-124,
               marginRight: -10,
             }}>
-            <div>
-            <IconButton aria-label="Reminder">
-              <img className={classes.img} src={reminders} alt="reminders" />
-            </IconButton>
-    
-            <IconButton aria-label="Collaborator">
-              <img className={classes.img} src={addUser} alt="collaborator" />
-            </IconButton>
-         
-            <IconButton className="change-color-btn"
+           
+           <div>
+           <Reminder/>
+            
+           <Collaborator/>
+           
+            
+            <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
               onClick={(event) => this.handleClick(event)}
@@ -138,220 +149,50 @@ return(
             <img className={classes.img} src={color} alt="color" />
             </IconButton>
             <Menu id="menu"
-           
             anchorEl={anchorEl} 
             open={Boolean(anchorEl)} 
             onClose={this.handleClose}
            >
-                   <div>
-        <IconButton
-          id="color-btn"
-          style={{ backgroundColor: "white" }}
-          onClick={() => {
-            this.handleClose();
-            this.changeColor(note, 1);
-          }}
-        >
-          <div
-            className="color-change-div"
-          />
-        </IconButton>
-       
-        <Tooltip title="Red">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 138, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 2);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Orange">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 209, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 3);
-            }}
-          >
-            <div
-              className="color-change-div" 
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Yellow">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 255, 141)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 4);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Green">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(204, 255, 144)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 5);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Teal">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(167, 255, 235)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 6);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(128, 216, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 7);
-            }}
-          >
-            <div
-              className="color-change-div"
-            
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Dark blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(130, 177, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 8);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Purple">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(179, 136, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 9);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Pink">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(248, 187, 208)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 10);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Brown">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(215, 204, 200)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 11);
-            }}
-          >
-            <div
-              className="color-change-div"   
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Gray">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(207, 216, 220)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 12);
-            }}
-          >
-            <div
-              className="color-change-div"
-            />
-          </IconButton>
-        </Tooltip>
-      </div>
-                   
+                   <OtherNoteColor fetchData={note}/>      
             </Menu>
-      
-            <IconButton aria-label="image">
-              <img className={classes.img} src={image} alt="images" />
+
+            <div>
+                <ImageOnNote getnote={note}/>
+            </div>
+
+          <IconButton onClick={()=>noteCtrl.isArchiveNote(note)} style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
+              <img className={classes.img} src={unarchive} alt="unarchive" />
             </IconButton>
-    
-            <IconButton aria-label="Archive">
-              <img className={classes.img} src={archive} alt="archive" />
-            </IconButton>
-    
-            <IconButton aria-label="More Vert">
-              <img className={classes.img} src={morevert} alt="archive" />
-            </IconButton>
-           
+
+            <div>
+                <MoreOtherNote getnote={note}/>
             </div>
             </div>
+            </div>
+            
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.onClose} color="primary" style={{marginTop:-55}}>
-                CLOSE
-              </Button>
+            <Button  onClick={() => {
+                  this.handleClose();
+                }}  style={{marginTop:-55}}>
+              CLOSE
+            </Button>
             </DialogActions>
-          </Dialog>
-       
-<Card className="dashboard"   style={{top: 0,
-    left: 0,
-    height: 100,
+          </Dialog> 
+         
+              )
+            }            
+           
+if (note.archive === true && note.pin === false) {
+return(          
+<Card   style={{
+   height:100,  
     width: 250,
-    backgroundColor:note.color}}>
+    marginLeft:350,
+    marginRight:150,
+    marginTop: 150,
+    backgroundColor:note.color
+  }}>
 
       <div style={{marginTop:10,
       marginLeft:10}}>{note.title} 
@@ -362,15 +203,13 @@ return(
       </div>
       
       <div>
-            <IconButton aria-label="Reminder">
-              <img className={classes.img} src={reminders} alt="reminders" />
-            </IconButton>
-    
-            <IconButton aria-label="Collaborator">
-              <img className={classes.img} src={addUser} alt="collaborator" />
-            </IconButton>
-         
-            <IconButton className="change-color-btn"
+           <Reminder/>
+
+            <div>
+           <Collaborator style={{marginTtop:-56,
+    marginLeft: 40}}/>
+            </div>
+            <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
               onClick={(event) => this.handleClick(event)}
@@ -378,218 +217,37 @@ return(
             <img className={classes.img} src={color} alt="color" />
             </IconButton>
             <Menu id="menu"
-           
             anchorEl={anchorEl} 
             open={Boolean(anchorEl)} 
             onClose={this.handleClose}
            >
-                   <div>
-        <IconButton
-          id="color-btn"
-          style={{ backgroundColor: "white" }}
-          onClick={() => {
-            this.handleClose();
-            this.changeColor(note, 1);
-          }}
-        >
-          <div
-            className="color-change-div"
-          />
-        </IconButton>
-       
-        <Tooltip title="Red">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 138, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 2);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Orange">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 209, 128)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 3);
-            }}
-          >
-            <div
-              className="color-change-div" 
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Yellow">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(255, 255, 141)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 4);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Green">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(204, 255, 144)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 5);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Teal">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(167, 255, 235)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 6);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(128, 216, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 7);
-            }}
-          >
-            <div
-              className="color-change-div"
-            
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Dark blue">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(130, 177, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 8);
-            }}
-          >
-            <div
-              className="color-change-div"
-              
-            />
-          </IconButton>
-        </Tooltip>
-        <br />
-        <Tooltip title="Purple">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(179, 136, 255)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 9);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Pink">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(248, 187, 208)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 10);
-            }}
-          >
-            <div
-              className="color-change-div"
-             
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Brown">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(215, 204, 200)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 11);
-            }}
-          >
-            <div
-              className="color-change-div"   
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Gray">
-          <IconButton
-            id="color-btn"
-            style={{ backgroundColor: "rgb(207, 216, 220)" }}
-            onClick={() => {
-              this.handleClose();
-              this.changeColor(note, 12);
-            }}
-          >
-            <div
-              className="color-change-div"
-            />
-          </IconButton>
-        </Tooltip>
-      </div>
-                   
+                   <OtherNoteColor fetchData={note}/>      
             </Menu>
-      
-            <IconButton aria-label="image">
-              <img className={classes.img} src={image} alt="images" />
-            </IconButton>
-    
-            <IconButton aria-label="Archive">
-              <img className={classes.img} src={archive} alt="archive" />
-            </IconButton>
-    
-            <IconButton aria-label="More Vert">
-              <img className={classes.img} src={morevert} alt="archive" />
-            </IconButton>
-           
-            </div>
-          
-      </Card>
 
-</div>
-   
-  
- )
-}
-else{
-    <Home/>
-}
-}
+            <div>
+                <ImageOnNote getnote={note}/>
+            </div>
+
+          <IconButton onClick={()=> noteCtrl.isArchiveNote(note)} style={{marginTop:-174, marginLeft:161}} aria-label="Unarchive">
+              <img className={classes.img} src={unarchive} alt="unarchive" />
+            </IconButton>
+
+            <div>
+                <MoreOtherNote style={{marginTop: -207,
+    marginLeft: 199}} getnote={note}/>
+            </div>
+            </div>
+         
+      </Card>      
+      )  
+      }else{
+        return(
+          <div></div>
+        )
+      }
+    })
+  )
+  }
 }
 ArchiveNote.propTypes = {
     classes: PropTypes.object.isRequired

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Notes from '../icons/Notes.svg';
 import reminders from '../icons/reminders.svg';
-import labe from '../images/labe.svg';
 import archive from '../icons/archive.svg';
 import trash from '../images/trash.svg';
 import setting from '../images/setting.svg';
 import sendFeed from '../images/sendFeed.svg';
 import help from '../images/help.svg';
 import Button from '@material-ui/core/Button';
+import Label from '../Note/Label';
+import plus from '../images/plus.svg';
+import { Divider } from '@material-ui/core';
 
 class Sidebar extends Component{
    
@@ -28,15 +30,18 @@ class Sidebar extends Component{
                         </Button>
                         <span style={{marginLeft:-160}}>Reminders</span>
 
-                           
+                           <Divider/>
                
+                <Label/>
 
-                <Button href=""  className="sidebarBtn">
-                                <img style={{width:30, height:30,marginLeft:-169}} src={labe} alt="Archive"  className="" />
-                            </Button>
-                            <span style={{marginLeft:-162}}> Label</span>
+                <Button  className="sidebarBtn">
+                <img style={{width:30, height:30,marginTop:-6,marginRight:174}} src={plus} alt="creat"/>
+                </Button>
+                <span style={{marginLeft:-160}} >create new label</span>
 
-                <Button href="/home/archive"  className="sidebarBtn">
+
+              <Divider/>  
+                <Button href= "/home/archive"  className="sidebarBtn">
                                 <img style={{width:30, height:30,marginLeft:-172}} src={archive} alt="Archive"  className="archiveBtn" />
                             </Button>
                             <span style={{marginLeft:-163}}>  Archive</span>

@@ -50,7 +50,7 @@ updateNote(){
 
     render(){
         var note=this.props.getData;     
-                  
+         console.log('note info form pinned')         
         return(
      <div>
         <Dialog
@@ -60,7 +60,7 @@ updateNote(){
           fullWidth
         >
          
-          <DialogContent>
+          <DialogContent style={{overflowY:"hidden"}}>
             
            <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
            <IconButton style={{float:'right',marginTop: -10}}>
@@ -73,7 +73,7 @@ updateNote(){
           
           <div style={{
             marginTop: 63,
-            marginBottom:-23,
+            marginBottom:-124,
             marginRight: -10,
           }}>
           <Icons fetchData={note}/></div>

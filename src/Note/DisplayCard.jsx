@@ -18,7 +18,9 @@ class DisplayCard extends Component {
          
         </div>
       );
-    } else {
+    } else if(note.pin===false &&
+      note.trash===false &&
+      note.archive===false){
       return (
         <div>
         
@@ -26,6 +28,9 @@ class DisplayCard extends Component {
         </div>
       );
     }
+    return(
+      <div></div>
+    )
   
   }
 }

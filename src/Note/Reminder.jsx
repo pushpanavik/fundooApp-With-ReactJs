@@ -45,6 +45,7 @@ class Reminder extends Component{
             aria-owns={open ? 'reminderMenu' : null}
             aria-haspopup="true"
             onClick={(event) => this.handleClick(event)}
+           
             >
             <img style={{width: 17}} src={reminders} alt="reminders" />
             </IconButton>

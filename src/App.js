@@ -7,7 +7,7 @@ import ResetPassword from './user/ResetPassword';
 import Navbar from '../src/user/Navbar';
 import Home from './user/Home'
 import './App.css';
-// import ArchiveNote from './Note/ArchiveNote';
+import ArchiveNote from './Note/ArchiveNote';
 import TrashNote from './Note/TrashNote';
 import DisplayNote from './Note/DisplayNote'
 // import Reminder from './Note/Reminder'
@@ -16,7 +16,7 @@ import DisplayNote from './Note/DisplayNote'
 class App extends Component {
   render() {
     return (
-      <Router>
+     <Router>
         <div className="App">
             
               <div className="FormCenter"></div>
@@ -28,9 +28,9 @@ class App extends Component {
               <Route  path="/home" component={Home}/>
               <Route  path='/home/note' component={DisplayNote}/>
               <Route  path='/home/trash' component={TrashNote}/>
-              {/* <Route  path='/archive' component={ArchiveNote}/>
+              <Route  path='/home/archive' component={ArchiveNote}/>
              
-              <Route  path='/reminder' component={Reminder}/>  */}
+              {/* <Route  path='/reminder' component={Reminder}/>   */}
               
               
               

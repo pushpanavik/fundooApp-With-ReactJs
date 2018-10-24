@@ -42,7 +42,7 @@ let postImageService=(url,data) =>{
 }
 
 let putService=(url,data) =>{
-    console.log('data of user is',url,data);
+   
     return axios({
         method: 'PUT',
         url:url,
