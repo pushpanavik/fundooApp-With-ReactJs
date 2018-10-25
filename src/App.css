@@ -231,11 +231,20 @@ color-change-div{
     margin-top: 48px;
     border: none;
 }
+
+
 .labelDialog{
   font-size: 18px;
     font-weight: 500;
     height: 25px;
 }
+#editlabel {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+
 .NavbarColor{
   background-color: #fb0;
 }

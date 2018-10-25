@@ -44,7 +44,7 @@ class MoreOnNote extends Component{
         const { open } = this.state;
         
         var note=this.props.getnote;
-         console.log('from more ption',note)
+        
         return(
             <div>
             <IconButton aria-label="More Vert" style={{marginTop:-207,marginLeft:199}}

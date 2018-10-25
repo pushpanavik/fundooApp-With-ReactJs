@@ -1,7 +1,9 @@
 
 import {
-    postService, postResetService, getService, postImageService, putService, deleteService
+    postService, postResetService, getService, postImageService, putService, deleteService,
+    deleteLabelService
 } from '../user/UserService';
+
 
 const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
 const NOTE_PATH = "http://localhost:9090/fundoo/user/displayNote";
@@ -9,7 +11,11 @@ const PROFILE_PATH = "http://localhost:9090/fundoo/uploadFile";
 const UPDATE_PROFILE = "http://localhost:9090/fundoo/updateUser";
 const USER_PATH = "http://localhost:9090/fundoo/getUser";
 const UPDATE_NOTE = "http://localhost:9090/fundoo/user/updateNote";
-const DELETE_NOTE = "http://localhost:9090/fundoo/user/deleteNote/"
+const DELETE_NOTE = "http://localhost:9090/fundoo/user/deleteNote/";
+const ADD_LABEL = "http://localhost:9090/fundoo/user/addLabel";
+const DISPLAY_LABEL="http://localhost:9090/fundoo/user/displayLabel";
+const UPDATE_Label="http://localhost:9090/fundoo/user/updateLabel";
+const DELETE_Label="http://localhost:9090/fundoo/user/delete/";
 
 class NoteController {
 
@@ -29,7 +35,9 @@ class NoteController {
                 .then(res => {
                     console.log(res);
                     localStorage.setItem("NoteToken", res.data.msg);
-                    this.getAllNote();
+                    var self=this;
+                    self.getAllNote();
+                    self.getLabel();
                 })
                 .catch(error => {
                     console.log(error);
@@ -155,7 +163,9 @@ class NoteController {
     putService(UPDATE_NOTE,note)
     .then(res =>{
         console.log(res);
-              this.getAllNote();
+        var self=this;
+        self.getAllNote();
+        self.getLabel();
 
     })
     .catch(error =>{
@@ -172,6 +182,7 @@ class NoteController {
                 console.log(error);
             })
     }
+
 
     changeColor(note, btn) {
         if (btn === 1) {
@@ -302,6 +313,89 @@ class NoteController {
             note.archive = false;
         }
         this.updateNote(note);
+    }
+
+    getAllLabel(callback) {
+        getService(DISPLAY_LABEL).then(res => {
+             console.log(res); 
+            return callback(res.data);
+        })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    getLabel() {
+        console.log('comes under controller in get label');
+        
+        getService(DISPLAY_LABEL).then(res => {
+             console.log(res); 
+            
+        })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    getLabelOnNote() {
+        getService(NOTE_PATH)
+            .then(res => {
+                // console.log(res); 
+                console.log("Response....", res.data);
+                
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    addLabelOnSidebar(labelname){
+        const label={
+            name:labelname
+        }
+        if(label.name!==null  ||label.name!==undefined){
+            postService(ADD_LABEL,label)
+            .then(res=>{
+                console.log(res);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        }
+       
+    }
+    editLabel(labelname,label){
+        
+        const labelObj={
+            name:labelname,
+            labelId:label.labelId,
+            userDetails:label.userDetails
+        }
+        if(labelname!==null  ||labelname!==undefined){
+            putService(UPDATE_Label,labelObj)
+            .then(res=>{
+                console.log(res);
+                this.getLabel();
+                this.getAllNote();
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        }
+    }
+
+    deleteLabel(label){
+            if(label!==null  ||label!==undefined){
+            var url=DELETE_Label+ label.labelId;
+            deleteLabelService(url)
+            .then(res=>{
+                console.log(res);
+                this.getLabel();
+                this.getAllNote();
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        }
     }
 }
 

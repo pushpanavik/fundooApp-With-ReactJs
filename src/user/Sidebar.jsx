@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Label from '../Note/Label';
 import plus from '../images/plus.svg';
 import { Divider } from '@material-ui/core';
+import DisplayLabel from '../Note/DisplayLabel';
 
 class Sidebar extends Component{
    
@@ -33,6 +34,7 @@ class Sidebar extends Component{
                            <Divider/>
                
                 <Label/>
+                <DisplayLabel/>
 
                 <Button  className="sidebarBtn">
                 <img style={{width:30, height:30,marginTop:-6,marginRight:174}} src={plus} alt="creat"/>
