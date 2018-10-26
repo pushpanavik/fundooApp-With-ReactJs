@@ -31,8 +31,7 @@ class DisplayNote extends Component {
     noteKey=value;
       
        return(
-         <div key={i}>
-        
+         <div key={i}>   
           <DisplayCard  getDataFromParent={noteKey}/>
         </div>
          
@@ -41,22 +40,23 @@ class DisplayNote extends Component {
       });
 
 return( 
-  <div style={{
-    marginTop:105,
+  
+   <div>
+     <Note/>
+   <div style={{
+   marginTop:40,
     display:'flex',
     flexDirection:'row',
-    justifyContent:'space-evenly',
+    justifyContent:'space-between',
     flexWrap:'wrap',
     marginLeft:350,
     marginRight:150,
    
     
-  }}>
-   <div style={{marginBottom:45}}><Note/></div>
-    {listItems}
+  }}>{listItems}
    
   </div> 
-  
+  </div>
  )
 
 }

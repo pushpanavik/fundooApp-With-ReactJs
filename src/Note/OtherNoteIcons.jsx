@@ -67,7 +67,6 @@ class OtherNoteIcons extends Component{
           
         const { anchorEl } =this.state;
         const { open } = this.state;
-       
         const { classes } = this.props;
         
         return(

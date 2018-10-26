@@ -1,7 +1,7 @@
 
 import {
     postService, postResetService, getService, postImageService, putService, deleteService,
-    deleteLabelService
+    deleteLabelService,putLabelNoteService
 } from '../user/UserService';
 
 
@@ -16,6 +16,8 @@ const ADD_LABEL = "http://localhost:9090/fundoo/user/addLabel";
 const DISPLAY_LABEL="http://localhost:9090/fundoo/user/displayLabel";
 const UPDATE_Label="http://localhost:9090/fundoo/user/updateLabel";
 const DELETE_Label="http://localhost:9090/fundoo/user/delete/";
+const LABEL_NOTE="http://localhost:9090/fundoo/user/updateNoteLabel/";
+const DELETE_LABELNOTE="http://localhost:9090/fundoo/user/deleteLabel/";
 
 class NoteController {
 
@@ -37,7 +39,7 @@ class NoteController {
                     localStorage.setItem("NoteToken", res.data.msg);
                     var self=this;
                     self.getAllNote();
-                    self.getLabel();
+                  
                 })
                 .catch(error => {
                     console.log(error);
@@ -59,9 +61,7 @@ class NoteController {
 
     getUserNote(callback) {
         getService(NOTE_PATH)
-            .then(res => {
-                // console.log(res); 
-                console.log("Response....", res.data);
+            .then(res => {           
                 return callback(res.data);
 
             })
@@ -132,20 +132,23 @@ class NoteController {
                 console.log(error);
             })
     }
+   
 
-    // loadProfileImage(user){
-    //     console.log(user);
-    //     var url =user.data.profilepicImage;
-    //     var pathname = new URL(url).pathname;
-    //     const profileImgUrl="http://localhost:9090"+pathname+"";
-    //     getService(profileImgUrl)
-    //     .then(res=>{
-    //         console.log(res);
-    //     })
-    //     .catch(err=>{
-    //         console.log(err);
-    //     })
-    // }
+    uploadImage(dataurl,filename) {
+   
+    const file=this.dataURLtoFile(dataurl, filename)
+        var form1 = new FormData();
+        form1.append("file", file);
+        console.log(form1);
+        postImageService(PROFILE_PATH, form1)
+            .then(res => {
+                console.log(res);
+                this.updateNote(res.data.msg);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     isPinned(note) {
 
         console.log('inisde pin', note)
@@ -165,7 +168,7 @@ class NoteController {
         console.log(res);
         var self=this;
         self.getAllNote();
-        self.getLabel();
+      
 
     })
     .catch(error =>{
@@ -317,7 +320,6 @@ class NoteController {
 
     getAllLabel(callback) {
         getService(DISPLAY_LABEL).then(res => {
-             console.log(res); 
             return callback(res.data);
         })
             .catch(error => {
@@ -326,16 +328,40 @@ class NoteController {
     }
     getLabel() {
         console.log('comes under controller in get label');
-        
-        getService(DISPLAY_LABEL).then(res => {
-             console.log(res); 
-            
+                getService(DISPLAY_LABEL).then(res => {
+                 console.log(res);
+                        
         })
             .catch(error => {
                 console.log(error);
             })
     }
 
+    addLabelOnNote(note,label){
+
+        console.log('note infor from add label on note',note);
+        console.log('label infor from add label on note',label);
+        var url=LABEL_NOTE+note.id+"/"+label.labelId;
+        putLabelNoteService(url)
+        .then(res =>{
+            console.log("Response....", res.data);
+           
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+    deleteLabelOnNote(label,note){
+        var url=DELETE_LABELNOTE+ label.labelId+ "/"+note.id;
+        deleteLabelService(url)
+        .then(res =>{
+            console.log(res);
+           
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
     getLabelOnNote() {
         getService(NOTE_PATH)
             .then(res => {
@@ -374,8 +400,6 @@ class NoteController {
             putService(UPDATE_Label,labelObj)
             .then(res=>{
                 console.log(res);
-                this.getLabel();
-                this.getAllNote();
             })
             .catch(err =>{
                 console.log(err);
@@ -389,8 +413,6 @@ class NoteController {
             deleteLabelService(url)
             .then(res=>{
                 console.log(res);
-                this.getLabel();
-                this.getAllNote();
             })
             .catch(err =>{
                 console.log(err);

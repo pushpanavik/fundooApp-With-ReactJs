@@ -54,8 +54,20 @@ let putService=(url,data) =>{
 }) 
 }
 
+let putLabelNoteService=(url) =>{
+   
+    return axios({
+        method: 'PUT',
+        url:url,
+        headers:{
+			"Content-Type":"application/json",
+            'token': localStorage.getItem('token')
+     },
+        
+}) 
+}
 const getService=(url) =>{
-    console.log('token inside getuser',url);
+  
     return axios({
         method:'GET',
         url:url,
@@ -83,4 +95,4 @@ return axios({
     })
      }
     
-export {postService,postResetService,getService,postImageService,putService,deleteService,deleteLabelService};
+export {postService,postResetService,getService,postImageService,putService,deleteService,deleteLabelService,putLabelNoteService};

@@ -19,7 +19,6 @@ class SignInForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        //this.goToLoginPage=this.goToLoginPage.bind(this);
         
     }
 

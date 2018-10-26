@@ -14,7 +14,7 @@ class DisplayCard extends Component {
       return (
         
         <div>
-                   <PinnedNote  getData={note} /> 
+            <PinnedNote  getData={note} /> 
          
         </div>
       );
@@ -24,7 +24,7 @@ class DisplayCard extends Component {
       return (
         <div>
         
-          <OtherNote  getData={note}/>
+          <OtherNote style={{marginTop:400}} getData={note}/>
         </div>
       );
     }

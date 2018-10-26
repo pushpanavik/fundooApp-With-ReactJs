@@ -29,6 +29,7 @@ class App extends Component {
               <Route  path='/home/note' component={DisplayNote}/>
               <Route  path='/home/trash' component={TrashNote}/>
               <Route  path='/home/archive' component={ArchiveNote}/>
+              {/* <Route path="/home/label" component={LabelsOnSidebar}/> */}
              
               {/* <Route  path='/reminder' component={Reminder}/>   */}
               

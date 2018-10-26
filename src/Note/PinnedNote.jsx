@@ -4,15 +4,13 @@ import IconButton from "@material-ui/core/IconButton";
 import BluePin from '../images/BluePin.svg';
 import Card from "@material-ui/core/Card";
 import Icons from '../Note/Icons';
-import {Input,Button} from '@material-ui/core/Button';
+import {Button} from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import Menu from '@material-ui/core/Menu';
-import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Chip from '@material-ui/core/Chip';
+
+
 var noteCtrl = new NoteController();
 
 class PinnedNote extends Component {
@@ -23,7 +21,8 @@ class PinnedNote extends Component {
       title: "",
       description: "",
       notes: [],
-      label:[],
+      labels:[],
+      
 
     }
     this.handleClick = this.handleClick.bind(this);
@@ -34,14 +33,7 @@ class PinnedNote extends Component {
       open: !this.state.open,
     })
   }
-  handleClickLabel=(event)=> {
-    this.setState({
-      anchorElAddLabel: event.currentTarget
-  });
-}
-handleCloseLabel=()=> {
-  this.setState({ anchorElAddLabel: null });
-}
+
    
   handleClose = () => {
     this.setState({ open: false });
@@ -63,129 +55,118 @@ handleCloseLabel=()=> {
     }
     noteCtrl.updateNote(noteObj)
   }
-componentDidMount(){
-  var self=this;
-  noteCtrl.getAllLabel(function(getLabels){
-    self.setState({
-      label:getLabels
-    })
-  })
+  componentDidMount() {
+    var self = this;
+    noteCtrl.getAllLabel(function (labelDetails) {
+      console.log(labelDetails);
+        if (labelDetails !== null && labelDetails !== undefined) {
+            self.setState({
+                labels: labelDetails
+            });
+        }
+        else {
+            self.setState({
+                labels: []
+            });
+        }
+    });
 }
+
   render() {
-    var labeldata;
-    var note = this.props.getData;
-    var labelObj=Object.values(this.state.label).map(function(value,i){
-      var key=i;
-      return(
-       <div>
-         labeldata=value;
-       </div> 
-      )
-      
-    })
-  
-    const {anchorElAddLabel}=this.state;
-    console.log('note info form pinned')
-    return (
-      <div>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-          fullWidth
-        >
+     
+       var note = this.props.getData;
+    // return(
+    //  this.state.labels && Object.values(this.state.labels).map((label,i)=>{
+     
+    //   var labelName = label;    
+    //   console.log(labelName)
+    return(
+<div>
+      <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+      >
 
-          <DialogContent style={{ overflowY: "hidden" }}>
+        <DialogContent style={{ overflowY: "hidden" }}>
 
-            <div ><input type="text" style={{ outline: 'none', border: 0 }} defaultValue={note.title} onChange={event => this.setState({ title: event.target.value })} />
-              <IconButton style={{ float: 'right', marginTop: -10 }}>
-                <img src={BluePin} alt="pin" />
-              </IconButton>
-            </div>
+          <div ><input type="text" style={{ outline: 'none', border: 0 }} defaultValue={note.title} onChange={event => this.setState({ title: event.target.value })} />
+            <IconButton style={{ float: 'right', marginTop: -10 }}>
+              <img src={BluePin} alt="pin" />
+            </IconButton>
+          </div>
 
-            <div style={{ marginTop: 5 }}><input type="text" style={{ outline: 'none', border: 0 }} defaultValue={note.description} onChange={event => this.setState({ description: event.target.value })} />
-            </div>
-
-            <div style={{
-              marginTop: 63,
-              marginBottom: -124,
-              marginRight: -10,
-            }}>
-              <Icons fetchData={note} /></div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => {
-              this.handleClose();
-              this.updateNote();
-            }} color="primary" style={{ marginTop: -55 }}>
-              CLOSE
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-
-        <Card className="dashboard" style={{
-          top: 0,
-          left: 0,
-          height: 100,
-          width: 250,
-          backgroundColor: note.color
-        }} >
-
-          <div style={{
-            marginTop: 10,
-            marginLeft: 10
-          }}>{note.title}
-            <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => noteCtrl.isPinned(note)}><img id="bluepin" src={BluePin} alt="pin" /></IconButton>
+          <div style={{ marginTop: 5 }}><input type="text" style={{ outline: 'none', border: 0 }} defaultValue={note.description} onChange={event => this.setState({ description: event.target.value })} />
           </div>
 
           <div style={{
-            marginTop: 10,
-            marginLeft: 10
-          }} onClick={this.handleClick}>{note.description}
-          </div>
-          <Menu
-            id="simple-menu-add-label"
-            anchorEl={anchorElAddLabel}
-            open={Boolean(anchorElAddLabel)}
-            onClose={this.handleCloseLabel}
-          >
-            <div>Label note</div>
-            <Input
-              id="label-search"
-              disableUnderline={true}
-              type="text"
-              placeholder="Enter label name"
-            />
-           
-                <div>
-                  <FormControlLabel
-                    id="add-label-note"
-                    control={
-                      <Checkbox
-                        style={{ width: 36, height: 36, padding: 5 }}
-                        icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 20 }} />}
-                        checkedIcon={<CheckBoxIcon style={{ fontSize: 20 }} />}
+            marginTop: 63,
+            marginBottom: -124,
+            marginRight: -10,
+          }}>
+            <Icons fetchData={note} />
+        </div>
+        </DialogContent>
 
-                        color="default"
-                        onClick={() => this.getLabel(labeldata,note)}
-                      />
-                    }
-                    label={labeldata}
-                  />
-                </div>
-              );
-            })
-            }
-          </Menu>
-          <Icons data={note} />
+        <DialogActions>
+         
+             <Button onClick={() => {
+            this.handleClose();
+            this.updateNote();
+          }} 
+          color="primary" style={{ marginTop: -55 }}>
+            CLOSE
+          </Button>  
+        </DialogActions>
+      </Dialog>
 
-          
-        </Card>
+
+      <Card className="dashboard" style={{
+        top: 0,
+        left: 0,
+        height: 150,
+        width: 250,
+        backgroundColor: note.color
+      }} >
+
+        <div style={{
+          marginTop: 10,
+          marginLeft: 10
+        }}>{note.title}
+          <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => noteCtrl.isPinned(note)}><img id="bluepin" src={BluePin} alt="pin" /></IconButton>
+        </div>
+
+        <div style={{
+          marginTop: 10,
+          marginLeft: 10
+        }} onClick={this.handleClick}>{note.description}
+        </div>
+
+        {/* <div>
+        if(labelName!==null){
+          <Chip
+          label={labelName.name}
+          onDelete={() => noteCtrl.deleteLabelOnNote(labelName,note)}
+          style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
+          />
+          }
+     
+        </div> */}
+       
+        <Icons data={note} />
+
+        
+      </Card>
+     
       </div>
-    );
-  }
+    )
 
+    
+  //  })
+  //  )
+
+  }  
 }
 
 export default PinnedNote;

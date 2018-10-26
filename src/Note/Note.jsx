@@ -106,7 +106,7 @@ class Note extends Component {
         <Collapse in={!this.state.open}>
           <Card
             className={classes.card}
-            style={{ marginLeft: 91, marginTop: 55 }}
+            style={{ marginLeft: 431, marginTop: 106 }}
           >
             <input
               className={classes.takeNote}

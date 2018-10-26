@@ -36,11 +36,9 @@ class ProfileCard extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    console.log(this.state.imagePreviewUrl);
-    console.log(this.state.name);
-    // if(this.state.imagePreviewUrl!==undefined && this.state.name===null){
+  
     noteCtrl.uploadProfilePic(this.state.imagePreviewUrl,this.state.name);
-    // }
+    
   };
   
   handleClick() {
@@ -55,8 +53,7 @@ class ProfileCard extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log('handle uploading-', this.state.file);
+     
   }
 
   handleImageChange(e) {
@@ -77,7 +74,7 @@ class ProfileCard extends Component {
         imagePreviewUrl: reader.result
       });
     }
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
   }
 
   render() {

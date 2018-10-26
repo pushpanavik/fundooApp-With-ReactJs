@@ -227,8 +227,8 @@ color-change-div{
   border-color: gray;
 }
   .notefirstCard{
-    margin-left:201px;
-    margin-top: 48px;
+    margin-left:439px;
+    margin-top: 118px;
     border: none;
 }
 
@@ -258,6 +258,17 @@ color-change-div{
 }
 .paper{
   top:64px;
+}
+.hide-file {
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  cursor: pointer;
+  right: 0;
+  top: 0;
+  height: 50%;
+  font-size: 24px;
+  width: 50%;
 }
 .fileInput{
   border-bottom: 4px solid lightgray;

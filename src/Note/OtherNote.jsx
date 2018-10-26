@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import OtherNoteIcons from './OtherNoteIcons';
+import { Chip } from '@material-ui/core';
 var noteCtrl = new NoteController();
 
 
@@ -33,7 +34,8 @@ class OtherNote  extends Component{
     open:false,
     title:"",
     description: "",
-    notes:[]
+    notes:[],
+    labels:[],
     
 } 
 this.handleClick=this.handleClick.bind(this);
@@ -64,10 +66,30 @@ updateNote(){
   noteCtrl.updateNote(noteObj)
 }
 
+componentDidMount() {
+  var self = this;
+  noteCtrl.getAllLabel(function (labelDetails) {
+      if (labelDetails !== null && labelDetails !== undefined) {
+          self.setState({
+              labels: labelDetails
+          });
+      }
+      else {
+          self.setState({
+              labels: []
+          });
+      }
+  });
+}
     render(){
-             
+       
         var note=this.props.getData;
-         
+       console.log(note)
+        // return(
+        // Object.values(this.state.labels).map((label,i)=>{
+     
+        //   var labelName = label;    
+        //  console.log(labelName);
         
         return(
           <div>
@@ -108,22 +130,38 @@ updateNote(){
             </DialogActions>
           </Dialog>
        
-<Card className="dashboard"   style={{top: 0,
+<Card className="dashboard"    style={{top: 0,
     left: 0,
-    height: 100,
+    height: 150,
     width: 250,
     backgroundColor:note.color
   }}>
 
       <div style={{marginTop:10,
       marginLeft:10}}>{note.title} 
-      <IconButton style={{float:"right",marginTop:-12}} onClick={() => noteCtrl.isPinned(note)}><img id="otherpin" src={pin} alt="pin"/></IconButton>      </div>
+      <IconButton style={{float:"right",marginTop:-12}} onClick={() => noteCtrl.isPinned(note)}>
+      <img id="otherpin" src={pin} alt="pin"/></IconButton>
+     
+        {/* <img src={note.image} alt="noteImage"/> */}
+        
+       </div>
       
       <div style={{marginTop:10,
       marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
       
       <div>
+        <div>
+        if(note.listOfLabels!=null){
+          <Chip 
+         // label={labelName.name}
+          onDelete={() => noteCtrl.deleteLabelOnNote(note)}
+          style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
+          />
+          }
+       
+        </div>
+        
       <OtherNoteIcons data={note}/>         
       </div>
           
@@ -131,8 +169,10 @@ updateNote(){
       
       </div>
         )
+
+      // })
+      //   )
     }
-    
 }
 OtherNote.propTypes = {
   classes: PropTypes.object.isRequired
