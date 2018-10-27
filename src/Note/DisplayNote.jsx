@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NoteController from "../controller/NoteController";
-import DisplayCard from "./DisplayCard";
-import Note from "./Note";
+import DisplayCard from '../Note/DisplayCard'
+
 
 var noteCtrl = new NoteController();
 
@@ -31,7 +31,7 @@ class DisplayNote extends Component {
     noteKey=value;
       
        return(
-         <div key={i}>   
+         <div key={noteKey.id}>   
           <DisplayCard  getDataFromParent={noteKey}/>
         </div>
          
@@ -42,15 +42,14 @@ class DisplayNote extends Component {
 return( 
   
    <div>
-     <Note/>
    <div style={{
    marginTop:40,
     display:'flex',
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:'center',
     flexWrap:'wrap',
-    marginLeft:350,
-    marginRight:150,
+    marginLeft:60,
+  
    
     
   }}>{listItems}
@@ -59,8 +58,28 @@ return(
   </div>
  )
 
+  // render() {
+  //     var otherCount = localStorage.getItem("otherNotes");
+  //     var pinnedCount = localStorage.getItem("pinnedNotes");
+  //     return(
+  //         <div style={{ marginLeft:150,
+  //           marginRight:350,
+  //           width: 250,}}>
+              
+  //           <PinnedNote />
+             
+  //             <div style={{width: 240,marginLeft: 400,marginTop: 160,opacity:0.5,fontWeight:'bold',fontSize:15}}>
+  //                 Others {otherCount}
+  //             </div>
+             
+  //                 <OtherNote />
+             
+  //         </div>
+  //     );
+  }
+
 }
   
-}
+
 
 export default DisplayNote;

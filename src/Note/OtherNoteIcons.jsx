@@ -76,8 +76,8 @@ class OtherNoteIcons extends Component{
             <div>
            <Collaborator/>
             </div>
-            
-            <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
+             
+             <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
               onClick={(event) => this.handleClick(event)}

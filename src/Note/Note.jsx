@@ -15,6 +15,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Collapse } from "@material-ui/core";
 import PropTypes from "prop-types";
 import NoteController from "../controller/NoteController";
+import DisplayNote from "./DisplayNote";
 
 
 
@@ -73,9 +74,6 @@ class Note extends Component {
   };
   render() {
     const { classes } = this.props;
-    console.log(this.state.title)
-    console.log(this.state.description);
-    
     return (
       <div>
         <Collapse in={this.state.open}>
@@ -165,6 +163,7 @@ class Note extends Component {
             </div>
           </Card>
         </Collapse>
+      <DisplayNote/>
        
       </div>
     );

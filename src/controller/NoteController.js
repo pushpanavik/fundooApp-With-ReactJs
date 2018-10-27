@@ -29,7 +29,8 @@ class NoteController {
 
         const noteModel = {
             title: title,
-            description: description
+            description: description,
+            image:'',
 
         }
         if (title !== "" && description !== "") {
@@ -134,21 +135,8 @@ class NoteController {
     }
    
 
-    uploadImage(dataurl,filename) {
    
-    const file=this.dataURLtoFile(dataurl, filename)
-        var form1 = new FormData();
-        form1.append("file", file);
-        console.log(form1);
-        postImageService(PROFILE_PATH, form1)
-            .then(res => {
-                console.log(res);
-                this.updateNote(res.data.msg);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+  
     isPinned(note) {
 
         console.log('inisde pin', note)
@@ -257,7 +245,27 @@ class NoteController {
             })
     }
 
+    getImageonCard(event,note) {
+        event.preventDefault();
+      var form = new FormData();
+          console.log("form", event.target.files[0]);
 
+          form.append("file", event.target.files[0]);
+          console.log("form after appending", event.target.files[0]);
+            postImageService(PROFILE_PATH, form)
+        .then(res => {
+            console.log(res);
+            console.log(res.data)
+            var note=JSON.parse(localStorage.getItem("noteInfo") || "[]");
+            note.image=res.data.msg;
+            this.updateNote(note);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        
+      }
+      
     // var getImageUrl = '';
     //   $scope.imageSelect = function(event, note) {
     //     console.log('goes under imge', event);

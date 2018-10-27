@@ -9,8 +9,8 @@ import Home from './user/Home'
 import './App.css';
 import ArchiveNote from './Note/ArchiveNote';
 import TrashNote from './Note/TrashNote';
-import DisplayNote from './Note/DisplayNote'
-// import Reminder from './Note/Reminder'
+
+import Note from './Note/Note'
 
 
 class App extends Component {
@@ -26,7 +26,8 @@ class App extends Component {
               <Route strict path="/resetPassword"  component={ResetPassword}></Route>
               <Route exact path="/navbar" component={Navbar}></Route>
               <Route  path="/home" component={Home}/>
-              <Route  path='/home/note' component={DisplayNote}/>
+              <Route  path='/home/note' component={Note}/>
+             
               <Route  path='/home/trash' component={TrashNote}/>
               <Route  path='/home/archive' component={ArchiveNote}/>
               {/* <Route path="/home/label" component={LabelsOnSidebar}/> */}

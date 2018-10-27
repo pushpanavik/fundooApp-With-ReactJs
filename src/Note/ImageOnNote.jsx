@@ -12,48 +12,24 @@ class ImageOnNote extends Component{
             imagePreviewUrl:null,
             
         }
-        this.getImageonCard=this.getImageonCard.bind(this);
+      
     }
   
     triggerInputFile = () => {
         this.fileInput.click();
     }
-   
-        getImageonCard(e) {
-            // e.preventDefault();
-            // e.preventDefault();
-
-            let reader = new FileReader();
-            var image = '';
-           
-                let file=e.target.files[0];
-           
-            // let file = e.target.files[0];
-            // let name=e.target.files[0].name;
-        
-            reader.onloadend = () => {
-                 this.setState({
-                 imagePreviewUrl: reader.result
-               });
-            // }
-             reader.readAsDataURL(file);
-           
-        }
-        if (e.target.files[0]) {
-            image = e.target.files[0].name;
-        noteCtrl.uploadImage(this.state.imagePreviewUrl,image);
-          }
-        }
+          
+       
     render(){
 
        let note=this.props.getnote;
-       
+       let {imagePreviewUrl} = this.state;
       
         return(
             <div className="previewComponent">
             <input className="hide-file" ref={fileInput => this.fileInput = fileInput}
               type="file" 
-              onChange={(e)=>this.getImageonCard(e)} />
+              onChange={(e)=>noteCtrl.getImageonCard(e,note)} />
             <IconButton  onClick={this.triggerInputFile} aria-label="image" style={{marginTop:-135,marginLeft:119}}>
               <img style={{width:17}} src={image} alt="images" />
             </IconButton>

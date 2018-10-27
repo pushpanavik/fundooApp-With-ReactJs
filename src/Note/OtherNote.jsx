@@ -66,30 +66,12 @@ updateNote(){
   noteCtrl.updateNote(noteObj)
 }
 
-componentDidMount() {
-  var self = this;
-  noteCtrl.getAllLabel(function (labelDetails) {
-      if (labelDetails !== null && labelDetails !== undefined) {
-          self.setState({
-              labels: labelDetails
-          });
-      }
-      else {
-          self.setState({
-              labels: []
-          });
-      }
-  });
-}
     render(){
        
         var note=this.props.getData;
+        console.log(note.listOfLabels)
        console.log(note)
-        // return(
-        // Object.values(this.state.labels).map((label,i)=>{
      
-        //   var labelName = label;    
-        //  console.log(labelName);
         
         return(
           <div>
@@ -130,11 +112,11 @@ componentDidMount() {
             </DialogActions>
           </Dialog>
        
-<Card className="dashboard"    style={{top: 0,
-    left: 0,
-    height: 150,
-    width: 250,
-    backgroundColor:note.color
+<Card className="dashboard"    style={{
+    backgroundColor: note.color,
+    width:240,
+    marginTop:30,
+    marginRight:70,
   }}>
 
       <div style={{marginTop:10,
@@ -152,13 +134,13 @@ componentDidMount() {
       
       <div>
         <div>
-        if(note.listOfLabels!=null){
+        {/* if(note.listOfLabels!=null){ */}
           <Chip 
          // label={labelName.name}
           onDelete={() => noteCtrl.deleteLabelOnNote(note)}
           style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
           />
-          }
+         
        
         </div>
         
@@ -169,9 +151,6 @@ componentDidMount() {
       
       </div>
         )
-
-      // })
-      //   )
     }
 }
 OtherNote.propTypes = {
