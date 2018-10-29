@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-//import Chip from '@material-ui/core/Chip';
+import Chip from '@material-ui/core/Chip';
 
 
 var noteCtrl = new NoteController();
@@ -23,6 +23,7 @@ class PinnedNote extends Component {
       image:"",
       notes: [],
       labels:[],
+      
       
 
     }
@@ -40,8 +41,8 @@ class PinnedNote extends Component {
     this.setState({ open: false });
   };
 componentDidUpdate(prevProps){
-  var note=this.props.getData;
-  image:note.image
+  
+ 
 }
 updateNote() {
   var note = this.props.getData;
@@ -79,18 +80,21 @@ updateNote() {
 
   render() {
      
-    var pinnedNotes = [];
+    
     var note=this.props.getData;
-      pinnedNotes.push(note);
-     localStorage.setItem('pinnedNotes',pinnedNotes.length);
-    console.log(note)
-     if(note.pin===true ){   
+    
+    var labellist=note.listOfLabels;
+    console.log(this.state.labellist);
+   
     return(
-
-          // Object.values(this.state.labels).map((label,i)=>{
-          //  var labelName = label;  
+    Object.values(labellist).map((labels)=>{
+      var label=labels;
+      console.log(label.name)
+     
+  
+     if(note.pin===true && note.trash===false &&note.archive===false ){ 
        
-      
+    return(     
         
      <div>
            <Dialog  
@@ -146,11 +150,13 @@ updateNote() {
                marginTop: 10,
                marginLeft: 10
              }}>{note.title}
-               <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => noteCtrl.isPinned(note)}><img id="bluepin" src={BluePin} alt="pin" />
+               <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => noteCtrl.isPinned(note)}><img id="bluepin" src={BluePin} alt="pin" /></IconButton>
+               </div>
+            {note.image ?
+            <img src ={note.image} alt="images"/>
             
-            <img src ={note.image} alt="images"/></IconButton>
-             </div>
-          
+             :null
+            }
      
              <div style={{
                marginTop: 10,
@@ -158,31 +164,53 @@ updateNote() {
              }} onClick={this.handleClick}>{note.description}
              </div>
      
-             {/* <div>
-             if(labelName!==null){
+             <div>
+             {label.name ?
                <Chip 
-               label={labelName.name}
-               onDelete={() => noteCtrl.deleteLabelOnNote(labelName,note)}
+               label={label.name}
+               onDelete={() => noteCtrl.deleteLabelOnNote(note)}
                style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
                />
+               :
+               null
                }
           
-             </div> */}
+             </div>
             
-             <Icons data={note} />
+             <div style={{marginTop:5}}>
+             {note.reminderDate ?
+               <Chip 
+               label={note.reminderDate }
+               onDelete={() => noteCtrl.deleteReminderOnNote(note)}
+               style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
+               />
+               :
+               null
+               }
+          
+             </div>
+             <Icons  data={note} />
      
              
            </Card>
           
            </div>
          
-     
-            // })
-             )
-  
+         )
+             }
+             else {
+              return (
+                  <div>
+                  </div>
+              );
+          }
+    
+            })
+            
+    )
           }
         }
-  }  
+   
 
 
 export default PinnedNote;

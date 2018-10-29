@@ -26,7 +26,7 @@ class DisplayNote extends Component {
   render(){
     var noteKey;
      
-   var listItems =Object.values(this.state.notes).map(function(value,i) {
+   var listItems =Object.values(this.state.notes).map(function(value) {
      
     noteKey=value;
       
@@ -58,24 +58,7 @@ return(
   </div>
  )
 
-  // render() {
-  //     var otherCount = localStorage.getItem("otherNotes");
-  //     var pinnedCount = localStorage.getItem("pinnedNotes");
-  //     return(
-  //         <div style={{ marginLeft:150,
-  //           marginRight:350,
-  //           width: 250,}}>
-              
-  //           <PinnedNote />
-             
-  //             <div style={{width: 240,marginLeft: 400,marginTop: 160,opacity:0.5,fontWeight:'bold',fontSize:15}}>
-  //                 Others {otherCount}
-  //             </div>
-             
-  //                 <OtherNote />
-             
-  //         </div>
-  //     );
+
   }
 
 }

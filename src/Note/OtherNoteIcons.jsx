@@ -71,8 +71,8 @@ class OtherNoteIcons extends Component{
         
         return(
             
-            <div>
-           <Reminder/>
+            <div style={{height:50}}>
+           <Reminder />
             <div>
            <Collaborator/>
             </div>
@@ -96,7 +96,7 @@ class OtherNoteIcons extends Component{
                 <ImageOnNote getnote={note}/>
             </div>
    
-            <IconButton onClick={()=>{noteCtrl.isArchiveNote(note);}} style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
+            <IconButton onClick={()=>{noteCtrl.isArchiveNote(note);}} style={{marginTop:-164, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
             

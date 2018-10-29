@@ -20,8 +20,17 @@ const LABEL_NOTE="http://localhost:9090/fundoo/user/updateNoteLabel/";
 const DELETE_LABELNOTE="http://localhost:9090/fundoo/user/deleteLabel/";
 
 class NoteController {
-
+    constructor(){
+        
+        var path=window.location.pathname;
+        var value=path.split('/')[3];
+        console.log('path value',value);
+        console.log(path);
+    }
+  
     addNote(title, description) {
+
+        var self=this;
         console.log("Add Note called");
 
         console.log(title);
@@ -31,6 +40,8 @@ class NoteController {
             title: title,
             description: description,
             image:'',
+            remindertime:'',
+            tempdate:''
 
         }
         if (title !== "" && description !== "") {
@@ -38,7 +49,6 @@ class NoteController {
                 .then(res => {
                     console.log(res);
                     localStorage.setItem("NoteToken", res.data.msg);
-                    var self=this;
                     self.getAllNote();
                   
                 })
@@ -136,6 +146,7 @@ class NoteController {
    
 
    
+   
   
     isPinned(note) {
 
@@ -149,13 +160,82 @@ class NoteController {
         this.updateNote(note);
     }
 
+    todayReminder(note){
+        console.log('note infor uinse remider tody',note);
+        var today = new Date();
+        console.log("Date......");
+        console.log(today); 
+        if(today.getHours() >20 && today.getHours() <8){
+            today.setHours(8);
+            today.setMinutes(0);
+        }else if(today.getHours() <20 && today.getHours() >8){
+            today.setHours(20);
+            today.setMinutes(0);
+}
+        note.reminderDate = today;
+        this.updateNote(note);
+        
+    }
 
+    tommorrowReminder(note){
+       var tommorow=new Date();
+       tommorow.setDate(tommorow.getDate() +1);
+       tommorow.setHours(8);
+       tommorow.setMinutes(0);
+       note.reminderDate=tommorow;
+       this.updateNote(note);
+     }
+
+     nextWeekReminder(note){
+         console.log('next week',note);
+         var nextweek=new Date();
+         var day=nextweek.getDay();
+         var numberofDays=7-day+1;
+         nextweek.setDate(nextweek.getDate() +numberofDays);
+         nextweek.setHours(8);
+         nextweek.setMinutes(0);
+         note.reminderDate=nextweek;
+         this.updateNote(note);
+         
+     }
+
+     removeReminder(note){
+         note.reminderDate=null;
+         note.remindertime=null;
+         this.updateNote(note);
+     }
+
+     reminderDate(note){
+      
+         var myDate=new Date(note.tempdate);
+         if(note.remindertime.split(':')[1].split('')[1] ==='PM'){
+             var a=note.remindertime.split(':')[0];
+             var b=12;
+             var time24=this.addTime(a,b);
+             myDate.setHours(time24);
+             myDate.setMinutes(note.remindertime.split(':')[1].split('')[0]);
+         }
+         else{
+             myDate.setHours(note.remindertime.split(':')[0]);
+             myDate.setMinutes(note.remindertime.split(':')[1].split('')[0]);
+         }
+         note.reminderDate=myDate;
+         this.updateNote(note);
+     }
+
+     addtime(a,b){
+         var count=0;
+         while(count <a){
+             b++;
+             count++;
+         }
+         return b;
+     }
     updateNote(note){
     putService(UPDATE_NOTE,note)
     .then(res =>{
         console.log(res);
-        var self=this;
-        self.getAllNote();
+       this.getAllNote();
       
 
     })

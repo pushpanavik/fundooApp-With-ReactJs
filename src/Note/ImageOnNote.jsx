@@ -23,14 +23,14 @@ class ImageOnNote extends Component{
     render(){
 
        let note=this.props.getnote;
-       let {imagePreviewUrl} = this.state;
+     
       
         return(
             <div className="previewComponent">
             <input className="hide-file" ref={fileInput => this.fileInput = fileInput}
               type="file" 
               onChange={(e)=>noteCtrl.getImageonCard(e,note)} />
-            <IconButton  onClick={this.triggerInputFile} aria-label="image" style={{marginTop:-135,marginLeft:119}}>
+            <IconButton  onClick={this.triggerInputFile} aria-label="image" style={{marginTop:-129,marginLeft:119}}>
               <img style={{width:17}} src={image} alt="images" />
             </IconButton>
                </div> 

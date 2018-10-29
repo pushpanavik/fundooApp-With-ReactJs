@@ -9,7 +9,8 @@ import Home from './user/Home'
 import './App.css';
 import ArchiveNote from './Note/ArchiveNote';
 import TrashNote from './Note/TrashNote';
-
+import ReminderPage from './Note/ReminderPage'
+import DisplayLabel from './Note/DisplayLabel';
 import Note from './Note/Note'
 
 
@@ -30,9 +31,9 @@ class App extends Component {
              
               <Route  path='/home/trash' component={TrashNote}/>
               <Route  path='/home/archive' component={ArchiveNote}/>
-              {/* <Route path="/home/label" component={LabelsOnSidebar}/> */}
+              <Route path="/home/label" component={DisplayLabel}/> 
              
-              {/* <Route  path='/reminder' component={Reminder}/>   */}
+              <Route  path='/home/reminder' component={ReminderPage}/>  
               
               
               

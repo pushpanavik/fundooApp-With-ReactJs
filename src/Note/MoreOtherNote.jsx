@@ -51,7 +51,7 @@ class MoreOtherNote extends Component {
 
         return (
             <div>
-                <IconButton aria-label="More Vert" style={{ marginTop: -207, marginLeft: 199 }}
+                <IconButton aria-label="More Vert" style={{ marginTop: -201, marginLeft: 199 }}
                     aria-owns={open ? 'moreMenu' : null}
                     aria-haspopup="true"
                     onClick={(event) => this.handleClick(event)}

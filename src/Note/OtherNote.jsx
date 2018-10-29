@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import OtherNoteIcons from './OtherNoteIcons';
 import { Chip } from '@material-ui/core';
+
 var noteCtrl = new NoteController();
 
 
@@ -69,10 +70,13 @@ updateNote(){
     render(){
        
         var note=this.props.getData;
-        console.log(note.listOfLabels)
-       console.log(note)
-     
-        
+        var labellist=note.listOfLabels;
+        console.log(this.state.labellist);
+        return(
+          Object.values(labellist).map((labels,i)=>{
+            var label=labels;
+            console.log(label.name);        
+          if(note.trash===false && note.pin===false  ){    
         return(
           <div>
           <Dialog
@@ -123,8 +127,11 @@ updateNote(){
       marginLeft:10}}>{note.title} 
       <IconButton style={{float:"right",marginTop:-12}} onClick={() => noteCtrl.isPinned(note)}>
       <img id="otherpin" src={pin} alt="pin"/></IconButton>
-     
-        {/* <img src={note.image} alt="noteImage"/> */}
+      { note.image ?
+         <img src={note.image} alt="noteImage"/>
+         :
+         null
+         }
         
        </div>
       
@@ -132,16 +139,17 @@ updateNote(){
       marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
       
-      <div>
+      <div key={i}>
         <div>
-        {/* if(note.listOfLabels!=null){ */}
+      { label.name ?
           <Chip 
-         // label={labelName.name}
+          label={label.name}
           onDelete={() => noteCtrl.deleteLabelOnNote(note)}
           style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
           />
+          :null
+       } 
          
-       
         </div>
         
       <OtherNoteIcons data={note}/>         
@@ -151,7 +159,18 @@ updateNote(){
       
       </div>
         )
+          
     }
+    else {
+      return (
+          <div>
+          </div>
+      );
+  }
+   })
+   
+)
+  }
 }
 OtherNote.propTypes = {
   classes: PropTypes.object.isRequired

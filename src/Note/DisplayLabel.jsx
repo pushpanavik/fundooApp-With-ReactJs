@@ -10,12 +10,27 @@ class DisplayLabel extends Component {
         super();
 
         this.state = {
-            labels: []
+            labels: [],
+            note:[]
         }
     }
 
     componentDidMount(){
         var self=this;
+
+        noteCtrl.getUserNote(function (noteDetails){
+            if(noteDetails!==null){
+                self.setState({
+                    note:noteDetails
+                })
+            }
+            else{
+                self.setState({
+                    note:[]
+                })
+            }
+           
+        })
         noteCtrl.getAllLabel(function(listofLabels){
           if(listofLabels!== null){
             self.setState({
@@ -31,6 +46,7 @@ class DisplayLabel extends Component {
         })
       }
     render() {
+
         return (
             Object.values(this.state.labels).map((value,i) => {
                

@@ -71,14 +71,14 @@ class Icons extends Component{
         const { classes } = this.props;
         
         return(
-            
-            <div>
-           <Reminder/>
+         
+            <div style={{height:50}}>
+           <Reminder fetchDataFromParent={note}/>
             <div>
            <Collaborator/>
             </div>
             
-            <IconButton className="change-color-btn" style={{marginTop:-96,marginLeft:80}}
+            <IconButton className="change-color-btn" style={{marginTop:-93,marginLeft:80}}
               aria-owns={open ? 'menu' : null}
               aria-haspopup="true"
               onClick={(event) => this.handleClick(event)}
@@ -97,7 +97,7 @@ class Icons extends Component{
                 <ImageOnNote getnote={note}/>
             </div>
    
-            <IconButton onClick={()=>noteCtrl.isArchiveNote(note)} style={{marginTop:-174, marginLeft:160}} aria-label="Archive">
+            <IconButton onClick={()=>noteCtrl.isArchiveNote(note)} style={{marginTop:-164, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
             
