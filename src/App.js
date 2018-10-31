@@ -12,7 +12,7 @@ import TrashNote from './Note/TrashNote';
 import ReminderPage from './Note/ReminderPage'
 import DisplayLabel from './Note/DisplayLabel';
 import Note from './Note/Note'
-
+import SearchNote from './Note/SearchNote'
 
 class App extends Component {
   render() {
@@ -32,16 +32,15 @@ class App extends Component {
               <Route  path='/home/trash' component={TrashNote}/>
               <Route  path='/home/archive' component={ArchiveNote}/>
               <Route path="/home/label" component={DisplayLabel}/> 
-             
+              <Route path='/search' component={SearchNote}/>
               <Route  path='/home/reminder' component={ReminderPage}/>  
               
               
               
              
               
-            
-             
-             
+       
+        
             
           </div>
 

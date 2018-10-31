@@ -10,12 +10,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Chip from '@material-ui/core/Chip';
 
-
 var noteCtrl = new NoteController();
 
 class PinnedNote extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       open: false,
       title: "",
@@ -23,6 +22,7 @@ class PinnedNote extends Component {
       image:"",
       notes: [],
       labels:[],
+      color:"",
       
       
 
@@ -40,10 +40,7 @@ class PinnedNote extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-componentDidUpdate(prevProps){
-  
- 
-}
+
 updateNote() {
   var note = this.props.getData;
   const noteObj = {
@@ -80,23 +77,19 @@ updateNote() {
 
   render() {
      
-    
     var note=this.props.getData;
-    
     var labellist=note.listOfLabels;
-    console.log(this.state.labellist);
-   
-    return(
-    Object.values(labellist).map((labels)=>{
-      var label=labels;
-      console.log(label.name)
-     
-  
-     if(note.pin===true && note.trash===false &&note.archive===false ){ 
+      
+    // return(
+    // Object.values(labellist).map((labels)=>{
+    //   var label=labels;
+    //   console.log(label.name)
+      
+      if(note.pin===true){ 
        
     return(     
         
-     <div>
+     <div >
            <Dialog  
              open={this.state.open}
              onClose={this.handleClose}
@@ -105,7 +98,7 @@ updateNote() {
            >
      
              <DialogContent style={{ overflowY: "hidden" }}>
-     
+              
                <div ><input type="text" style={{ outline: 'none', border: 0 }} defaultValue={note.title} onChange={event => this.setState({ title: event.target.value })} />
                  <IconButton style={{ float: 'right', marginTop: -10 }}>
                    <img src={BluePin} alt="pin" />
@@ -142,7 +135,7 @@ updateNote() {
              width:240,
              marginTop:30,
              marginRight:80,
-   
+            
 
            }} >
            
@@ -150,13 +143,13 @@ updateNote() {
                marginTop: 10,
                marginLeft: 10
              }}>{note.title}
-               <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => noteCtrl.isPinned(note)}><img id="bluepin" src={BluePin} alt="pin" /></IconButton>
+               <IconButton style={{ float: "right", marginTop: -12 }} onClick={() => {this.props.takeNoteData(note);noteCtrl.isPinned(note);}}><img id="bluepin" src={BluePin} alt="pin" /></IconButton>
                </div>
-            {note.image ?
-            <img src ={note.image} alt="images"/>
-            
-             :null
-            }
+               { note.image ?
+         <img src={note.image} alt="noteImage"/>
+         :
+         null
+         }
      
              <div style={{
                marginTop: 10,
@@ -165,22 +158,22 @@ updateNote() {
              </div>
      
              <div>
-             {label.name ?
-               <Chip 
+             {/* {label.name ?
+               <Chip
                label={label.name}
-               onDelete={() => noteCtrl.deleteLabelOnNote(note)}
+               onDelete={() => noteCtrl.deleteLabelOnNote(label,note)}
                style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
                />
                :
                null
-               }
+               } */}
           
              </div>
             
              <div style={{marginTop:5}}>
              {note.reminderDate ?
-               <Chip 
-               label={note.reminderDate }
+               <Chip
+               label={note.reminderDate}
                onDelete={() => noteCtrl.deleteReminderOnNote(note)}
                style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
                />
@@ -189,7 +182,7 @@ updateNote() {
                }
           
              </div>
-             <Icons  data={note} />
+             <Icons   data={note} />
      
              
            </Card>
@@ -201,13 +194,14 @@ updateNote() {
              else {
               return (
                   <div>
+                    ydfhfhfh
                   </div>
               );
           }
     
-            })
+    //         })
             
-    )
+    // )
           }
         }
    

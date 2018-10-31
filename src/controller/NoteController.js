@@ -18,14 +18,15 @@ const UPDATE_Label="http://localhost:9090/fundoo/user/updateLabel";
 const DELETE_Label="http://localhost:9090/fundoo/user/delete/";
 const LABEL_NOTE="http://localhost:9090/fundoo/user/updateNoteLabel/";
 const DELETE_LABELNOTE="http://localhost:9090/fundoo/user/deleteLabel/";
+var dateFormat = require('dateformat');
 
 class NoteController {
     constructor(){
         
         var path=window.location.pathname;
         var value=path.split('/')[3];
-        console.log('path value',value);
-        console.log(path);
+      
+      
     }
   
     addNote(title, description) {
@@ -143,11 +144,7 @@ class NoteController {
                 console.log(error);
             })
     }
-   
-
-   
-   
-  
+    
     isPinned(note) {
 
         console.log('inisde pin', note)
@@ -161,17 +158,11 @@ class NoteController {
     }
 
     todayReminder(note){
+        var day=new Date();
+       
         console.log('note infor uinse remider tody',note);
-        var today = new Date();
+        var today =dateFormat( day,"mmm d, h:MM TT")
         console.log("Date......");
-        console.log(today); 
-        if(today.getHours() >20 && today.getHours() <8){
-            today.setHours(8);
-            today.setMinutes(0);
-        }else if(today.getHours() <20 && today.getHours() >8){
-            today.setHours(20);
-            today.setMinutes(0);
-}
         note.reminderDate = today;
         this.updateNote(note);
         
@@ -179,9 +170,9 @@ class NoteController {
 
     tommorrowReminder(note){
        var tommorow=new Date();
-       tommorow.setDate(tommorow.getDate() +1);
-       tommorow.setHours(8);
-       tommorow.setMinutes(0);
+     tommorow.setDate(tommorow.getDate()+1);
+       tommorow=dateFormat(tommorow,"mmm d, h:MM TT");
+      
        note.reminderDate=tommorow;
        this.updateNote(note);
      }
@@ -192,8 +183,7 @@ class NoteController {
          var day=nextweek.getDay();
          var numberofDays=7-day+1;
          nextweek.setDate(nextweek.getDate() +numberofDays);
-         nextweek.setHours(8);
-         nextweek.setMinutes(0);
+         nextweek=dateFormat(nextweek,"mmm d, h :MM TT ")
          note.reminderDate=nextweek;
          this.updateNote(note);
          
@@ -232,6 +222,7 @@ class NoteController {
          return b;
      }
     updateNote(note){
+        console.log('update note',note)
     putService(UPDATE_NOTE,note)
     .then(res =>{
         console.log(res);
@@ -326,9 +317,12 @@ class NoteController {
     }
 
     getImageonCard(event,note) {
+        console.log('id =',note.id)
+        console.log('note data',note);
+        
         event.preventDefault();
       var form = new FormData();
-          console.log("form", event.target.files[0]);
+        //   console.log("form", event.target.files[0]);
 
           form.append("file", event.target.files[0]);
           console.log("form after appending", event.target.files[0]);
@@ -336,8 +330,9 @@ class NoteController {
         .then(res => {
             console.log(res);
             console.log(res.data)
-            var note=JSON.parse(localStorage.getItem("noteInfo") || "[]");
+           // var note=JSON.parse(localStorage.getItem("noteInfo") || "[]");
             note.image=res.data.msg;
+            
             this.updateNote(note);
         })
         .catch(error => {
@@ -346,53 +341,18 @@ class NoteController {
         
       }
       
-    // var getImageUrl = '';
-    //   $scope.imageSelect = function(event, note) {
-    //     console.log('goes under imge', event);
-    //     console.log('note info', note);
-    //     if (event != undefined) {
-    //       event.stopPropagation();
-    //     }
-    //     document.addEventListener("change", function(event) {
-    //       console.log('inside document');
-    //       var form = new FormData();
-    //       console.log("form", event.target.files[0]);
+     
+      
+   
+   
+      removeImage(note) {
+        console.log("note info ", note);
+        console.log("image link", note.image);
+        note.image = null;
+        
+                this.updateNote(note);
 
-    //       form.append("file", event.target.files[0]);
-    //       console.log("form after appending", event.target.files[0]);
-    //       var url = baseUrl + "uploadFile";
-    //       console.log("url", url);
-    //       noteservice.postImageService(form, url).then(function successCallback(response) {
-    //         console.log("Upload Successfully done", response);
-    //         note.image = response.data.msg;
-    //         console.log('getImageUrl', note.image);
-    //         updateImage(note);
-    //       }, function errorCallback(response) {
-    //         console.log(" Upload failed", response);
-    //       });
-    //     });
-    //   };
-
-    //   function updateImage(note) {
-    //     console.log("In update image...............");
-
-    //     var url = baseUrl + 'user/updateNote';
-    //     console.log('url inside update image', url);
-    //     noteservice.putService(url, note).then(function successCallback(response) {
-
-    //       console.log(response);
-    //     }, function errorCallback(response) {
-    //       console.log("error" + response.data);
-    //     })
-    //   }
-    //   $scope.removeImage = function(note) {
-    //     console.log("note info ", note);
-    //     console.log("image link", note.image);
-    //     note.image = null;
-    //     $scope.getAllNote();
-    //     updateImage(note);
-
-    //   };
+      };
 
 
     isArchiveNote(note) {
@@ -440,7 +400,11 @@ class NoteController {
         })
     }
     deleteLabelOnNote(label,note){
-        var url=DELETE_LABELNOTE+ label.labelId+ "/"+note.id;
+        console.log(label.labelId);
+        console.log(note.id);
+        
+        
+        var url=DELETE_LABELNOTE+ note.id+ "/"+ label.labelId;
         deleteLabelService(url)
         .then(res =>{
             console.log(res);
@@ -506,6 +470,17 @@ class NoteController {
                 console.log(err);
             })
         }
+    }
+    deleteReminderOnNote(note){
+        note.reminderDate=null;
+        putService(UPDATE_NOTE,note)
+        .then(res =>{
+            console.log(res);
+           
+        })
+        .catch(err =>{
+            console.log(err);
+        })
     }
 }
 

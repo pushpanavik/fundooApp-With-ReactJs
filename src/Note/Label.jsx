@@ -53,7 +53,6 @@ class Label extends Component{
     })
   }   
     render(){
-    
             return (  
               <div>                                 
                       <Button onClick={()=>{
@@ -87,7 +86,7 @@ class Label extends Component{
                      {/* <img style={{width:30, height:30}} src={Cross} alt="cross"/> */}
                      <img style={{width:30, height:30,marginBottom:-5,marginLeft:49,opacity:0.5}} src={tick} alt="tick"/>
             
-                     <DisplayLabelsOnDialog/>
+                     <DisplayLabelsOnDialog />
                     
                      <div>
                     <input style={{border:'none',outline:'none'}} type="text"  aria-label="Create new label" maxLength="50"></input>

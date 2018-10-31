@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import OtherNoteIcons from './OtherNoteIcons';
 import { Chip } from '@material-ui/core';
+import Delete from '../images/Delete.svg'
 
 var noteCtrl = new NoteController();
 
@@ -29,14 +30,15 @@ const style = theme => ({
        
   });
 class OtherNote  extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
   this.state={
     open:false,
     title:"",
     description: "",
     notes:[],
     labels:[],
+    archive:false
     
 } 
 this.handleClick=this.handleClick.bind(this);
@@ -66,17 +68,24 @@ updateNote(){
 }
   noteCtrl.updateNote(noteObj)
 }
-
+updateDataOnNote=(note)=>{
+  console.log('othernote parent');
+  this.setState({
+    archive:note.archive,
+    title:note.title,
+    description:note.description,
+  })
+}
     render(){
        
         var note=this.props.getData;
         var labellist=note.listOfLabels;
-        console.log(this.state.labellist);
-        return(
-          Object.values(labellist).map((labels,i)=>{
-            var label=labels;
-            console.log(label.name);        
-          if(note.trash===false && note.pin===false  ){    
+        
+        // return(
+        //   Object.values(labellist).map((labels,i)=>{
+        //     var label=labels;
+        //     console.log(label.name);        
+          if(note.trash===false && note.pin===false && note.archive===false ){    
         return(
           <div>
           <Dialog
@@ -87,21 +96,33 @@ updateNote(){
           >
            
             <DialogContent style={{overflowY:"hidden"}}>
-              
-             <div ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
-             <IconButton style={{float:'right',marginTop: -10}}>
+            { note.image ?
+         <img style={{}}src={note.image} alt="noteImage"/>
+         :null
+         }
+             <div style={{marginTop:-44,position:'absolute'}} ><input type="text"  style={{outline:'none',border:0}} defaultValue={note.title} onChange={event =>this.setState({title:event.target.value})} />
+             <IconButton style={{marginTop: -594,marginLeft:314,backgroundColor:"red"}}>
                <img src={pin}  alt="pin"/>
+               
              </IconButton>
+           
+         <IconButton style={{backgroundColor:"red",marginTop:-107,marginLeft:479}}>
+         {note.image ?
+         <img src={Delete} alt="deleteimg" />
+        :null}
+         </IconButton>
+        
+
              </div>
   
-             <div style={{marginTop:5}}><input type="text"  style={{outline:'none',border:0}} defaultValue={note.description} onChange={event =>this.setState({description:event.target.value})} />
+             <div style={{position:'absolute',marginTop:-17,marginRight:-102}}><input type="text"  style={{outline:'none',border:0,position:'absolute'}} defaultValue={note.description} onChange={event =>this.setState({description:event.target.value})} />
              </div>
             
             <div style={{
-              marginTop: 63,
-              marginBottom:-124,
-              marginRight: -10,
+             position:'absolute'
+
             }}>
+
             <OtherNoteIcons fetchData={note}/>
             </div>
             
@@ -110,7 +131,7 @@ updateNote(){
             <Button  onClick={() => {
                   this.handleClose();
                   this.updateNote();
-                }} color="primary" style={{marginTop:-55}}>
+                }} color="primary" style={{}}>
               CLOSE
             </Button>
             </DialogActions>
@@ -125,7 +146,7 @@ updateNote(){
 
       <div style={{marginTop:10,
       marginLeft:10}}>{note.title} 
-      <IconButton style={{float:"right",marginTop:-12}} onClick={() => noteCtrl.isPinned(note)}>
+      <IconButton style={{float:"right",marginTop:-12}} onClick={() =>{this.props.takeNoteDataFromUnpin(note); noteCtrl.isPinned(note)}}>
       <img id="otherpin" src={pin} alt="pin"/></IconButton>
       { note.image ?
          <img src={note.image} alt="noteImage"/>
@@ -139,20 +160,33 @@ updateNote(){
       marginLeft:10}} onClick={this.handleClick}>{note.description} 
       </div>
       
-      <div key={i}>
-        <div>
+      <div>
+        {/* <div  key={i}>
       { label.name ?
           <Chip 
           label={label.name}
-          onDelete={() => noteCtrl.deleteLabelOnNote(note)}
+          onDelete={() => noteCtrl.deleteLabelOnNote(label,note)}
           style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
           />
           :null
        } 
          
-        </div>
+        </div> */}
+
+         <div style={{marginTop:5}}>
+             {note.reminderDate ?
+               <Chip
+               label={note.reminderDate}
+               onDelete={() => noteCtrl.deleteReminderOnNote(note)}
+               style={{ borderRadius: 50, height: 24, marginLeft: 10, fontSize: 11 }}
+               />
+               :
+               null
+               }
+          
+             </div>
         
-      <OtherNoteIcons data={note}/>         
+      <OtherNoteIcons  data={note}/>         
       </div>
           
       </Card>
@@ -164,12 +198,13 @@ updateNote(){
     else {
       return (
           <div>
+            
           </div>
       );
   }
-   })
+//    })
    
-)
+// )
   }
 }
 OtherNote.propTypes = {

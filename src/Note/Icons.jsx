@@ -28,11 +28,12 @@ const style = theme => ({
     });
       
 class Icons extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             anchorEl: null,
-            open:false,  
+            open:false,
+            reminderDate:''  
         }
         
     }
@@ -60,7 +61,7 @@ class Icons extends Component{
             [e.target.name]: e.target.value
         })
     }
-  
+   
    
     render(){
         var note=this.props.data;
@@ -97,7 +98,7 @@ class Icons extends Component{
                 <ImageOnNote getnote={note}/>
             </div>
    
-            <IconButton onClick={()=>noteCtrl.isArchiveNote(note)} style={{marginTop:-164, marginLeft:160}} aria-label="Archive">
+            <IconButton onClick={()=>{noteCtrl.isArchiveNote(note);noteCtrl.isPinned(note)}} style={{marginTop:-164, marginLeft:160}} aria-label="Archive">
               <img className={classes.img} src={archive} alt="archive" />
             </IconButton>
             

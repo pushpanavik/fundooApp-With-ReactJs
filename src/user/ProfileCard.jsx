@@ -11,7 +11,14 @@ import PropTypes from 'prop-types';
 import 'react-image-crop/dist/ReactCrop.css';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import account from '../icons/account.svg';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({
+  typography: {
+      useNextVariants: true
+  }
+  });
+  
 var noteCtrl=new NoteController();
 class ProfileCard extends Component {
   constructor() {
@@ -92,6 +99,9 @@ class ProfileCard extends Component {
       console.log(user);
       
     return (
+      <MuiThemeProvider theme={theme}>
+
+
       <Card className="signoutcard">
         <div>
           <table>
@@ -149,7 +159,7 @@ class ProfileCard extends Component {
               
               <th>
                 <div style={{ height: 70 }}>
-                  <Typography>
+                  <Typography >
                     {user.firstname} {this.state.user.lastname}
                   </Typography>
                   <br />
@@ -170,6 +180,7 @@ class ProfileCard extends Component {
           </Button>
         </div>
       </Card>
+      </MuiThemeProvider>
     );
   }
 }

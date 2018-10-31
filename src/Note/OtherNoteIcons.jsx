@@ -6,12 +6,14 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Menu from '@material-ui/core/Menu';
-import Reminder from './Reminder';
+
 import Collaborator from './Collaborator';
 import ImageOnNote from './ImageOnNote';
 import MoreOnNote from './MoreOnNote';
 import OtherNoteColor from './OtherNoteColor';
 import NoteController from '../controller/NoteController';
+import ReminderPage from './ReminderPage';
+
 var noteCtrl=new NoteController();
 
 const style = theme => ({
@@ -28,8 +30,8 @@ const style = theme => ({
     });
       
 class OtherNoteIcons extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             anchorEl: null,
             open:false,  
@@ -72,7 +74,7 @@ class OtherNoteIcons extends Component{
         return(
             
             <div style={{height:50}}>
-           <Reminder />
+           <ReminderPage fetchDataFromParent={note} />
             <div>
            <Collaborator/>
             </div>

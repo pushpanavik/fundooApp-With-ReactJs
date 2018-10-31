@@ -183,7 +183,7 @@ componentDidMount() {
               )
             }            
            
-if (note.archive === true && note.pin === false) {
+if (note.archive === true ) {
 return(          
 <Card   style={{
    height:100,  
