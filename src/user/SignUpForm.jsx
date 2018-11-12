@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link,NavLink } from 'react-router-dom';
  import {postService} from './UserService';
 
-const APIPATH="http://localhost:9090/fundoo/user/registerUser";
+const APIPATH="http://localhost:8080/register";
 class SignUpForm extends Component {
     constructor() {
         super();

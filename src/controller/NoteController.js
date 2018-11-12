@@ -5,19 +5,19 @@ import {
 } from '../user/UserService';
 
 
-const ADD_NOTE = "http://localhost:9090/fundoo/user/addNote";
-const NOTE_PATH = "http://localhost:9090/fundoo/user/displayNote";
-const PROFILE_PATH = "http://localhost:9090/fundoo/uploadFile";
-const UPDATE_PROFILE = "http://localhost:9090/fundoo/updateUser";
-const USER_PATH = "http://localhost:9090/fundoo/getUser";
-const UPDATE_NOTE = "http://localhost:9090/fundoo/user/updateNote";
-const DELETE_NOTE = "http://localhost:9090/fundoo/user/deleteNote/";
-const ADD_LABEL = "http://localhost:9090/fundoo/user/addLabel";
-const DISPLAY_LABEL="http://localhost:9090/fundoo/user/displayLabel";
-const UPDATE_Label="http://localhost:9090/fundoo/user/updateLabel";
-const DELETE_Label="http://localhost:9090/fundoo/user/delete/";
-const LABEL_NOTE="http://localhost:9090/fundoo/user/updateNoteLabel/";
-const DELETE_LABELNOTE="http://localhost:9090/fundoo/user/deleteLabel/";
+const ADD_NOTE = "http://localhost:8080/createNote";
+const NOTE_PATH = "http://localhost:8080/getNotesOfUser";
+const PROFILE_PATH = "http://localhost:8080/uploadFile";
+const UPDATE_PROFILE = "http://localhost:8080/updateUser";
+const USER_PATH = "http://localhost:8080/getuser/";
+const UPDATE_NOTE = "http://localhost:8080/updateNote";
+const DELETE_NOTE = "http://localhost:8080/deleteNote/";
+const ADD_LABEL = "http://localhost:8080/addLabel";
+const DISPLAY_LABEL="http://localhost:8080/displayLabel";
+const UPDATE_Label="http://localhost:8080/updateLabel";
+const DELETE_Label="http://localhost:8080/delete/";
+const LABEL_NOTE="http://localhost:8080/updateNoteLabel/";
+const DELETE_LABELNOTE="http://localhost:8080/deleteLabel/";
 var dateFormat = require('dateformat');
 
 class NoteController {
@@ -341,16 +341,12 @@ class NoteController {
         
       }
       
-     
-      
-   
-   
+    
       removeImage(note) {
         console.log("note info ", note);
         console.log("image link", note.image);
         note.image = null;
-        
-                this.updateNote(note);
+        this.updateNote(note);
 
       };
 

@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {postService} from './UserService';
-const FORGOT_PATH="http://localhost:9090/fundoo/user/forgotPassword";
+const FORGOT_PATH="http://localhost:8080/forgotpassword";
 
 class ForgotPassword extends Component{
     constructor(){

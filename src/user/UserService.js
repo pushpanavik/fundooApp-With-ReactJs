@@ -21,7 +21,7 @@ const postResetService=(data) =>{
     
     return axios({
         method: 'POST',
-        url:"http://localhost:9090/fundoo/user/resetPassword",
+        url:"http://localhost:8080/resetpassword",
         headers:{
             'Content-Type' : 'application/json',
             'token': localStorage.getItem("forgotToken")

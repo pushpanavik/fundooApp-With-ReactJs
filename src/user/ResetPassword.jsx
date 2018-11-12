@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import NoteController from '../controller/NoteController';
-
+import {postResetService} from './UserService'
 var notecontrol=new NoteController();
 class ResetPassword extends Component{
     constructor(){
@@ -48,16 +48,24 @@ class ResetPassword extends Component{
         let check = this.validateForm();
         console.log(check)
         if(check){
-            notecontrol.resetPassword(
+            postResetService(
                 this.state.password
-            );
+            ).then(response =>{
+                console.log(response.data);
+                alert('password successfully updated')
+              
+            })
+            .catch(error =>{
+                console.log(error);
+                this.props.history.push("/forgot-password"); 
+            }); 
         }else{
             return false;
         }
     }
 
     render(){
-        console.log("pass:+++++=", this.state.password);
+       
         
         return(
             <div className="FormCenter">

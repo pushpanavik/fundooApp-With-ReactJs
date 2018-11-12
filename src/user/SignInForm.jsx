@@ -3,7 +3,7 @@ import NoteController from "../controller/NoteController";
 import { Link,NavLink } from 'react-router-dom';
 import {postService} from './UserService';
 
-const LOGIN_PATH="http://localhost:9090/fundoo/user/login";
+const LOGIN_PATH="http://localhost:8080/login";
 
 var noteCtrl = new NoteController();
 class SignInForm extends Component {
